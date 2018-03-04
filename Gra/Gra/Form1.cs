@@ -8,8 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-using ClassLibrary; //nasza biblioteka klas
-
 namespace Gra
 {
     public partial class Form1 : Form
