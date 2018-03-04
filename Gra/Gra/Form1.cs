@@ -12,9 +12,18 @@ namespace Gra
 {
     public partial class Form1 : Form
     {
+        Game game;
+
         public Form1()
         {
             InitializeComponent();
+
+            game = new Game(this);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            
         }
     }
 }
