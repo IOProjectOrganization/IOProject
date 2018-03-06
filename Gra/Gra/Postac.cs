@@ -24,17 +24,16 @@ namespace Gra
         public int EXP;
         public int Level
         { get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
-        
+
 
         //public Bron UzywanaBron;    //problem - bron ma dostepnosc prywatną więc nie moze to byc funkcja public oraz nie byłem w stanie
-                                      //stworzyc funkcji przykladowo public void ZalozBron(Bron ZakladanaBron) {} rowniez z powodu braku
-                                      //dostepu
+        //stworzyc funkcji przykladowo public void ZalozBron(Bron ZakladanaBron) {} rowniez z powodu braku
+        //dostepu
 
         //public List<Przedmiot> Ekwipunek;   // tak samo jak wyżej
-                                              // nie jestem pewien jak temu poradzić
-                                              // mozliwa jest zmiana dostepu tych klas w przedmiotach ale chciałbym usłyszeć o
-                                              // waszych alternatywach/pomysłach 
-
+        // nie jestem pewien jak temu poradzić
+        // mozliwa jest zmiana dostepu tych klas w przedmiotach ale chciałbym usłyszeć o
+        // waszych alternatywach/pomysłach 
 
         public Bohater(int hp, int maxhp, int gold, int exp) : base(hp, maxhp)  // konstruktor
         {

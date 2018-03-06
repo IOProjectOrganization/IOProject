@@ -19,7 +19,8 @@ namespace Gra
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            //Application.Run(new Form());
+            Application.Run(new Menu()); // odsyła do menu gry
         }
     }
 

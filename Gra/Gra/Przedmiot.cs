@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace Gra
 {
-    class Przedmiot
+    public class Przedmiot
     {
         private int ilosc;
         private string nazwa;
+        private bool stackable; // czy w ekwipunku ma widniec jako osobny wpis, czy może być dołączany do innych przedmiotów tego samego typu; 
 
         public Przedmiot()
         {
@@ -17,10 +18,16 @@ namespace Gra
             nazwa = "";
         }
 
-        public Przedmiot(int _ilosc, string _nazwa)
+        public Przedmiot(int _ilosc, string _nazwa, bool _stackable)
         {
             ilosc = _ilosc;
             nazwa = _nazwa;
+            stackable = _stackable;
+        }
+
+        public bool getStackable()
+        {
+            return stackable;
         }
 
         public int getIlosc()
@@ -43,6 +50,11 @@ namespace Gra
             nazwa = _nazwa;
         }
 
+        public void setStackable(bool _stackable)
+        {
+            stackable = _stackable;
+        }
+
         public void zmniejszIlosc(int _x)
         {
             if (ilosc >= _x)
@@ -59,16 +71,22 @@ namespace Gra
         }
     }
 
-    class Bron : Przedmiot
+    public class Bron : Przedmiot
     {
         private int obrazenia;
         //private int zuzycie; // dwa kolejne, jesli uwzgledniamy zuzycie
         //private int zywotnosc; // 
 
-        public Bron(int _ilosc, string _nazwa, int _obrazenia) : base(_ilosc, _nazwa)
+        public Bron(int _ilosc, string _nazwa, int _obrazenia, bool _stackable) : base(_ilosc, _nazwa, _stackable)
         {
             obrazenia = _obrazenia;
         }
+
+        /*public Bron()
+        {
+            setNazwa = 
+
+        }*/
 
         public int getObrazenia()
         {
@@ -77,11 +95,11 @@ namespace Gra
 
     }
 
-    class Lekarstwa : Przedmiot
+    public class Lekarstwa : Przedmiot
     {
         private int leczenie;
 
-        public Lekarstwa(int _ilosc, string _nazwa, int _leczenie) : base (_ilosc, _nazwa)
+        public Lekarstwa(int _ilosc, string _nazwa, int _leczenie, bool _stackable) : base (_ilosc, _nazwa, _stackable)
         {
             leczenie = _leczenie;
         }
