@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Drawing;  // dla zmiennej image w klasie bohatera
 namespace Gra
 {
     public class Postac     // bazowa klasa postaci
@@ -20,25 +20,25 @@ namespace Gra
 
     public class Bohater : Postac   // klasa bohatera
     {
+        public Image ObrazekPostaci;  // obrazek ktory ma przedstawiac postac
+        public int posX;   //polozenie x
+        public int posY;   //polozenie y
         public int Gold;
         public int EXP;
         public int Level
         { get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
 
+        public Bron UzywanaBron;    
+    
+        public List<Przedmiot> Ekwipunek;
 
-        //public Bron UzywanaBron;    //problem - bron ma dostepnosc prywatną więc nie moze to byc funkcja public oraz nie byłem w stanie
-        //stworzyc funkcji przykladowo public void ZalozBron(Bron ZakladanaBron) {} rowniez z powodu braku
-        //dostepu
-
-        //public List<Przedmiot> Ekwipunek;   // tak samo jak wyżej
-        // nie jestem pewien jak temu poradzić
-        // mozliwa jest zmiana dostepu tych klas w przedmiotach ale chciałbym usłyszeć o
-        // waszych alternatywach/pomysłach 
-
-        public Bohater(int hp, int maxhp, int gold, int exp) : base(hp, maxhp)  // konstruktor
+        public Bohater(int hp, int maxhp, int gold, int exp, int posx, int posy, Image SciezkaObrazku) : base(hp, maxhp)  // konstruktor
         {
             Gold = gold;
             EXP = exp;
+            posX = posx;
+            posY = posy;
+            ObrazekPostaci = new Bitmap(SciezkaObrazku);
         }
 
         public void DodajEXP(int exp)
@@ -59,6 +59,27 @@ namespace Gra
         public void SetGold(int gold)
         {
             Gold = gold;
+        }
+
+        public void RuchWPrawo()
+        {
+            posX += 40;
+            // zmiana obrazekpostaci
+        }
+        public void RuchWLewo()
+        {
+            posX -= 40;
+            //zmiana obrazekpostaci
+        }
+        public void RuchWDol()
+        {
+            posY += 40;
+            //zmiana obrazekpostaci
+        }
+        public void RuchWGore()
+        {
+            posY -= 40;
+            //zmiana obrazekpostaci
         }
 
     }
