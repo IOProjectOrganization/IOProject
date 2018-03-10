@@ -51,5 +51,10 @@ namespace Gra
         {
             MessageBox.Show("Controls"); // okienko Help, na razie z miejscem na sterowanie
         }
+
+        private void Menu_KeyDown(object sender, KeyEventArgs e)
+        {
+            game.HandleKeyPress(e);
+        }
     }
 }

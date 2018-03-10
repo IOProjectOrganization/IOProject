@@ -17,6 +17,7 @@ namespace Gra
             public Point TileLoc; //Lokalzacja obiektu
             public bool isWalkable; //Czy można po nim się poruszać
             public bool isInteractive; //Czy obiekt jest interaktywny
+            public bool isMapLoader;
         }
         
         public List<Tile> MapTiles; //Lista wszystkich pól
@@ -43,23 +44,33 @@ namespace Gra
                     Tile T = new Tile(); //Tworzymy obiekt
                     T.TileLoc = new Point(x * TileSize, y * TileSize); //Ustalamy położenie obiektu (bierzemy pod uwagę jego rozmiar)
 
-                    if (line[x].ToString() == "0") //Sprawdzamy wartość w pliku
+                    if (line[x].ToString() == "t")
                     {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.WaterTile); //Ustalamy obraz                  NOTE: Zmienić na EMPTY - wywoływać tylko kolizję
-                        T.isWalkable = false; //Ustalamy czy można się po nim poruszać
-                        T.isInteractive = false;
-                    }
-                    if (line[x].ToString() == "1")
-                    {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.GrassTile);
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty);
                         T.isWalkable = true;
                         T.isInteractive = false;
+                        T.isMapLoader = true;
+                    }
+                    if (line[x].ToString() == "0") //Sprawdzamy wartość w pliku
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty); //Ustalamy obraz                  NOTE: Zmienić na EMPTY - wywoływać tylko kolizję
+                        T.isWalkable = false; //Ustalamy czy można się po nim poruszać
+                        T.isInteractive = false;
+                        T.isMapLoader = false;
+                    }
+                    if (line[x].ToString() == "1") 
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty);
+                        T.isWalkable = true;
+                        T.isInteractive = false;
+                        T.isMapLoader = false;
                     }
                     if (line[x].ToString() == "2")
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty); //Niewidoczny, interaktywny obiekt
                         T.isWalkable = true;
                         T.isInteractive = true;
+                        T.isMapLoader = false;
                     }
 
                     MapTiles.Add(T); //Dodajemy dany obiekt mapy do listy
@@ -75,6 +86,9 @@ namespace Gra
         {
             foreach (Tile T in MapTiles) //Dla każdego obiektu na liście MapTiles
                 Device.DrawImage(T.TileImage, T.TileLoc); //Rysujemy obiekt według poszczególnych parametrów każdego obiektu
+
+            Image img = new Bitmap(Gra.Properties.Resources.world00);
+            Device.DrawImage(img, new Point(0, 0));
         }
 
         public bool GetWalkableAt(Point Loc) //Zwraca wartość czy możemy się poruszać po danym polu
@@ -96,25 +110,48 @@ namespace Gra
 
             return false;
         }
-    }
 
+        public bool GetIsMapLoader(Point Loc)
+        {
+            foreach (Tile T in MapTiles)
+                if (T.TileLoc == Loc)
+                    if (T.isMapLoader)
+                        return true;
+            return false;
+        }
+    }
     public class WorldMapSprite
     {
-        public Point Location;
-        public Image Image;
-        public int ID;
-        public string TextFilename = "";
+        private Point Location;
+        private Image Image;
 
-        public WorldMapSprite(Point location, Image image, int ID)
+        public WorldMapSprite(Point location, Image image)
         {
             this.Location = location;
             this.Image = image;
-            this.ID = ID;
+        }
+
+        public void Move(int X, int Y)
+        {
+            Location.X += X;
+            Location.Y += Y;
         }
 
         public void Draw(Graphics Device)
         {
             Device.DrawImage(Image, Location);
         }
+
+        public Point GetLocation()
+        { return this.Location; }
+
+        public void SetLocation(Point loc)
+        { this.Location = loc; }
+
+        public Image GetImage()
+        { return this.Image; }
+
+        public void SetImage(Image img)
+        { this.Image = img; }
     }
 }
