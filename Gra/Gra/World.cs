@@ -30,7 +30,9 @@ namespace Gra
         public void LoadMap(string MapName) //Wczytywanie świata
         {
             MapTiles.Clear(); //Czyścimy obecny świat
-            StreamReader Reader = new StreamReader(@"MapTileData\" + MapName + ".txt"); //Wczytywanie danych z pliku o podanej ścieżce
+
+            StreamReader Reader = new StreamReader(@"MapTileData\maptiles" + MapName + ".txt"); //Wczytywanie danych z pliku o podanej ścieżce
+
             int TileSize = 40;
 
             int y = 0;
@@ -82,12 +84,34 @@ namespace Gra
             Reader.Close(); //Kończymy czytanie pliku
         }
 
-        public void DrawMap(Graphics Device) //Rysowanie na ekranie
+        public void DrawMap(Graphics Device, int WorldX, int WorldY) //Rysowanie na ekranie
         {
+            Image img;
+
             foreach (Tile T in MapTiles) //Dla każdego obiektu na liście MapTiles
                 Device.DrawImage(T.TileImage, T.TileLoc); //Rysujemy obiekt według poszczególnych parametrów każdego obiektu
 
-            Image img = new Bitmap(Gra.Properties.Resources.world00);
+            if (WorldX < 0 && WorldY >= 0)
+            {
+                WorldX *= -1;
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "" + WorldY));
+            }
+            else if (WorldX >= 0 && WorldY < 0)
+            {
+                WorldY *= -1;
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "_" + WorldY));
+            }
+            else if (WorldX < 0 && WorldY < 0)
+            {
+                WorldX *= -1;
+                WorldY *= -1;
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "_" + WorldY));
+            }
+            else
+            {
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "" + WorldY));
+            }
+
             Device.DrawImage(img, new Point(0, 0));
         }
 

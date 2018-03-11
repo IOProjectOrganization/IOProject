@@ -55,7 +55,8 @@ namespace Gra
             WorldMapPB.BackColor = Color.Transparent;
             WorldMapPB.Parent = GameForm;
 
-            timer.Interval = 1000;
+            timer.Tick += timer_Tick;
+            timer.Interval = 65;
 
             Draw();
         }
@@ -64,7 +65,7 @@ namespace Gra
         {
             mapX += MoveX;
             mapY += MoveY;
-            worldMap.LoadMap(mapX + " " + mapY);
+            worldMap.LoadMap(mapX + "" + mapY);
         }
 
         void Draw()
@@ -73,7 +74,7 @@ namespace Gra
             Image Img = new Bitmap(GameForm.Width, GameForm.Height);
             Device = Graphics.FromImage(Img);
 
-            worldMap.DrawMap(Device);
+            worldMap.DrawMap(Device, mapX, mapY);
             Player.GetCharacterSprite().Draw(Device);
 
             WorldMapPB.Image = Img;
@@ -83,108 +84,63 @@ namespace Gra
 
         public void HandleKeyPress(KeyEventArgs e)
         {
-            Point p = new Point(0, 0);
-
-            if (e.KeyCode == Keys.Left)
+            if (Player.GetIsMoving() == false)
             {
-                p = new Point(Player.GetCharacterSprite().GetLocation().X - 40, Player.GetCharacterSprite().GetLocation().Y);
-                DesiredMove = p;
+                Point p = new Point(0, 0);
 
-                if (CanMove(p))
+                if (e.KeyCode == Keys.Left)
                 {
-                    timer.Tick += timer_Tick;
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X - 40, Player.GetCharacterSprite().GetLocation().Y);
+                    DesiredMove = p;
 
-                    if (worldMap.GetIsMapLoader(p))
-                    {
-                        LoadNewMap(-1, 0);
-                        //Player.GetCharacterSprite().SetLocation(p);
-                    }
-                    else
+                    if (CanMove(p))
                     {
                         Player.SetMoveDirection(Postac.MoveDirection.Left);
                         Player.SetIsMoving(true);
                         timer.Start();
-                        //Player.GetCharacterSprite().SetLocation(p);
-                        //animacja
                     }
                 }
-            }
 
-            if (e.KeyCode == Keys.Right)
-            {
-                p = new Point(Player.GetCharacterSprite().GetLocation().X + 40, Player.GetCharacterSprite().GetLocation().Y);
-                DesiredMove = p;
-                
-                if (CanMove(p))
+                if (e.KeyCode == Keys.Right)
                 {
-                    timer.Tick += timer_Tick;
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X + 40, Player.GetCharacterSprite().GetLocation().Y);
+                    DesiredMove = p;
 
-                    if (worldMap.GetIsMapLoader(p))
-                    {
-                        LoadNewMap(+1, 0);
-                        //Player.GetCharacterSprite().SetLocation(p);
-                    }
-                    else
+                    if (CanMove(p))
                     {
                         Player.SetMoveDirection(Postac.MoveDirection.Right);
                         Player.SetIsMoving(true);
                         timer.Start();
-                        //Player.GetCharacterSprite().SetLocation(p);
-                        //animacja
                     }
                 }
-            }
 
-            if (e.KeyCode == Keys.Up)
-            {
-                p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - 40);
-                DesiredMove = p;
-
-                if (CanMove(p))
+                if (e.KeyCode == Keys.Up)
                 {
-                    timer.Tick += timer_Tick;
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - 40);
+                    DesiredMove = p;
 
-                    if (worldMap.GetIsMapLoader(p))
+                    if (CanMove(p))
                     {
-                        LoadNewMap(0, -1);
-                        //Player.GetCharacterSprite().SetLocation(p);
-                    }
-                    else
-                    {
-                        Player.SetMoveDirection(Postac.MoveDirection.Up);
-                        Player.SetIsMoving(true);
-                        timer.Start();
-                        //Player.GetCharacterSprite().SetLocation(p);
-                        //animacja
+                            Player.SetMoveDirection(Postac.MoveDirection.Up);
+                            Player.SetIsMoving(true);
+                            timer.Start();
                     }
                 }
-            }
 
-            if (e.KeyCode == Keys.Down)
-            {
-                p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + 40);
-                DesiredMove = p;
 
-                if (CanMove(p))
+                if (e.KeyCode == Keys.Down)
                 {
-                    timer.Tick += timer_Tick;
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + 40);
+                    DesiredMove = p;
 
-                    if (worldMap.GetIsMapLoader(p))
-                    {
-                        LoadNewMap(0, +1);
-                        //Player.GetCharacterSprite().SetLocation(p);
-                    }
-                    else
+                    if (CanMove(p))
                     {
                         Player.SetMoveDirection(Postac.MoveDirection.Down);
                         Player.SetIsMoving(true);
                         timer.Start();
-                        //Player.GetCharacterSprite().SetLocation(p);
-                        //animacja
                     }
                 }
             }
-
             Draw();
         }
 
@@ -192,6 +148,56 @@ namespace Gra
         {
             if (Player.GetCharacterSprite().GetLocation().X == DesiredMove.X && Player.GetCharacterSprite().GetLocation().Y == DesiredMove.Y)
             {
+                if (worldMap.GetIsMapLoader(Player.GetCharacterSprite().GetLocation()))
+                {
+                    if (Player.GetMoveDirection() == Postac.MoveDirection.Left)
+                    {
+                        LoadNewMap(-1, 0);
+
+                        Point z = new Point(32 * 40, Player.GetCharacterSprite().GetLocation().Y);
+
+                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
+                            z.X -= 40;
+
+                        Player.GetCharacterSprite().SetLocation(z);
+                    }
+
+                    if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
+                    {
+                        LoadNewMap(1, 0);
+
+                        Point z = new Point(0, Player.GetCharacterSprite().GetLocation().Y);
+
+                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
+                            z.X += 40;
+
+                        Player.GetCharacterSprite().SetLocation(z);
+                    }
+
+                    if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
+                    {
+                        LoadNewMap(0, -1);
+
+                        Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 18 * 40);
+
+                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
+                            z.Y -= 40;
+
+                        Player.GetCharacterSprite().SetLocation(z);
+                    }
+
+                    if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
+                    {
+                        LoadNewMap(0, 1);
+
+                        Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 0);
+
+                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
+                            z.X += 40;
+
+                        Player.GetCharacterSprite().SetLocation(z);
+                    }
+                }
                 Player.SetIsMoving(false);
                 timer.Stop();
             }
@@ -224,9 +230,8 @@ namespace Gra
 
         bool CanMove(Point p)
         {
-            if (Player.GetIsMoveing() == false)
-                if (worldMap.GetWalkableAt(p))
-                    return true;
+            if (worldMap.GetWalkableAt(p))
+                return true;
             return false;
         }
     }

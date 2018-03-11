@@ -118,7 +118,7 @@ namespace Gra
         public void SetIsMoving(bool b)
         { isMoving = b; }
 
-        public bool GetIsMoveing()
+        public bool GetIsMoving()
         { return isMoving; }
 
     }
