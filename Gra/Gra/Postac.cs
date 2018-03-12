@@ -37,9 +37,9 @@ namespace Gra
         private int Level
         { get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
 
-        public Bron UzywanaBron;    
-    
-        public List<Przedmiot> Ekwipunek;
+        private Bron UzywanaBron;
+
+        private List<Przedmiot> Ekwipunek;
 
         public Bohater(int hp, int maxhp, int gold, int exp, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(hp, maxhp)  // konstruktor
         {
@@ -50,6 +50,31 @@ namespace Gra
 //            posY = posy;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
+            Ekwipunek = new List<Przedmiot>();
+        }
+
+        public void DodajPrzedmiot(Przedmiot item)
+        {
+            if(item.getStackable()==true)   // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
+            {
+                foreach(Przedmiot istniejacyPrzedmiot in Ekwipunek)
+                {
+                    if(istniejacyPrzedmiot.getNazwa()==item.getNazwa())
+                    {
+                        istniejacyPrzedmiot.zwiekszIlosc(item.getIlosc());
+                        break;
+                    }
+                }
+            }
+            else   // w przeciwnym wypadku poprostu dodaje przedmiot do listy ekwipunek
+            {
+                Ekwipunek.Add(item);
+            }
+        }
+
+        public void ZalozBron(Bron bron)
+        {
+            UzywanaBron = bron;
         }
 
         public void DodajEXP(int exp)
