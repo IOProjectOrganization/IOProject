@@ -47,7 +47,7 @@ namespace Gra
 
             LoadNewMap(0, 0);
 
-            Player = new Bohater(100, 100, 0, 0, new Point(23*40, 10*40), Gra.Properties.Resources.Player);
+            Player = new Bohater(100, 100, 50, 50, 0, 0, new Point(23*40, 10*40), Gra.Properties.Resources.Player); // dodane mp
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;

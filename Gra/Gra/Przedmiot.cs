@@ -9,6 +9,7 @@ namespace Gra
     public class Przedmiot
     {
         private int ilosc;
+        private int id;
         private string nazwa;
         private bool stackable; // czy w ekwipunku ma widniec jako osobny wpis, czy może być dołączany do innych przedmiotów tego samego typu; 
 
@@ -18,9 +19,10 @@ namespace Gra
             nazwa = "";
         }
 
-        public Przedmiot(int _ilosc, string _nazwa, bool _stackable)
+        public Przedmiot(int _ilosc, int _id, string _nazwa, bool _stackable)
         {
             ilosc = _ilosc;
+            id = _id;
             nazwa = _nazwa;
             stackable = _stackable;
         }
@@ -40,6 +42,11 @@ namespace Gra
             return nazwa;
         }
 
+        public int getId()
+        {
+            return id;
+        }
+
         public void setIlosc(int _ilosc) // na wypadek, jakby wykorzystano konsruktor domyslny
         {
             ilosc = _ilosc;
@@ -53,6 +60,11 @@ namespace Gra
         public void setStackable(bool _stackable)
         {
             stackable = _stackable;
+        }
+
+        public void setId(int _i)
+        {
+            id = _i;
         }
 
         public void zmniejszIlosc(int _x)
@@ -77,16 +89,10 @@ namespace Gra
         //private int zuzycie; // dwa kolejne, jesli uwzgledniamy zuzycie
         //private int zywotnosc; // 
 
-        public Bron(int _ilosc, string _nazwa, int _obrazenia, bool _stackable) : base(_ilosc, _nazwa, _stackable)
+        public Bron(int _ilosc, int _id, string _nazwa, int _obrazenia, bool _stackable) : base(_ilosc, _id, _nazwa, _stackable)
         {
             obrazenia = _obrazenia;
         }
-
-        /*public Bron()
-        {
-            setNazwa = 
-
-        }*/
 
         public int getObrazenia()
         {
@@ -95,18 +101,81 @@ namespace Gra
 
     }
 
-    public class Lekarstwa : Przedmiot
+    public class Mikstury : Przedmiot // zmienione tak, by obslugiwalo zarowno przedmioty zwiekszajace HP, jak i te zwiekszajace MP
     {
-        private int leczenie;
+        private int potionHp;
+        private int potionMp;
 
-        public Lekarstwa(int _ilosc, string _nazwa, int _leczenie, bool _stackable) : base (_ilosc, _nazwa, _stackable)
+        public Mikstury(int _ilosc, int _id, string _nazwa, int _potionHp, int _potionMP, bool _stackable) : base (_ilosc, _id, _nazwa, _stackable)
         {
-            leczenie = _leczenie;
+            potionHp = _potionHp;
+            potionMp = _potionMP;
         }
 
-        public int getLeczenie() 
+        public int getPotionHp() 
         {
-            return leczenie;
+            return potionHp;
+        }
+
+        public int getPotionMp()
+        {
+            return potionMp;
+        }
+    }
+
+    ///////
+
+    public static class Item
+    {
+        public static readonly List<Przedmiot> Items = new List<Przedmiot>(); // uzytkowe temp
+        public static readonly List<Mikstury> Medicine = new List<Mikstury>(); // lekarstwa
+        public static readonly List<Bron> Weapon = new List<Bron>(); // bron
+
+        // Mikstury
+
+        public const int itemId_smallPotion = 1;
+        public const int itemId_bigPotion = 2;
+        public const int itemId_smallMpPotion = 3;
+        public const int itemId_bigMpPotion = 4;
+
+        // Uzytkowe
+
+        public const int itemId_bone = 5;
+
+        // Bronie
+
+        public static int weaponId_normalSword = 6;
+        public static int weaponId_bigSword = 7;
+
+        static Item()
+        {
+            zaladujPrzedmioty();
+        }
+
+        private static void zaladujPrzedmioty()
+        {
+            Medicine.Add(new Mikstury(0,itemId_smallPotion, "Mala mikstura", 50, 0, true));
+            Medicine.Add(new Mikstury(0, itemId_bigPotion, "Duza mikstura", 100, 0, true));
+            Medicine.Add(new Mikstury(0, itemId_smallMpPotion, "Ether", 0, 25, true));
+            Medicine.Add(new Mikstury(0, itemId_bigMpPotion, "Mega Ether", 0, 50, true));
+
+            Items.Add(new Przedmiot(0, itemId_bone, "Ludzka kosc",true));
+
+            Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 70, false));
+            Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 120, false));
+        }
+
+        public static Przedmiot ItemsById(int _id)
+        {
+            foreach(Przedmiot item in Medicine)
+            {
+                if(item.getId() == _id)
+                {
+                    return item;
+                }
+            }
+
+            return null;
         }
     }
 }

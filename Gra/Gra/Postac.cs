@@ -12,14 +12,19 @@ namespace Gra
         public int HP;
         public int MaxHP;
 
+        private int MP; // dodane punkty MP
+        private int maxMP;
+
         public enum MoveDirection { None, Up, Down, Left, Right };
 
         protected WorldMapSprite CharacterSprite; //Pozwala na obsługę postaci w świecie gry
 
-        public Postac(int hp, int maxhp)
+        public Postac(int hp, int maxhp, int mp, int maxmp)
         {
             HP = hp;
             MaxHP = maxhp;
+            MP = mp;
+            maxMP = maxmp;
         }
     }
 
@@ -41,7 +46,7 @@ namespace Gra
 
         private List<Przedmiot> Ekwipunek;
 
-        public Bohater(int hp, int maxhp, int gold, int exp, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(hp, maxhp)  // konstruktor
+        public Bohater(int hp, int maxhp, int mp, int maxmp, int gold, int exp, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(hp, maxhp, mp, maxmp)  // konstruktor // dodane mp
         {
             Gold = gold;
             EXP = exp;
@@ -164,7 +169,7 @@ namespace Gra
         public int NagrodaExp;
         public int NagrodaGold;
 
-        public Potwor(string nazwa, int obrazenia, int nagrodaexp, int nagrodagold, int hp, int maxhp) : base(hp, maxhp)
+        public Potwor(string nazwa, int obrazenia, int nagrodaexp, int nagrodagold, int hp, int maxhp, int mp, int maxmp) : base(hp, maxhp, mp, maxmp) // dodane mp
         {
             Nazwa = nazwa;
             Obrazenia = obrazenia;
