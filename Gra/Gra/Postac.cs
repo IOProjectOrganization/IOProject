@@ -58,32 +58,35 @@ namespace Gra
             Ekwipunek = new List<Przedmiot>();
         }
 
-        public void DodajPrzedmiot(Przedmiot item)
+        public void DodajPrzedmiot(int id)
         {
-            if (item.getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
+
+            if (Item.ItemsById(id).getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
             {
-                Ekwipunek.Add(item);
+                Ekwipunek.Add(Item.ItemsById(id));
             }
             else
             {
                 bool czyZnaleziono = false;
                 foreach(Przedmiot istniejacyPrzedmiot in Ekwipunek) // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
                 {
-                    if(istniejacyPrzedmiot.getNazwa()==item.getNazwa())
+                    if(istniejacyPrzedmiot.getId()==id)
                     {
                         czyZnaleziono = true;
-                        istniejacyPrzedmiot.zwiekszIlosc(item.getIlosc());
+                        istniejacyPrzedmiot.zwiekszIlosc(1);
                         break;
                     }
                 }
                 if (czyZnaleziono == false)  // jesli nie znaleziono itemu juz w ekwipunku do stackowania to go dodaje
-                    Ekwipunek.Add(item);
+                {
+                    Ekwipunek.Add(Item.ItemsById(id));
+                }
             }
         }
 
-        public void UsunPrzedmiot(Przedmiot item)
+        public void UsunPrzedmiot(int id)
         {
-            Ekwipunek.Remove(item);
+            Ekwipunek.Remove(Item.ItemsById(id));
         }
 
         public void ZalozBron(Bron bron)
