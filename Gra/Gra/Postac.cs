@@ -86,7 +86,14 @@ namespace Gra
 
         public void UsunPrzedmiot(int id)
         {
-            Ekwipunek.Remove(Item.ItemsById(id));
+            foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek)
+            {
+                if (istniejacyPrzedmiot.getId() == id)
+                {
+                    Ekwipunek.Remove(Item.ItemsById(id));
+                    break;
+                }
+            }
         }
 
         public void ZalozBron(Bron bron)
