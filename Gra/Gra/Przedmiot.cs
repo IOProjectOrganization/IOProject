@@ -27,6 +27,12 @@ namespace Gra
             stackable = _stackable;
         }
 
+        public virtual Przedmiot Kopia()  //wirtualna metoda glebokiej kopii
+        {
+            Przedmiot temp = new Przedmiot(this.getIlosc(), this.getId(), this.getNazwa(), this.getStackable());
+            return temp;
+        }
+
         public bool getStackable()
         {
             return stackable;
@@ -94,6 +100,12 @@ namespace Gra
             obrazenia = _obrazenia;
         }
 
+        public override Przedmiot Kopia()  //gleboka kopia
+        {
+            Przedmiot temp = new Bron(this.getIlosc(),this.getId(),this.getNazwa(),this.getObrazenia(),this.getStackable());
+            return temp;
+        }
+
         public int getObrazenia()
         {
             return obrazenia;
@@ -110,6 +122,12 @@ namespace Gra
         {
             potionHp = _potionHp;
             potionMp = _potionMP;
+        }
+
+        public override Przedmiot Kopia()  //gleboka kopia
+        {
+            Przedmiot temp = new Mikstury(this.getIlosc(), this.getId(), this.getNazwa(), this.getPotionHp(), this.getPotionMp(), this.getStackable());
+            return temp;
         }
 
         public int getPotionHp() 
@@ -173,6 +191,21 @@ namespace Gra
                 {
                     return item;
                 }
+            }
+            foreach(Przedmiot item in Weapon)   //dodatkowo przeszukiwanie Weapon
+            {
+                if(item.getId() == _id)
+                {
+                    return item;
+                }
+            }
+            foreach(Przedmiot item in Items)   //dodatkowo przeszukiwanie Items
+            {
+                if(item.getId() == _id)
+                {
+                    return item;
+                }
+                
             }
 
             return null;

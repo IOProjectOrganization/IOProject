@@ -60,10 +60,11 @@ namespace Gra
 
         public void DodajPrzedmiot(int id)
         {
-
-            if (Item.ItemsById(id).getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
+            Przedmiot DodawanyPrzedmiot = Item.ItemsById(id).Kopia();
+            if (DodawanyPrzedmiot.getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
             {
-                Ekwipunek.Add(Item.ItemsById(id));
+                DodawanyPrzedmiot.setIlosc(1);
+                Ekwipunek.Add(DodawanyPrzedmiot);
             }
             else
             {
@@ -77,9 +78,10 @@ namespace Gra
                         break;
                     }
                 }
-                if (czyZnaleziono == false)  // jesli nie znaleziono itemu juz w ekwipunku do stackowania to go dodaje
+                if (czyZnaleziono == false)  // jesli przedmiot jest stackowalny i go nie znaleziono w ekwipunku do stackowania to go dodaje w ilosci 1
                 {
-                    Ekwipunek.Add(Item.ItemsById(id));
+                    DodawanyPrzedmiot.setIlosc(1);
+                    Ekwipunek.Add(DodawanyPrzedmiot);
                 }
             }
         }
@@ -90,7 +92,7 @@ namespace Gra
             {
                 if (istniejacyPrzedmiot.getId() == id)
                 {
-                    Ekwipunek.Remove(Item.ItemsById(id));
+                    Ekwipunek.Remove(istniejacyPrzedmiot);
                     break;
                 }
             }
