@@ -9,22 +9,64 @@ namespace Gra
 {
     public class Postac     // bazowa klasa postaci
     {
-        public int HP;
-        public int MaxHP;
+        private int BaseHP;    // bazowe hp, do obliczania maxHP w polaczeniu z atrybutami
+        private int BaseMP;  // bazowe mp
 
-        private int MP; // dodane punkty MP
+        private int HP;
+        private int MaxHP;
+
+        private int MP;
         private int maxMP;
 
         public enum MoveDirection { None, Up, Down, Left, Right };
 
         protected WorldMapSprite CharacterSprite; //Pozwala na obsługę postaci w świecie gry
 
-        public Postac(int hp, int maxhp, int mp, int maxmp)
+        public Postac(int basehp, int basemp)
+        {
+            BaseHP = basehp;
+            BaseMP = basemp;
+        }
+
+        public int GetBaseHP()
+        {
+            return BaseHP;
+        }
+        public int GetBaseMP()
+        {
+            return BaseMP;
+        }
+        public void SetHP(int hp)
         {
             HP = hp;
+        }
+        public int GetHP()
+        {
+            return HP;
+        }
+        public void SetMaxHP(int maxhp)
+        {
             MaxHP = maxhp;
+        }
+        public int GetMaxHP()
+        {
+            return MaxHP;
+        }
+        public void SetMP(int mp)
+        {
             MP = mp;
+        }
+        public int GetMP()
+        {
+            return MP;
+        }
+        public void SetMaxMP(int maxmp)
+        {
             maxMP = maxmp;
+        }
+        public int GetMaxMP()
+        {
+            return maxMP;
         }
     }
 
@@ -35,19 +77,34 @@ namespace Gra
         private MoveDirection Direction = MoveDirection.None;
         private bool isMoving = false;
 
-//        private int posX;   //polozenie x
-//        private int posY;   //polozenie y
+        //        private int posX;   //polozenie x
+        //        private int posY;   //polozenie y
+        private int Strength;
+        private int Dexterity;
+        private int Intelligence;
+        private int Skillpoints;
+
+        private int Obrazenia;
+        //private int Obrona;       //kiedy/jesli dodamy armor
+
         private int Gold;
         private int EXP;
-        private int Level
-        { get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
-
+        private int Level;
+        private int EXPtoLevel
+        {
+            get
+            {
+                return (int)(100 * Level * 1.15);    // zwraca exp potrzebny do nastepnego levela, mozliwie do zmian 
+            }
+        }
+        //{ get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
         private Bron UzywanaBron;
 
         private List<Przedmiot> Ekwipunek;
 
-        public Bohater(int hp, int maxhp, int mp, int maxmp, int gold, int exp, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(hp, maxhp, mp, maxmp)  // konstruktor // dodane mp
+        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
         {
+            Level = level;
             Gold = gold;
             EXP = exp;
             PlayerLoc = Location;
@@ -56,6 +113,96 @@ namespace Gra
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
             Ekwipunek = new List<Przedmiot>();
+            Strength = STR;
+            Dexterity = DEX;
+            Intelligence = INT;
+            UpdateStats();
+            SetHP(GetMaxHP());
+            SetMP(GetMaxMP());
+            Skillpoints = 0;
+        }
+
+        public void UpdateStats()  // zapewnić aktualność danych kiedykolwiek zmienią się statystyki
+        {
+            SetMaxHP(GetBaseHP() + Strength * 7);
+            if (GetHP() > GetMaxHP()) SetHP(GetMaxHP());
+            SetMaxMP(GetBaseMP() + Intelligence * 4);
+            if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
+            if (UzywanaBron != null)
+            {
+                Obrazenia = UzywanaBron.getObrazenia() + Strength*10;
+            }
+            else
+                Obrazenia = Strength*10;
+        }
+
+        public int GetEXP()
+        {
+            return EXP;
+        }
+        public int GetEXPtoLevel()
+        {
+            return EXPtoLevel;
+        }
+        public int GetLevel()
+        {
+            return Level;
+        }
+        public int GetSkillpoints()
+        {
+            return Skillpoints;
+        }
+        public void LevelUp()
+        {
+            SetExp(EXP - EXPtoLevel);
+            Level++;
+            Strength++;
+            Dexterity++;
+            Intelligence++;
+            Skillpoints += 2;
+            UpdateStats();
+        }
+
+        public void SkillpointSTR()
+        {
+            if (Skillpoints > 0)
+            {
+                Skillpoints--;
+                Strength++;
+                UpdateStats();
+            }
+        }
+        public void SkillpointDEX()
+        {
+            if (Skillpoints > 0)
+            {
+                Skillpoints--;
+                Dexterity++;
+                UpdateStats();
+            }
+        }
+        public void SkillpointINT()
+        {
+            if (Skillpoints > 0)
+            {
+                Skillpoints--;
+                Intelligence++;
+                UpdateStats();
+            }
+        }
+
+        public bool CheckLevelUp()  //jesli starczy doswiadczenia do levela, leveluje postac oraz zwraca true/false
+        {
+            if (EXP > EXPtoLevel)
+            {
+                while (EXP > EXPtoLevel)
+                {
+                    LevelUp();
+                }
+                return true;
+            }
+            else
+                return false;
         }
 
         public void DodajPrzedmiot(int id)
@@ -101,6 +248,7 @@ namespace Gra
         public void ZalozBron(Bron bron)
         {
             UzywanaBron = bron;
+            UpdateStats();
         }
 
         public void DodajEXP(int exp)
@@ -181,8 +329,12 @@ namespace Gra
         public int NagrodaExp;
         public int NagrodaGold;
 
-        public Potwor(string nazwa, int obrazenia, int nagrodaexp, int nagrodagold, int hp, int maxhp, int mp, int maxmp) : base(hp, maxhp, mp, maxmp) // dodane mp
+        public Potwor(string nazwa, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp) // dodane mp
         {
+            SetMaxHP(basehp);
+            SetHP(basehp);
+            SetMaxMP(basemp);
+            SetMP(basemp);
             Nazwa = nazwa;
             Obrazenia = obrazenia;
             NagrodaExp = nagrodaexp;
