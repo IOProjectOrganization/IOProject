@@ -126,14 +126,14 @@ namespace Gra
         {
             SetMaxHP(GetBaseHP() + Strength * 7);
             if (GetHP() > GetMaxHP()) SetHP(GetMaxHP());
-            SetMaxMP(GetBaseMP() + Intelligence * 4);
+            SetMaxMP(GetBaseMP() + Intelligence * 5);
             if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
             if (UzywanaBron != null)
             {
-                Obrazenia = UzywanaBron.getObrazenia() + Strength*10;
+                Obrazenia = UzywanaBron.getObrazenia() + Strength*5;
             }
             else
-                Obrazenia = Strength*10;
+                Obrazenia = Strength*5;
         }
 
         public int GetEXP()
