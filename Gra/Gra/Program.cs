@@ -58,7 +58,7 @@ namespace Gra
 
             LoadNewMap(0, 0);
 
-            Player = new Bohater(100, 100, 50, 50, 0, 0, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // dodane mp
+            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // nowy konstruktor ze statystykami(4 do wszystkich)
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
