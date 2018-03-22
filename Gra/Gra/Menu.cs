@@ -6,7 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+//using Microsoft.DirectX.AudioVideoPlayback;
 using System.Windows.Forms;
+
 
 // Plik w przyszłości do rozszerzenia, prototyp
 
@@ -31,7 +33,16 @@ namespace Gra
             Help.Visible = false;
             Help.Enabled = false;
 
-            game = new Game(this); // zaczyna grę
+            //File.Copy(@"MapTileData\maptiles" + MapName + ".txt", @"MapTileData\maptiles" + MapName + "_1.txt", true)
+            foreach (var file in System.IO.Directory.GetFiles(@"MapTileData"))
+            {
+                if (!file.Contains("1_"))
+                    System.IO.File.Copy(file, System.IO.Path.Combine(@"MapTileData", "1_" + System.IO.Path.GetFileName(file)), true);
+            }
+
+            axWindowsMediaPlayer1.Visible = true;
+            axWindowsMediaPlayer1.URL = @"intro.mp4";
+            axWindowsMediaPlayer1.Dock = DockStyle.Fill;
         }
 
         private void Quit_Click(object sender, EventArgs e)
@@ -44,7 +55,13 @@ namespace Gra
 
         private void Menu_Load(object sender, EventArgs e)
         {
+            this.TopMost = true;
 
+            this.FormBorderStyle = FormBorderStyle.None;
+
+            this.WindowState = FormWindowState.Maximized;
+
+            axWindowsMediaPlayer1.Visible = false;
         }
 
         private void Help_Click(object sender, EventArgs e)
@@ -55,6 +72,17 @@ namespace Gra
         private void Menu_KeyDown(object sender, KeyEventArgs e)
         {
             game.HandleKeyPress(e);
+        }
+
+
+        private void axWindowsMediaPlayer1_PlayStateChange(object sender, AxWMPLib._WMPOCXEvents_PlayStateChangeEvent e)
+        {
+            if (axWindowsMediaPlayer1.playState.Equals(WMPLib.WMPPlayState.wmppsMediaEnded))
+            {
+                axWindowsMediaPlayer1.Visible = false;
+                game = new Game(this); // zaczyna grę
+                this.Focus();
+            }
         }
     }
 }

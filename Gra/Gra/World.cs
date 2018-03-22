@@ -15,11 +15,16 @@ namespace Gra
         {
             public Image TileImage; //Obrazek jaki będzie wyświetlany
             public Point TileLoc; //Lokalzacja obiektu
+
             public bool isWalkable; //Czy można po nim się poruszać
             public bool isInteractive; //Czy obiekt jest interaktywny
-            public bool isMapLoader;
+            public bool isMapLoader; //Czy wczytuje mape
+            public bool SwitchState;
         }
         
+        public List<WorldMapItem> worldMapItems; //Lista przedmiotów na danym świecie
+        WorldMapItem item; //Przedmiot
+
         public List<Tile> MapTiles; //Lista wszystkich pól
 
         public WorldMap(Form form) //Konstruktor
@@ -27,92 +32,148 @@ namespace Gra
             MapTiles = new List<Tile>(); //Tworzymy pusty świat
         }
 
-        public void LoadMap(string MapName) //Wczytywanie świata
+        public void LoadMap(string MapName, int TileWidth, int TileHeight, bool NewMap) //Wczytywanie świata
         {
             MapTiles.Clear(); //Czyścimy obecny świat
+            if (NewMap)
+                worldMapItems.Clear();
 
-            StreamReader Reader = new StreamReader(@"MapTileData\maptiles" + MapName + ".txt"); //Wczytywanie danych z pliku o podanej ścieżce
+            StreamReader Reader = new StreamReader(@"MapTileData\1_maptiles" + MapName + ".txt"); //Wczytywanie danych z pliku o podanej ścieżce
 
-            int TileSize = 40;
-
+            int x = 0;
             int y = 0;
 
             while (!Reader.EndOfStream) //Wykonuj aż do końca pliku
             {
                 string line = Reader.ReadLine(); //Wczytaj linię
 
-                for (int x = 0; x < line.Length; x++)
+                for (int z = 0; z < line.Length; z += 4)
                 {
                     Tile T = new Tile(); //Tworzymy obiekt
-                    T.TileLoc = new Point(x * TileSize, y * TileSize); //Ustalamy położenie obiektu (bierzemy pod uwagę jego rozmiar)
+                    T.TileLoc = new Point(x * TileWidth, y * TileHeight); //Ustalamy położenie obiektu (bierzemy pod uwagę jego rozmiar)
 
-                    if (line[x].ToString() == "t")
+                    if (line[z].ToString() == "t") // Przechodzenie pomiędzy światami
                     {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty);
-                        T.isWalkable = true;
-                        T.isInteractive = false;
-                        T.isMapLoader = true;
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
+                        T.isWalkable = true; //Ustalamy czy można się po nim poruszać
+                        T.isInteractive = false; //Sprawdzamy czy jest interaktywny
+                        T.isMapLoader = true; //Sprawdzamy czy wczytuje świat
+                        T.SwitchState = false; //Sprawdzamy czy przycisko został przełączony
                     }
-                    if (line[x].ToString() == "0") //Sprawdzamy wartość w pliku
+                    if (line[z].ToString() == "0") //Zablokowana przestrzeń
                     {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty); //Ustalamy obraz                  NOTE: Zmienić na EMPTY - wywoływać tylko kolizję
-                        T.isWalkable = false; //Ustalamy czy można się po nim poruszać
-                        T.isInteractive = false;
-                        T.isMapLoader = false;
-                    }
-                    if (line[x].ToString() == "1") 
-                    {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty);
-                        T.isWalkable = true;
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
+                        T.isWalkable = false; 
                         T.isInteractive = false;
                         T.isMapLoader = false;
+                        T.SwitchState = false;
                     }
-                    if (line[x].ToString() == "2")
+                    if (line[z].ToString() == "1") //Domyślna, możliwa do chodzenia przestrzeć
                     {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty); //Niewidoczny, interaktywny obiekt
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
                         T.isWalkable = true;
+                        T.isInteractive = false;
+                        T.isMapLoader = false;
+                        T.SwitchState = false;
+                    }
+                    if (line[z].ToString() == "2") //Przedmiot
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
+                        T.isWalkable = false;
                         T.isInteractive = true;
                         T.isMapLoader = false;
+                        T.SwitchState = false;
+
+                        if (line[z + 1].ToString() == "0")
+                        {
+                            if (line[z + 2].ToString() == "0")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(1)));
+
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+
+                                if (item.GetIsCollected() == false)
+                                    T.TileImage = new Bitmap(Gra.Properties.Resources.WaterTile, TileWidth, TileHeight);
+                            }
+                            if (line[z + 2].ToString() == "1")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.GrassTile), Item.ItemsById(2)));
+
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+
+                                if (item.GetIsCollected() == false)
+                                    T.TileImage = new Bitmap(Gra.Properties.Resources.GrassTile, TileWidth, TileHeight);
+                            }
+                            if (line[z + 2].ToString() == "2")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(3)));
+                            }
+                            if (line[z + 2].ToString() == "3")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(4)));
+                            }
+                        }
+                        if (line[z + 1].ToString() == "1")
+                        {
+                            if (line[z + 2].ToString() == "0")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(6)));
+                            }
+                            if (line[z + 2].ToString() == "1")
+                            {
+                                worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(7)));
+                            }
+                        }
+                    }
+                    if (line[z].ToString() == "3") //Zablokowana przestrzeń
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
+                        T.isWalkable = false;
+                        T.isInteractive = true;
+                        T.isMapLoader = false;
+                        T.SwitchState = false;
                     }
 
                     MapTiles.Add(T); //Dodajemy dany obiekt mapy do listy
+                    x++;
                 }
 
+                x = 0;
                 y++;
             }
 
             Reader.Close(); //Kończymy czytanie pliku
         }
 
-        public void DrawMap(Graphics Device, int WorldX, int WorldY) //Rysowanie na ekranie
+        public void DrawMap(Graphics Device, int WorldX, int WorldY, int Width, int Height) //Rysowanie na ekranie
         {
             Image img;
-
-            foreach (Tile T in MapTiles) //Dla każdego obiektu na liście MapTiles
-                Device.DrawImage(T.TileImage, T.TileLoc); //Rysujemy obiekt według poszczególnych parametrów każdego obiektu
 
             if (WorldX < 0 && WorldY >= 0)
             {
                 WorldX *= -1;
-                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "" + WorldY));
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "" + WorldY), Width, Height);
             }
             else if (WorldX >= 0 && WorldY < 0)
             {
                 WorldY *= -1;
-                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "_" + WorldY));
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "_" + WorldY), Width, Height);
             }
             else if (WorldX < 0 && WorldY < 0)
             {
                 WorldX *= -1;
                 WorldY *= -1;
-                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "_" + WorldY));
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world_" + WorldX + "_" + WorldY), Width, Height);
             }
             else
             {
-                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "" + WorldY));
+                img = new Bitmap((Image)Gra.Properties.Resources.ResourceManager.GetObject("world" + WorldX + "" + WorldY), Width, Height);
             }
 
             Device.DrawImage(img, new Point(0, 0));
+
+            foreach (Tile T in MapTiles) //Dla każdego obiektu na liście MapTiles
+                Device.DrawImage(T.TileImage, T.TileLoc); //Rysujemy obiekt według poszczególnych parametrów każdego obiektu
         }
 
         public bool GetWalkableAt(Point Loc) //Zwraca wartość czy możemy się poruszać po danym polu
@@ -144,6 +205,7 @@ namespace Gra
             return false;
         }
     }
+
     public class WorldMapSprite
     {
         private Point Location;
@@ -161,10 +223,8 @@ namespace Gra
             Location.Y += Y;
         }
 
-        public void Draw(Graphics Device)
-        {
-            Device.DrawImage(Image, Location);
-        }
+        public void Draw(Graphics Device, int Width, int Height)
+        {   Device.DrawImage(Image, Location.X, Location.Y, Width, Height); }
 
         public Point GetLocation()
         { return this.Location; }
@@ -177,5 +237,25 @@ namespace Gra
 
         public void SetImage(Image img)
         { this.Image = img; }
+    }
+
+    public class WorldMapItem : WorldMapSprite
+    {
+        private bool isCollected;
+
+        public WorldMapItem(Point location, Image image, Przedmiot item) : base(location, image)
+        {
+            isCollected = false;
+        }
+
+        public void Draw(Graphics Device, int Width, int Height)
+        { Device.DrawImage(GetImage(), GetLocation().X, GetLocation().Y, Width, Height); }
+
+
+        public bool GetIsCollected()
+        { return isCollected; }
+
+        public void SetIsCollected(bool c)
+        { isCollected = c; }
     }
 }

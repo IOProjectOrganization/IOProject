@@ -27,13 +27,19 @@ namespace Gra
     public class Game
     {
         Form GameForm; //Ustawienie zmiennej na form
-        WorldMap worldMap; //Ustawienie zmiennej świata
-        PictureBox WorldMapPB; //Ustawienie zmiennej PictureBox'a
+
+        public WorldMap worldMap; //Ustawienie zmiennej świata
+        public PictureBox WorldMapPB; //Ustawienie zmiennej PictureBox'a
+
         Bohater Player; //Tworzymy gracza
+
         Timer timer = new Timer();
 
-        int mapX; //Zmienna X świata
-        int mapY; //Zmienna Y świata
+        public int mapX = 0; //Zmienna X świata
+        public int mapY = 0; //Zmienna Y świata
+
+        public int _Width;
+        public int _Height;
 
         public Game(Form form)
         {
@@ -41,13 +47,18 @@ namespace Gra
             GameForm.BackColor = Color.White; //Ustawiamy kolor tła na biały
 
             worldMap = new WorldMap(GameForm);
+            worldMap.worldMapItems = new List<WorldMapItem>();
+
 
             mapX = 0;
             mapY = 0;
 
+            _Width = GameForm.Width;
+            _Height = GameForm.Height;
+
             LoadNewMap(0, 0);
 
-            Player = new Bohater(100, 100, 50, 50, 0, 0, new Point(23*40, 10*40), Gra.Properties.Resources.Player); // dodane mp
+            Player = new Bohater(100, 100, 50, 50, 0, 0, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // dodane mp
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -56,7 +67,7 @@ namespace Gra
             WorldMapPB.Parent = GameForm;
 
             timer.Tick += timer_Tick;
-            timer.Interval = 65;
+            timer.Interval = 10;
 
             Draw();
         }
@@ -65,17 +76,25 @@ namespace Gra
         {
             mapX += MoveX;
             mapY += MoveY;
-            worldMap.LoadMap(mapX + "" + mapY);
+            worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true);
         }
 
-        void Draw()
+        void ReloadMap()
+        { worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, false); }
+
+        public void Draw()
         {
+            WorldMapPB.Width = GameForm.Width;
+            WorldMapPB.Height = GameForm.Height;
+            _Width = GameForm.Width;
+            _Height = GameForm.Height;
+
             Graphics Device;
-            Image Img = new Bitmap(GameForm.Width, GameForm.Height);
+            Image Img = new Bitmap(_Width, _Height);
             Device = Graphics.FromImage(Img);
 
-            worldMap.DrawMap(Device, mapX, mapY);
-            Player.GetCharacterSprite().Draw(Device);
+            worldMap.DrawMap(Device, mapX, mapY, _Width, _Height);
+            Player.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
 
             WorldMapPB.Image = Img;
         }
@@ -88,9 +107,65 @@ namespace Gra
             {
                 Point p = new Point(0, 0);
 
+                if (worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X , Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X - _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X + _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
+                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X , Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
+                {
+                    if (e.KeyCode == Keys.E)
+                    {
+                        //########################################################
+                        WorldMapItem item = null;
+
+                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X - _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
+                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X + _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
+                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y - _Height / 18);
+                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y + _Height / 18);
+
+                        if (item != null)
+                        {
+                            item.SetIsCollected(true);
+                            ReloadMap();
+
+                            int i = 0;
+                            StringBuilder newFile = new StringBuilder();
+                            string[] text = File.ReadAllLines(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt");
+                            string temp = "";
+
+                            //int w = item.GetLocation().X / (_Width / 32) * 4 + 1;
+                            //int h = item.GetLocation().Y / (_Height / 18) + 1;
+                            //MessageBox.Show(w.ToString() + " / " + h.ToString());
+
+                            foreach (string line in text)
+                            {
+                                if (i != item.GetLocation().Y / (_Height / 18))
+                                {
+                                    newFile.AppendLine(line);
+                                }
+                                if (i == item.GetLocation().Y / (_Height / 18))
+                                {
+                                    temp = line.Substring(0, item.GetLocation().X / (_Width / 32) * 4);
+                                    temp += "1";
+                                    temp += line.Substring(item.GetLocation().X / (_Width / 32) * 4 + 1);
+
+                                    newFile.Append(temp + "\r\n");
+                                }
+
+                                i++;
+                            }
+
+                            File.WriteAllText(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt", newFile.ToString());
+                            worldMap.worldMapItems.Remove(item);
+                            ReloadMap();
+                        }
+                        //########################################################
+                    }
+                }
+
                 if (e.KeyCode == Keys.Left)
                 {
-                    p = new Point(Player.GetCharacterSprite().GetLocation().X - 40, Player.GetCharacterSprite().GetLocation().Y);
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
                     DesiredMove = p;
 
                     if (CanMove(p))
@@ -103,7 +178,7 @@ namespace Gra
 
                 if (e.KeyCode == Keys.Right)
                 {
-                    p = new Point(Player.GetCharacterSprite().GetLocation().X + 40, Player.GetCharacterSprite().GetLocation().Y);
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
                     DesiredMove = p;
 
                     if (CanMove(p))
@@ -116,7 +191,7 @@ namespace Gra
 
                 if (e.KeyCode == Keys.Up)
                 {
-                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - 40);
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18));
                     DesiredMove = p;
 
                     if (CanMove(p))
@@ -130,7 +205,7 @@ namespace Gra
 
                 if (e.KeyCode == Keys.Down)
                 {
-                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + 40);
+                    p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18));
                     DesiredMove = p;
 
                     if (CanMove(p))
@@ -138,6 +213,14 @@ namespace Gra
                         Player.SetMoveDirection(Postac.MoveDirection.Down);
                         Player.SetIsMoving(true);
                         timer.Start();
+                    }
+                }
+
+                if (e.KeyCode == Keys.Escape)
+                {
+                    if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Quit", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
+                    {
+                        GameForm.Close();
                     }
                 }
             }
@@ -154,10 +237,14 @@ namespace Gra
                     {
                         LoadNewMap(-1, 0);
 
-                        Point z = new Point(32 * 40, Player.GetCharacterSprite().GetLocation().Y);
+                        Point z = new Point(32 * (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
+
+                        Player.SetXTileIndex(32);
 
                         while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
-                            z.X -= 40;
+                        {
+                            z.X -= (_Width / 32);
+                        }
 
                         Player.GetCharacterSprite().SetLocation(z);
                     }
@@ -168,8 +255,13 @@ namespace Gra
 
                         Point z = new Point(0, Player.GetCharacterSprite().GetLocation().Y);
 
+                        Player.SetXTileIndex(0);
+
                         while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
-                            z.X += 40;
+                        {
+                            z.X += (_Width / 32);
+                            Player.SetXTileIndex(Player.GetXTileIndex() + 1);
+                        }
 
                         Player.GetCharacterSprite().SetLocation(z);
                     }
@@ -180,8 +272,13 @@ namespace Gra
 
                         Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 18 * 40);
 
+                        Player.SetYTileIndex(18);
+
                         while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
-                            z.Y -= 40;
+                        {
+                            z.Y -= (_Height / 18);
+                            Player.SetYTileIndex(Player.GetYTileIndex() - 1);
+                        }
 
                         Player.GetCharacterSprite().SetLocation(z);
                     }
@@ -192,9 +289,13 @@ namespace Gra
 
                         Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 0);
 
-                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
-                            z.X += 40;
+                        Player.SetYTileIndex(0);
 
+                        while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
+                        {
+                            z.X += (_Height / 18);
+                            Player.SetYTileIndex(Player.GetYTileIndex() + 1);
+                        }
                         Player.GetCharacterSprite().SetLocation(z);
                     }
                 }
@@ -205,23 +306,27 @@ namespace Gra
             {
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Left)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X - 5, Player.GetCharacterSprite().GetLocation().Y);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32) / 5, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
+                    Player.SetXTileIndex(Player.GetXTileIndex() - 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X + 5, Player.GetCharacterSprite().GetLocation().Y);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32) / 5, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
+                    Player.SetXTileIndex(Player.GetXTileIndex() + 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - 5);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) / 5);
                     Player.GetCharacterSprite().SetLocation(p);
+                    Player.SetYTileIndex(Player.GetYTileIndex() - 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + 5);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) / 5);
                     Player.GetCharacterSprite().SetLocation(p);
+                    Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                 }
             }
 

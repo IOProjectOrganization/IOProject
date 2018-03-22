@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;  // dla zmiennej image w klasie bohatera
+using System.Windows.Forms;
+using System.IO;
 
 namespace Gra
 {
@@ -34,9 +36,8 @@ namespace Gra
         private Point PlayerLoc;
         private MoveDirection Direction = MoveDirection.None;
         private bool isMoving = false;
-
-//        private int posX;   //polozenie x
-//        private int posY;   //polozenie y
+        private int XTileIndex;
+        private int YTileIndex;
         private int Gold;
         private int EXP;
         private int Level
@@ -46,13 +47,11 @@ namespace Gra
 
         private List<Przedmiot> Ekwipunek;
 
-        public Bohater(int hp, int maxhp, int mp, int maxmp, int gold, int exp, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(hp, maxhp, mp, maxmp)  // konstruktor // dodane mp
+        public Bohater(int hp, int maxhp, int mp, int maxmp, int gold, int exp, Point Location, Image SciezkaObrazku) : base(hp, maxhp, mp, maxmp)  // konstruktor // dodane mp
         {
             Gold = gold;
             EXP = exp;
             PlayerLoc = Location;
-//            posX = posx;
-//            posY = posy;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
             Ekwipunek = new List<Przedmiot>();
@@ -123,34 +122,6 @@ namespace Gra
             Gold = gold;
         }
 
-        
-/*
-        public void RuchWPrawo()
-        {
-//            posX += 40;
-            PlayerLoc.X += 40;
-            // zmiana obrazekpostaci
-        }
-        public void RuchWLewo()
-        {
-//            posX -= 40;
-            PlayerLoc.X -= 40;
-            //zmiana obrazekpostaci
-        }
-        public void RuchWDol()
-        {
-//            posY += 40;
-            PlayerLoc.Y += 40;
-            //zmiana obrazekpostaci
-        }
-        public void RuchWGore()
-        {
-//            posY -= 40;
-            PlayerLoc.Y -= 40;
-            //zmiana obrazekpostaci
-        }
-*/
-
         public WorldMapSprite GetCharacterSprite()
         {   return CharacterSprite;    }
 
@@ -171,6 +142,18 @@ namespace Gra
 
         public bool GetIsMoving()
         { return isMoving; }
+
+        public void SetXTileIndex(int x)
+        { XTileIndex = x; }
+
+        public int GetXTileIndex()
+        { return XTileIndex; }
+
+        public void SetYTileIndex(int y)
+        { YTileIndex = y; }
+
+        public int GetYTileIndex()
+        { return YTileIndex; }
 
     }
 
