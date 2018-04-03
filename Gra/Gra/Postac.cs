@@ -86,8 +86,6 @@ namespace Gra
         private int Dexterity;
         private int Intelligence;
         private int Skillpoints;
-        private int XTileIndex;
-        private int YTileIndex;
 
         private int Obrazenia;
         //private int Obrona;       //kiedy/jesli dodamy armor
