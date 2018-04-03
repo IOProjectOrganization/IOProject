@@ -55,7 +55,7 @@ namespace Gra
 
         private void Menu_Load(object sender, EventArgs e)
         {
-            this.TopMost = true;
+            //this.TopMost = true;
 
             this.FormBorderStyle = FormBorderStyle.None;
 
@@ -71,7 +71,18 @@ namespace Gra
 
         private void Menu_KeyDown(object sender, KeyEventArgs e)
         {
-            game.HandleKeyPress(e);
+            if (game == null)
+            {
+                if (e.KeyCode == Keys.Escape)
+                {
+                    axWindowsMediaPlayer1.close();
+                    axWindowsMediaPlayer1.Visible = false;
+                    game = new Game(this); // zaczyna grę
+                    this.Focus();
+                }
+            }
+            else
+                game.HandleKeyPress(e);
         }
 
 
@@ -79,6 +90,7 @@ namespace Gra
         {
             if (axWindowsMediaPlayer1.playState.Equals(WMPLib.WMPPlayState.wmppsMediaEnded))
             {
+                axWindowsMediaPlayer1.close();
                 axWindowsMediaPlayer1.Visible = false;
                 game = new Game(this); // zaczyna grę
                 this.Focus();

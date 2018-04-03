@@ -74,16 +74,16 @@
     </Compile>
     <Compile Include="Przedmiot.cs" />
     <Compile Include="World.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Equipment.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Equipment.Designer.cs">
+      <DependentUpon>Equipment.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Equipment.resx">
+      <DependentUpon>Equipment.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
@@ -143,8 +143,6 @@
     <EmbeddedResource Include="bin\Debug\MapTileData\maptiles-10.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\intro.mp4" />
-    <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <None Include="Resources\world20.png" />
     <None Include="Resources\world10.png" />
   </ItemGroup>
@@ -166,6 +164,18 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\healthpotion_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\manapotion_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sword_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\sword_2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

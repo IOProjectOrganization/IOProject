@@ -124,8 +124,20 @@
   <data name="GrassTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GrassTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="healthpotion_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\healthpotion_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="manapotion_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\manapotion_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Player.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sword_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sword_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="sword_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\sword_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="WaterTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WaterTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
