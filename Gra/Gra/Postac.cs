@@ -78,9 +78,10 @@ namespace Gra
         private Point PlayerLoc;
         private MoveDirection Direction = MoveDirection.None;
         private bool isMoving = false;
+        private int XTileIndex;
+        private int YTileIndex;
 
-        //        private int posX;   //polozenie x
-        //        private int posY;   //polozenie y
+
         private int Strength;
         private int Dexterity;
         private int Intelligence;
@@ -104,7 +105,7 @@ namespace Gra
         //{ get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
         private Bron UzywanaBron;
 
-        private List<Przedmiot> Ekwipunek;
+        public List<Przedmiot> Ekwipunek;
 
         public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
         {
@@ -132,10 +133,10 @@ namespace Gra
             if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
             if (UzywanaBron != null)
             {
-                Obrazenia = UzywanaBron.getObrazenia() + Strength*5;
+                Obrazenia = UzywanaBron.getObrazenia() + Strength * 5;
             }
             else
-                Obrazenia = Strength*5;
+                Obrazenia = Strength * 5;
         }
 
         public int GetObrazenia()
@@ -223,9 +224,9 @@ namespace Gra
             else
             {
                 bool czyZnaleziono = false;
-                foreach(Przedmiot istniejacyPrzedmiot in Ekwipunek) // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
+                foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek) // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
                 {
-                    if(istniejacyPrzedmiot.getId()==id)
+                    if (istniejacyPrzedmiot.getId() == id)
                     {
                         czyZnaleziono = true;
                         istniejacyPrzedmiot.zwiekszIlosc(1);
@@ -283,7 +284,7 @@ namespace Gra
         }
 
         public WorldMapSprite GetCharacterSprite()
-        {   return CharacterSprite;    }
+        { return CharacterSprite; }
 
         public void SetCharacterSprite(Point location, Image img)
         {

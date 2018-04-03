@@ -21,7 +21,7 @@ namespace Gra
             public bool isMapLoader; //Czy wczytuje mape
             public bool SwitchState;
         }
-        
+
         public List<WorldMapItem> worldMapItems; //Lista przedmiotów na danym świecie
         WorldMapItem item; //Przedmiot
 
@@ -63,7 +63,7 @@ namespace Gra
                     if (line[z].ToString() == "0") //Zablokowana przestrzeń
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
-                        T.isWalkable = false; 
+                        T.isWalkable = false;
                         T.isInteractive = false;
                         T.isMapLoader = false;
                         T.SwitchState = false;
@@ -89,28 +89,26 @@ namespace Gra
                             if (line[z + 2].ToString() == "0")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(1)));
-
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
-
-                                if (item.GetIsCollected() == false)
-                                    T.TileImage = new Bitmap(Gra.Properties.Resources.WaterTile, TileWidth, TileHeight);
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.healthpotion_1, TileWidth, TileHeight);
                             }
                             if (line[z + 2].ToString() == "1")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.GrassTile), Item.ItemsById(2)));
-
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
-
-                                if (item.GetIsCollected() == false)
-                                    T.TileImage = new Bitmap(Gra.Properties.Resources.GrassTile, TileWidth, TileHeight);
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.healthpotion_1, TileWidth, TileHeight);
                             }
                             if (line[z + 2].ToString() == "2")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(3)));
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.manapotion_1, TileWidth, TileHeight);
                             }
                             if (line[z + 2].ToString() == "3")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(4)));
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.manapotion_1, TileWidth, TileHeight);
                             }
                         }
                         if (line[z + 1].ToString() == "1")
@@ -118,10 +116,14 @@ namespace Gra
                             if (line[z + 2].ToString() == "0")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(6)));
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.sword_1, TileWidth, TileHeight);
                             }
                             if (line[z + 2].ToString() == "1")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(7)));
+                                item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+                                T.TileImage = new Bitmap(Gra.Properties.Resources.sword_2, TileWidth, TileHeight);
                             }
                         }
                     }
@@ -224,7 +226,7 @@ namespace Gra
         }
 
         public void Draw(Graphics Device, int Width, int Height)
-        {   Device.DrawImage(Image, Location.X, Location.Y, Width, Height); }
+        { Device.DrawImage(Image, Location.X, Location.Y, Width, Height); }
 
         public Point GetLocation()
         { return this.Location; }
@@ -241,21 +243,19 @@ namespace Gra
 
     public class WorldMapItem : WorldMapSprite
     {
-        private bool isCollected;
+        int id;
 
         public WorldMapItem(Point location, Image image, Przedmiot item) : base(location, image)
         {
-            isCollected = false;
+            id = item.getId();
+        }
+
+        public int getID()
+        {
+            return id;
         }
 
         public void Draw(Graphics Device, int Width, int Height)
         { Device.DrawImage(GetImage(), GetLocation().X, GetLocation().Y, Width, Height); }
-
-
-        public bool GetIsCollected()
-        { return isCollected; }
-
-        public void SetIsCollected(bool c)
-        { isCollected = c; }
     }
 }

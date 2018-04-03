@@ -32,6 +32,7 @@ namespace Gra
         public PictureBox WorldMapPB; //Ustawienie zmiennej PictureBox'a
 
         Bohater Player; //Tworzymy gracza
+        Equipment equipment = new Equipment();
 
         Timer timer = new Timer();
 
@@ -48,7 +49,6 @@ namespace Gra
 
             worldMap = new WorldMap(GameForm);
             worldMap.worldMapItems = new List<WorldMapItem>();
-
 
             mapX = 0;
             mapY = 0;
@@ -107,11 +107,11 @@ namespace Gra
             {
                 Point p = new Point(0, 0);
 
-                if (worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X , Player.GetCharacterSprite().GetLocation().Y)) ||
+                if (worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X - _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X + _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
-                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X , Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
+                    worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
                 {
                     if (e.KeyCode == Keys.E)
                     {
@@ -125,17 +125,13 @@ namespace Gra
 
                         if (item != null)
                         {
-                            item.SetIsCollected(true);
+                            Player.DodajPrzedmiot(item.getID());
                             ReloadMap();
 
                             int i = 0;
                             StringBuilder newFile = new StringBuilder();
                             string[] text = File.ReadAllLines(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt");
                             string temp = "";
-
-                            //int w = item.GetLocation().X / (_Width / 32) * 4 + 1;
-                            //int h = item.GetLocation().Y / (_Height / 18) + 1;
-                            //MessageBox.Show(w.ToString() + " / " + h.ToString());
 
                             foreach (string line in text)
                             {
@@ -161,6 +157,20 @@ namespace Gra
                         }
                         //########################################################
                     }
+                }
+
+                if (e.KeyCode == Keys.I)
+                {
+                    equipment.UpdateEquipment(Player);
+                    equipment.Show();
+                    equipment.Focus();
+
+
+                    //MessageBox.Show(Player.Ekwipunek.ElementAt(0).getNazwa().ToString());
+                    //foreach (Przedmiot item in Player.Ekwipunek)
+                    //{
+                    //    MessageBox.Show(item.getNazwa().ToString());
+                    //}
                 }
 
                 if (e.KeyCode == Keys.Left)
@@ -196,9 +206,9 @@ namespace Gra
 
                     if (CanMove(p))
                     {
-                            Player.SetMoveDirection(Postac.MoveDirection.Up);
-                            Player.SetIsMoving(true);
-                            timer.Start();
+                        Player.SetMoveDirection(Postac.MoveDirection.Up);
+                        Player.SetIsMoving(true);
+                        timer.Start();
                     }
                 }
 
@@ -306,25 +316,25 @@ namespace Gra
             {
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Left)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32) / 5, Player.GetCharacterSprite().GetLocation().Y);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32) / 4, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetXTileIndex(Player.GetXTileIndex() - 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32) / 5, Player.GetCharacterSprite().GetLocation().Y);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32) / 4, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetXTileIndex(Player.GetXTileIndex() + 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) / 5);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetYTileIndex(Player.GetYTileIndex() - 1);
                 }
                 if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
                 {
-                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) / 5);
+                    Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                 }
