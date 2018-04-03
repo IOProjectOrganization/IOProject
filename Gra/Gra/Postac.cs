@@ -85,6 +85,8 @@ namespace Gra
         private int Dexterity;
         private int Intelligence;
         private int Skillpoints;
+        private int XTileIndex;
+        private int YTileIndex;
 
         private int Obrazenia;
         //private int Obrona;       //kiedy/jesli dodamy armor
@@ -134,6 +136,11 @@ namespace Gra
             }
             else
                 Obrazenia = Strength*5;
+        }
+
+        public int GetObrazenia()
+        {
+            return Obrazenia;
         }
 
         public int GetEXP()
@@ -239,7 +246,11 @@ namespace Gra
             {
                 if (istniejacyPrzedmiot.getId() == id)
                 {
-                    Ekwipunek.Remove(istniejacyPrzedmiot);
+                    istniejacyPrzedmiot.zmniejszIlosc(1);
+                    if(istniejacyPrzedmiot.getIlosc()==0)
+                    {
+                        Ekwipunek.Remove(istniejacyPrzedmiot);
+                    }
                     break;
                 }
             }
@@ -306,15 +317,20 @@ namespace Gra
 
     }
 
-    public class Potwor : Postac   //mozliwa wczesna klasa potwora
+    public class Przeciwnik : Postac
     {
-        public string Nazwa;
-        public int Obrazenia;
-        public int NagrodaExp;
-        public int NagrodaGold;
+       //private Image ObrazekPostaci;  // obrazek ktory ma przedstawiac postac
+       //private Point PlayerLoc;
+        private int id;
+        private Image ObrazekPostaci;
+        private string Nazwa;
+        private int Obrazenia;
+        private int NagrodaExp;
+        private int NagrodaGold;
 
-        public Potwor(string nazwa, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp) // dodane mp
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Image SciezkaObrazku) : base(basehp, basemp) // dodane mp
         {
+            id = _id;
             SetMaxHP(basehp);
             SetHP(basehp);
             SetMaxMP(basemp);
@@ -323,6 +339,65 @@ namespace Gra
             Obrazenia = obrazenia;
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
+            ObrazekPostaci = new Bitmap(SciezkaObrazku);
+        }
+
+        public int GetObrazenia()
+        {
+            return Obrazenia;
+        }
+        public int getId()
+        {
+            return id;
+        }
+        public string getNazwa()
+        {
+            return Nazwa;
+        }
+        public int getNagrodaExp()
+        {
+            return NagrodaExp;
+        }
+        public int getNagrodaGold()
+        {
+            return NagrodaGold;
+        }
+        public Image getObrazekPostaci()
+        {
+            return ObrazekPostaci;
+        }
+    }
+    
+    public static class Wrog   // baza przeciwnikow
+    {
+        public static readonly List<Przeciwnik> Przeciwnik = new List<Przeciwnik>();
+
+        // ID
+
+        //public const int enemyId_szkielet = 1;
+
+        static Wrog()
+        {
+            zaladujPrzedmioty();
+        }
+
+        private static void zaladujPrzedmioty()
+        {
+            //Przeciwnik.Add(new Przeciwnik("Szkielet", enemyId_szkielet, 20, 25, 10, 80, 0, jakassciezkaobrazu));
+        }
+
+
+        public static Przeciwnik EnemyById(int _id)   // zwraca obiekt bedacy kopia przeciwnika o podanym id
+        {
+            foreach (Przeciwnik enemy in Przeciwnik)
+            {
+                if (enemy.getId() == _id)
+                {
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.getObrazekPostaci());
+                    return temp;
+                }
+            }
+            return null;
         }
     }
 }
