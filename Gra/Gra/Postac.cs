@@ -281,6 +281,7 @@ namespace Gra
         public void DodajEXP(int exp)
         {
             EXP += exp;
+            CheckLevelUp();
         }
 
         public void SetExp(int exp)
