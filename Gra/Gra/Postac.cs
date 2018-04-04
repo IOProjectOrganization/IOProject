@@ -169,6 +169,23 @@ namespace Gra
             UpdateStats();
         }
 
+        public int GetGold()
+        {
+            return Gold;
+        }
+        public int GetIntelligence()
+        {
+            return Intelligence;
+        }
+        public int GetDexterity()
+        {
+            return Dexterity;
+        }
+        public int GetStrength()
+        {
+            return Strength;
+        }
+
         public void SkillpointSTR()
         {
             if (Skillpoints > 0)

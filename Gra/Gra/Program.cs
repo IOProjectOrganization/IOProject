@@ -173,6 +173,11 @@ namespace Gra
                     //}
                 }
 
+                if(e.KeyCode == Keys.W)
+                {
+                    Player.DodajEXP(20);
+                }
+
                 if (e.KeyCode == Keys.Left)
                 {
                     p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
