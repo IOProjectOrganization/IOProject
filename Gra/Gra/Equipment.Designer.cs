@@ -54,24 +54,29 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.bohaterExp = new System.Windows.Forms.ProgressBar();
             this.Exp = new System.Windows.Forms.Label();
+            this.obramowanie_panel = new System.Windows.Forms.Panel();
+            this.ekwipunek_label = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // listBox1
             // 
             this.listBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.listBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.listBox1.Font = new System.Drawing.Font("BankGothic Md BT", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 24;
-            this.listBox1.Location = new System.Drawing.Point(29, 38);
+            this.listBox1.Location = new System.Drawing.Point(25, 108);
             this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(527, 700);
+            this.listBox1.Size = new System.Drawing.Size(527, 696);
             this.listBox1.TabIndex = 0;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.button1.FlatAppearance.BorderSize = 0;
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button1.Location = new System.Drawing.Point(711, 717);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
@@ -100,9 +105,9 @@
             this.Level.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.Level.Location = new System.Drawing.Point(626, 264);
             this.Level.Name = "Level";
-            this.Level.Size = new System.Drawing.Size(75, 18);
+            this.Level.Size = new System.Drawing.Size(92, 18);
             this.Level.TabIndex = 3;
-            this.Level.Text = "LEVEL";
+            this.Level.Text = "POZIOM";
             // 
             // Zloto
             // 
@@ -112,7 +117,7 @@
             this.Zloto.Name = "Zloto";
             this.Zloto.Size = new System.Drawing.Size(78, 18);
             this.Zloto.TabIndex = 4;
-            this.Zloto.Text = "ZLOTO";
+            this.Zloto.Text = "ZŁOTO";
             // 
             // Sila
             // 
@@ -122,7 +127,7 @@
             this.Sila.Name = "Sila";
             this.Sila.Size = new System.Drawing.Size(58, 18);
             this.Sila.TabIndex = 6;
-            this.Sila.Text = "SILA";
+            this.Sila.Text = "SIŁA";
             // 
             // Zrecznosc
             // 
@@ -130,9 +135,9 @@
             this.Zrecznosc.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
             this.Zrecznosc.Location = new System.Drawing.Point(626, 503);
             this.Zrecznosc.Name = "Zrecznosc";
-            this.Zrecznosc.Size = new System.Drawing.Size(140, 18);
+            this.Zrecznosc.Size = new System.Drawing.Size(129, 18);
             this.Zrecznosc.TabIndex = 7;
-            this.Zrecznosc.Text = "ZRECZNOSC";
+            this.Zrecznosc.Text = "ZRĘCZNOŚĆ";
             // 
             // Inteligencja
             // 
@@ -151,9 +156,9 @@
             this.HP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
             this.HP.Location = new System.Drawing.Point(627, 296);
             this.HP.Name = "HP";
-            this.HP.Size = new System.Drawing.Size(38, 18);
+            this.HP.Size = new System.Drawing.Size(197, 18);
             this.HP.TabIndex = 9;
-            this.HP.Text = "HP";
+            this.HP.Text = "PUNKTY ZDROWIA";
             // 
             // MP
             // 
@@ -162,9 +167,9 @@
             this.MP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
             this.MP.Location = new System.Drawing.Point(626, 331);
             this.MP.Name = "MP";
-            this.MP.Size = new System.Drawing.Size(39, 18);
+            this.MP.Size = new System.Drawing.Size(162, 18);
             this.MP.TabIndex = 10;
-            this.MP.Text = "MP";
+            this.MP.Text = "PUNKTY MAGII";
             // 
             // PunktyD
             // 
@@ -173,9 +178,9 @@
             this.PunktyD.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
             this.PunktyD.Location = new System.Drawing.Point(626, 368);
             this.PunktyD.Name = "PunktyD";
-            this.PunktyD.Size = new System.Drawing.Size(261, 18);
+            this.PunktyD.Size = new System.Drawing.Size(250, 18);
             this.PunktyD.TabIndex = 11;
-            this.PunktyD.Text = "PUNKTY UMIEJETNOSCI";
+            this.PunktyD.Text = "PUNKTY UMIEJĘTNOŚCI";
             // 
             // bohaterLevel
             // 
@@ -311,6 +316,7 @@
             this.bohaterExp.Location = new System.Drawing.Point(960, 420);
             this.bohaterExp.Name = "bohaterExp";
             this.bohaterExp.Size = new System.Drawing.Size(194, 18);
+            this.bohaterExp.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.bohaterExp.TabIndex = 26;
             // 
             // Exp
@@ -319,9 +325,28 @@
             this.Exp.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
             this.Exp.Location = new System.Drawing.Point(626, 420);
             this.Exp.Name = "Exp";
-            this.Exp.Size = new System.Drawing.Size(188, 18);
+            this.Exp.Size = new System.Drawing.Size(182, 18);
             this.Exp.TabIndex = 27;
-            this.Exp.Text = "DOSWIADCZENIE";
+            this.Exp.Text = "DOŚWIADCZENIE";
+            // 
+            // obramowanie_panel
+            // 
+            this.obramowanie_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.obramowanie_panel.Location = new System.Drawing.Point(0, 0);
+            this.obramowanie_panel.Name = "obramowanie_panel";
+            this.obramowanie_panel.Size = new System.Drawing.Size(1600, 45);
+            this.obramowanie_panel.TabIndex = 28;
+            // 
+            // ekwipunek_label
+            // 
+            this.ekwipunek_label.AutoSize = true;
+            this.ekwipunek_label.Font = new System.Drawing.Font("BankGothic Md BT", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ekwipunek_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.ekwipunek_label.Location = new System.Drawing.Point(674, 89);
+            this.ekwipunek_label.Name = "ekwipunek_label";
+            this.ekwipunek_label.Size = new System.Drawing.Size(252, 35);
+            this.ekwipunek_label.TabIndex = 0;
+            this.ekwipunek_label.Text = "EKWIPUNEK";
             // 
             // Equipment
             // 
@@ -329,8 +354,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
-            this.ClientSize = new System.Drawing.Size(1582, 853);
+            this.ClientSize = new System.Drawing.Size(1600, 900);
             this.ControlBox = false;
+            this.Controls.Add(this.ekwipunek_label);
+            this.Controls.Add(this.obramowanie_panel);
             this.Controls.Add(this.Exp);
             this.Controls.Add(this.bohaterExp);
             this.Controls.Add(this.ukosnik2);
@@ -357,10 +384,15 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.pictureBox1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(1600, 900);
+            this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(1600, 900);
             this.Name = "Equipment";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ekwipunek";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
@@ -397,6 +429,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ProgressBar bohaterExp;
         private System.Windows.Forms.Label Exp;
+        private System.Windows.Forms.Panel obramowanie_panel;
+        private System.Windows.Forms.Label ekwipunek_label;
     }
 }
 

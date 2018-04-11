@@ -33,6 +33,7 @@ namespace Gra
 
         Bohater Player; //Tworzymy gracza
         Equipment equipment = new Equipment();
+        Quit quit = new Quit();
 
         Timer timer = new Timer();
 
@@ -233,10 +234,14 @@ namespace Gra
 
                 if (e.KeyCode == Keys.Escape)
                 {
-                    if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Quit", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
-                    {
-                        GameForm.Close();
-                    }
+                    //if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Quit", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
+                    //{
+                    //    GameForm.Close();
+                    //}
+
+                    quit.Show();
+                    quit.sendForm(GameForm);
+                    quit.Focus();
                 }
             }
             Draw();

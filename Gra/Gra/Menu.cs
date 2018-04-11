@@ -18,6 +18,8 @@ namespace Gra
     public partial class Menu : Form
     {
         Game game;
+        Quit quit2 = new Quit();
+        Help help = new Help();
 
         public Menu()
         {
@@ -33,6 +35,9 @@ namespace Gra
             Help.Visible = false;
             Help.Enabled = false;
 
+            panel1.Hide();
+            label1.Hide();
+
             //File.Copy(@"MapTileData\maptiles" + MapName + ".txt", @"MapTileData\maptiles" + MapName + "_1.txt", true)
             foreach (var file in System.IO.Directory.GetFiles(@"MapTileData"))
             {
@@ -47,10 +52,14 @@ namespace Gra
 
         private void Quit_Click(object sender, EventArgs e)
         {
-            if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Quit", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
-            {
-                this.Close();
-            }
+            //if (DialogResult.Yes == MessageBox.Show("Na pewno?", "Wyjście", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
+            //{
+            //    this.Close();
+            //}
+            
+            quit2.Show();
+            quit2.sendForm(this);
+            quit2.Focus();
         }
 
         private void Menu_Load(object sender, EventArgs e)
@@ -66,7 +75,10 @@ namespace Gra
 
         private void Help_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Controls"); // okienko Help, na razie z miejscem na sterowanie
+            //MessageBox.Show("Controls"); // okienko Help, na razie z miejscem na sterowanie
+
+            help.Show();
+            help.Focus();
         }
 
         private void Menu_KeyDown(object sender, KeyEventArgs e)
