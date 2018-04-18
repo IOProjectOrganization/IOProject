@@ -41,6 +41,9 @@ namespace Gra
         public void SetHP(int hp)
         {
             HP = hp;
+
+            if (HP > MaxHP)
+                HP = MaxHP;
         }
         public int GetHP()
         {
@@ -57,6 +60,9 @@ namespace Gra
         public void SetMP(int mp)
         {
             MP = mp;
+
+            if (MP > maxMP)
+                MP = maxMP;
         }
         public int GetMP()
         {
@@ -158,6 +164,24 @@ namespace Gra
         {
             return Skillpoints;
         }
+        // mozliwosc dodania wartosci z przedmiotow do cech
+
+        public void addStrenght(int str)
+        {
+            Strength += str;
+        }
+
+        public void addDexterity(int dex)
+        {
+            Dexterity += dex;
+        }
+
+        public void addIntelligence(int intel)
+        {
+            Intelligence += intel;
+        }
+
+        //
         public void LevelUp()
         {
             SetExp(EXP - EXPtoLevel);

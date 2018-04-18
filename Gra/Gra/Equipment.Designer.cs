@@ -56,6 +56,8 @@
             this.Exp = new System.Windows.Forms.Label();
             this.obramowanie_panel = new System.Windows.Forms.Panel();
             this.ekwipunek_label = new System.Windows.Forms.Label();
+            this.statystyki_label = new System.Windows.Forms.Label();
+            this.uzycie = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -66,10 +68,10 @@
             this.listBox1.Font = new System.Drawing.Font("BankGothic Md BT", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 24;
-            this.listBox1.Location = new System.Drawing.Point(25, 108);
+            this.listBox1.Location = new System.Drawing.Point(28, 251);
             this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(527, 696);
+            this.listBox1.Size = new System.Drawing.Size(403, 432);
             this.listBox1.TabIndex = 0;
             // 
             // button1
@@ -77,8 +79,8 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(711, 717);
+            this.button1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(1212, 745);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(249, 91);
@@ -90,11 +92,11 @@
             // bohaterImie
             // 
             this.bohaterImie.AutoSize = true;
-            this.bohaterImie.Font = new System.Drawing.Font("BankGothic Lt BT", 28.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.bohaterImie.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
             this.bohaterImie.ForeColor = System.Drawing.Color.White;
-            this.bohaterImie.Location = new System.Drawing.Point(1269, 649);
+            this.bohaterImie.Location = new System.Drawing.Point(619, 644);
             this.bohaterImie.Name = "bohaterImie";
-            this.bohaterImie.Size = new System.Drawing.Size(201, 50);
+            this.bohaterImie.Size = new System.Drawing.Size(162, 55);
             this.bohaterImie.TabIndex = 2;
             this.bohaterImie.Text = "Godric";
             // 
@@ -102,50 +104,50 @@
             // 
             this.Level.AutoSize = true;
             this.Level.BackColor = System.Drawing.Color.Transparent;
-            this.Level.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.Level.Location = new System.Drawing.Point(626, 264);
+            this.Level.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.Level.Location = new System.Drawing.Point(1023, 264);
             this.Level.Name = "Level";
-            this.Level.Size = new System.Drawing.Size(92, 18);
+            this.Level.Size = new System.Drawing.Size(83, 22);
             this.Level.TabIndex = 3;
             this.Level.Text = "POZIOM";
             // 
             // Zloto
             // 
             this.Zloto.AutoSize = true;
-            this.Zloto.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.Zloto.Location = new System.Drawing.Point(627, 623);
+            this.Zloto.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.Zloto.Location = new System.Drawing.Point(1024, 623);
             this.Zloto.Name = "Zloto";
-            this.Zloto.Size = new System.Drawing.Size(78, 18);
+            this.Zloto.Size = new System.Drawing.Size(70, 22);
             this.Zloto.TabIndex = 4;
             this.Zloto.Text = "ZŁOTO";
             // 
             // Sila
             // 
             this.Sila.AutoSize = true;
-            this.Sila.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.Sila.Location = new System.Drawing.Point(626, 467);
+            this.Sila.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.Sila.Location = new System.Drawing.Point(1023, 467);
             this.Sila.Name = "Sila";
-            this.Sila.Size = new System.Drawing.Size(58, 18);
+            this.Sila.Size = new System.Drawing.Size(50, 22);
             this.Sila.TabIndex = 6;
             this.Sila.Text = "SIŁA";
             // 
             // Zrecznosc
             // 
             this.Zrecznosc.AutoSize = true;
-            this.Zrecznosc.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.Zrecznosc.Location = new System.Drawing.Point(626, 503);
+            this.Zrecznosc.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.Zrecznosc.Location = new System.Drawing.Point(1023, 503);
             this.Zrecznosc.Name = "Zrecznosc";
-            this.Zrecznosc.Size = new System.Drawing.Size(129, 18);
+            this.Zrecznosc.Size = new System.Drawing.Size(116, 22);
             this.Zrecznosc.TabIndex = 7;
             this.Zrecznosc.Text = "ZRĘCZNOŚĆ";
             // 
             // Inteligencja
             // 
             this.Inteligencja.AutoSize = true;
-            this.Inteligencja.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.Inteligencja.Location = new System.Drawing.Point(626, 538);
+            this.Inteligencja.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.Inteligencja.Location = new System.Drawing.Point(1023, 538);
             this.Inteligencja.Name = "Inteligencja";
-            this.Inteligencja.Size = new System.Drawing.Size(166, 18);
+            this.Inteligencja.Size = new System.Drawing.Size(139, 22);
             this.Inteligencja.TabIndex = 8;
             this.Inteligencja.Text = "INTELIGENCJA";
             // 
@@ -153,10 +155,10 @@
             // 
             this.HP.AutoSize = true;
             this.HP.BackColor = System.Drawing.Color.Transparent;
-            this.HP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.HP.Location = new System.Drawing.Point(627, 296);
+            this.HP.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.HP.Location = new System.Drawing.Point(1024, 296);
             this.HP.Name = "HP";
-            this.HP.Size = new System.Drawing.Size(197, 18);
+            this.HP.Size = new System.Drawing.Size(174, 22);
             this.HP.TabIndex = 9;
             this.HP.Text = "PUNKTY ZDROWIA";
             // 
@@ -164,10 +166,10 @@
             // 
             this.MP.AutoSize = true;
             this.MP.BackColor = System.Drawing.Color.Transparent;
-            this.MP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.MP.Location = new System.Drawing.Point(626, 331);
+            this.MP.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.MP.Location = new System.Drawing.Point(1023, 331);
             this.MP.Name = "MP";
-            this.MP.Size = new System.Drawing.Size(162, 18);
+            this.MP.Size = new System.Drawing.Size(144, 22);
             this.MP.TabIndex = 10;
             this.MP.Text = "PUNKTY MAGII";
             // 
@@ -175,39 +177,39 @@
             // 
             this.PunktyD.AutoSize = true;
             this.PunktyD.BackColor = System.Drawing.Color.Transparent;
-            this.PunktyD.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PunktyD.Location = new System.Drawing.Point(626, 368);
+            this.PunktyD.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.PunktyD.Location = new System.Drawing.Point(1023, 368);
             this.PunktyD.Name = "PunktyD";
-            this.PunktyD.Size = new System.Drawing.Size(250, 18);
+            this.PunktyD.Size = new System.Drawing.Size(218, 22);
             this.PunktyD.TabIndex = 11;
             this.PunktyD.Text = "PUNKTY UMIEJĘTNOŚCI";
             // 
             // bohaterLevel
             // 
-            this.bohaterLevel.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterLevel.Location = new System.Drawing.Point(1070, 264);
+            this.bohaterLevel.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterLevel.Location = new System.Drawing.Point(1467, 264);
             this.bohaterLevel.Name = "bohaterLevel";
-            this.bohaterLevel.Size = new System.Drawing.Size(84, 17);
+            this.bohaterLevel.Size = new System.Drawing.Size(84, 22);
             this.bohaterLevel.TabIndex = 12;
             this.bohaterLevel.Text = "label1";
             this.bohaterLevel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bohaterHP
             // 
-            this.bohaterHP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterHP.Location = new System.Drawing.Point(962, 297);
+            this.bohaterHP.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterHP.Location = new System.Drawing.Point(1359, 297);
             this.bohaterHP.Name = "bohaterHP";
-            this.bohaterHP.Size = new System.Drawing.Size(84, 17);
+            this.bohaterHP.Size = new System.Drawing.Size(84, 21);
             this.bohaterHP.TabIndex = 13;
             this.bohaterHP.Text = "label2";
             this.bohaterHP.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // bohaterMP
             // 
-            this.bohaterMP.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterMP.Location = new System.Drawing.Point(962, 331);
+            this.bohaterMP.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterMP.Location = new System.Drawing.Point(1359, 331);
             this.bohaterMP.Name = "bohaterMP";
-            this.bohaterMP.Size = new System.Drawing.Size(84, 17);
+            this.bohaterMP.Size = new System.Drawing.Size(84, 22);
             this.bohaterMP.TabIndex = 14;
             this.bohaterMP.Text = "label3";
             this.bohaterMP.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -215,40 +217,40 @@
             // bohaterPunktyD
             // 
             this.bohaterPunktyD.BackColor = System.Drawing.Color.Transparent;
-            this.bohaterPunktyD.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterPunktyD.Location = new System.Drawing.Point(1070, 368);
+            this.bohaterPunktyD.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterPunktyD.Location = new System.Drawing.Point(1467, 368);
             this.bohaterPunktyD.Name = "bohaterPunktyD";
-            this.bohaterPunktyD.Size = new System.Drawing.Size(84, 17);
+            this.bohaterPunktyD.Size = new System.Drawing.Size(84, 22);
             this.bohaterPunktyD.TabIndex = 15;
             this.bohaterPunktyD.Text = "label4";
             this.bohaterPunktyD.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bohaterSila
             // 
-            this.bohaterSila.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterSila.Location = new System.Drawing.Point(1070, 467);
+            this.bohaterSila.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterSila.Location = new System.Drawing.Point(1467, 467);
             this.bohaterSila.Name = "bohaterSila";
-            this.bohaterSila.Size = new System.Drawing.Size(84, 17);
+            this.bohaterSila.Size = new System.Drawing.Size(84, 22);
             this.bohaterSila.TabIndex = 16;
             this.bohaterSila.Text = "label5";
             this.bohaterSila.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bohaterZrecznosc
             // 
-            this.bohaterZrecznosc.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterZrecznosc.Location = new System.Drawing.Point(1070, 504);
+            this.bohaterZrecznosc.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterZrecznosc.Location = new System.Drawing.Point(1467, 504);
             this.bohaterZrecznosc.Name = "bohaterZrecznosc";
-            this.bohaterZrecznosc.Size = new System.Drawing.Size(84, 17);
+            this.bohaterZrecznosc.Size = new System.Drawing.Size(84, 21);
             this.bohaterZrecznosc.TabIndex = 17;
             this.bohaterZrecznosc.Text = "label6";
             this.bohaterZrecznosc.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bohaterInteligencja
             // 
-            this.bohaterInteligencja.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterInteligencja.Location = new System.Drawing.Point(1070, 538);
+            this.bohaterInteligencja.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterInteligencja.Location = new System.Drawing.Point(1467, 538);
             this.bohaterInteligencja.Name = "bohaterInteligencja";
-            this.bohaterInteligencja.Size = new System.Drawing.Size(84, 17);
+            this.bohaterInteligencja.Size = new System.Drawing.Size(84, 22);
             this.bohaterInteligencja.TabIndex = 18;
             this.bohaterInteligencja.Text = "label7";
             this.bohaterInteligencja.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -256,30 +258,30 @@
             // bohaterZloto
             // 
             this.bohaterZloto.BackColor = System.Drawing.Color.Transparent;
-            this.bohaterZloto.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterZloto.Location = new System.Drawing.Point(1070, 623);
+            this.bohaterZloto.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterZloto.Location = new System.Drawing.Point(1467, 623);
             this.bohaterZloto.Name = "bohaterZloto";
-            this.bohaterZloto.Size = new System.Drawing.Size(84, 17);
+            this.bohaterZloto.Size = new System.Drawing.Size(84, 22);
             this.bohaterZloto.TabIndex = 19;
             this.bohaterZloto.Text = "label8";
             this.bohaterZloto.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
             // bohaterMPMax
             // 
-            this.bohaterMPMax.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterMPMax.Location = new System.Drawing.Point(1070, 332);
+            this.bohaterMPMax.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterMPMax.Location = new System.Drawing.Point(1467, 332);
             this.bohaterMPMax.Name = "bohaterMPMax";
-            this.bohaterMPMax.Size = new System.Drawing.Size(82, 18);
+            this.bohaterMPMax.Size = new System.Drawing.Size(82, 23);
             this.bohaterMPMax.TabIndex = 21;
             this.bohaterMPMax.Text = "label1";
             this.bohaterMPMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // bohaterHPMax
             // 
-            this.bohaterHPMax.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.bohaterHPMax.Location = new System.Drawing.Point(1070, 296);
+            this.bohaterHPMax.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterHPMax.Location = new System.Drawing.Point(1467, 296);
             this.bohaterHPMax.Name = "bohaterHPMax";
-            this.bohaterHPMax.Size = new System.Drawing.Size(82, 18);
+            this.bohaterHPMax.Size = new System.Drawing.Size(82, 22);
             this.bohaterHPMax.TabIndex = 22;
             this.bohaterHPMax.Text = "label2";
             this.bohaterHPMax.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -287,33 +289,35 @@
             // ukosnik1
             // 
             this.ukosnik1.AutoSize = true;
-            this.ukosnik1.Location = new System.Drawing.Point(1052, 296);
+            this.ukosnik1.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.ukosnik1.Location = new System.Drawing.Point(1449, 296);
             this.ukosnik1.Name = "ukosnik1";
-            this.ukosnik1.Size = new System.Drawing.Size(12, 17);
+            this.ukosnik1.Size = new System.Drawing.Size(15, 22);
             this.ukosnik1.TabIndex = 23;
             this.ukosnik1.Text = "/";
             // 
             // ukosnik2
             // 
             this.ukosnik2.AutoSize = true;
-            this.ukosnik2.Location = new System.Drawing.Point(1052, 331);
+            this.ukosnik2.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.ukosnik2.Location = new System.Drawing.Point(1449, 331);
             this.ukosnik2.Name = "ukosnik2";
-            this.ukosnik2.Size = new System.Drawing.Size(12, 17);
+            this.ukosnik2.Size = new System.Drawing.Size(15, 22);
             this.ukosnik2.TabIndex = 24;
             this.ukosnik2.Text = "/";
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.pictureBox1.Location = new System.Drawing.Point(601, 251);
+            this.pictureBox1.Location = new System.Drawing.Point(998, 251);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(574, 418);
+            this.pictureBox1.Size = new System.Drawing.Size(574, 432);
             this.pictureBox1.TabIndex = 25;
             this.pictureBox1.TabStop = false;
             // 
             // bohaterExp
             // 
-            this.bohaterExp.Location = new System.Drawing.Point(960, 420);
+            this.bohaterExp.Location = new System.Drawing.Point(1357, 420);
             this.bohaterExp.Name = "bohaterExp";
             this.bohaterExp.Size = new System.Drawing.Size(194, 18);
             this.bohaterExp.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
@@ -322,10 +326,10 @@
             // Exp
             // 
             this.Exp.AutoSize = true;
-            this.Exp.Font = new System.Drawing.Font("BankGothic Md BT", 10.2F, System.Drawing.FontStyle.Bold);
-            this.Exp.Location = new System.Drawing.Point(626, 420);
+            this.Exp.Font = new System.Drawing.Font("Book Antiqua", 10.2F, System.Drawing.FontStyle.Bold);
+            this.Exp.Location = new System.Drawing.Point(1023, 420);
             this.Exp.Name = "Exp";
-            this.Exp.Size = new System.Drawing.Size(182, 18);
+            this.Exp.Size = new System.Drawing.Size(163, 22);
             this.Exp.TabIndex = 27;
             this.Exp.Text = "DOŚWIADCZENIE";
             // 
@@ -340,13 +344,37 @@
             // ekwipunek_label
             // 
             this.ekwipunek_label.AutoSize = true;
-            this.ekwipunek_label.Font = new System.Drawing.Font("BankGothic Md BT", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ekwipunek_label.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
             this.ekwipunek_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.ekwipunek_label.Location = new System.Drawing.Point(674, 89);
+            this.ekwipunek_label.Location = new System.Drawing.Point(111, 167);
             this.ekwipunek_label.Name = "ekwipunek_label";
-            this.ekwipunek_label.Size = new System.Drawing.Size(252, 35);
+            this.ekwipunek_label.Size = new System.Drawing.Size(227, 55);
             this.ekwipunek_label.TabIndex = 0;
-            this.ekwipunek_label.Text = "EKWIPUNEK";
+            this.ekwipunek_label.Text = "Ewipunek";
+            // 
+            // statystyki_label
+            // 
+            this.statystyki_label.AutoSize = true;
+            this.statystyki_label.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.statystyki_label.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.statystyki_label.Location = new System.Drawing.Point(1179, 156);
+            this.statystyki_label.Name = "statystyki_label";
+            this.statystyki_label.Size = new System.Drawing.Size(237, 55);
+            this.statystyki_label.TabIndex = 29;
+            this.statystyki_label.Text = "Statystyki";
+            // 
+            // uzycie
+            // 
+            this.uzycie.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.uzycie.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.uzycie.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.uzycie.Location = new System.Drawing.Point(111, 745);
+            this.uzycie.Name = "uzycie";
+            this.uzycie.Size = new System.Drawing.Size(249, 91);
+            this.uzycie.TabIndex = 30;
+            this.uzycie.Text = "Użyj";
+            this.uzycie.UseVisualStyleBackColor = false;
+            this.uzycie.Click += new System.EventHandler(this.uzycie_Click);
             // 
             // Equipment
             // 
@@ -356,6 +384,8 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
             this.ClientSize = new System.Drawing.Size(1600, 900);
             this.ControlBox = false;
+            this.Controls.Add(this.uzycie);
+            this.Controls.Add(this.statystyki_label);
             this.Controls.Add(this.ekwipunek_label);
             this.Controls.Add(this.obramowanie_panel);
             this.Controls.Add(this.Exp);
@@ -431,6 +461,8 @@
         private System.Windows.Forms.Label Exp;
         private System.Windows.Forms.Panel obramowanie_panel;
         private System.Windows.Forms.Label ekwipunek_label;
+        private System.Windows.Forms.Label statystyki_label;
+        private System.Windows.Forms.Button uzycie;
     }
 }
 

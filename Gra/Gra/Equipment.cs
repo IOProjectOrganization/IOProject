@@ -12,6 +12,8 @@ namespace Gra
 {
     public partial class Equipment : Form
     {
+        Bohater postac;
+
         public Equipment()
         {
             InitializeComponent();
@@ -24,6 +26,8 @@ namespace Gra
 
         public void UpdateEquipment(Bohater Player)
         {
+            postac = Player;
+
             setTextColor();
 
             listBox1.Items.Clear();
@@ -32,6 +36,7 @@ namespace Gra
 
             foreach (Przedmiot item in Player.Ekwipunek)
             {
+                if(Player.Ekwipunek.ElementAt(i).getIlosc() > 0)
                 listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
                 i++;
             }
@@ -210,6 +215,67 @@ namespace Gra
 
             Exp.ForeColor = Color.Black;
             Exp.BackColor = pictureBox1.BackColor;
+        }
+
+        private void uzycie_Click(object sender, EventArgs e)
+        {
+            string listbox_nazwa;
+            int indeks;
+
+            for(int i = 0; i < listBox1.Items.Count; i++)
+            {
+                if(listBox1.GetSelected(i) == true)
+                {
+                    listbox_nazwa = listBox1.SelectedItem.ToString();
+
+                    bool czySpacja = false;
+
+                    for(int k = listbox_nazwa.Length -1; k >=0 ; k--)
+                    {
+                        if (listbox_nazwa[k] == ' ' && czySpacja == true)
+                        {
+                            indeks = listbox_nazwa.Length - k;
+                            listbox_nazwa = listbox_nazwa.Remove(k, indeks);
+
+                            break;
+                        }
+                        else if (listbox_nazwa[k] == ' ' && czySpacja == false)
+                            czySpacja = true;
+                    }
+
+                    int j = 0;
+
+                    foreach(Przedmiot istniejacyPrzedmiot in postac.Ekwipunek)
+                    {
+                        if (istniejacyPrzedmiot.getNazwa().ToString() == listbox_nazwa)
+                        {
+                            if(istniejacyPrzedmiot.getId() <= 4)
+                            {
+                                Mikstury potka = (Mikstury)istniejacyPrzedmiot;
+
+                                postac.SetHP(postac.GetHP() + istniejacyPrzedmiot.getItemHP());
+                                postac.SetMP(postac.GetMP() + istniejacyPrzedmiot.getItemMP());
+
+                                postac.SetHP(postac.GetHP() + potka.getPotionHp());
+                                postac.SetMP(postac.GetMP() + potka.getPotionMp());
+
+                                postac.addStrenght(istniejacyPrzedmiot.getItemStrength());
+                                postac.addDexterity(istniejacyPrzedmiot.getItemDexterity());
+                                postac.addIntelligence(istniejacyPrzedmiot.getItemIntelligence());
+                            }
+
+                            postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
+
+                            break;
+                        }
+                        else
+                            j++;
+                    }
+                }
+            }
+
+            UpdateEquipment(postac);
+
         }
     }
 }

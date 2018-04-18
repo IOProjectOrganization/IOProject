@@ -53,11 +53,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.label1.Location = new System.Drawing.Point(250, 38);
+            this.label1.Location = new System.Drawing.Point(225, 52);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(203, 30);
+            this.label1.Size = new System.Drawing.Size(256, 55);
             this.label1.TabIndex = 0;
             this.label1.Text = "Sterowanie";
             // 
@@ -66,13 +66,14 @@
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button1.Location = new System.Drawing.Point(250, 167);
+            this.button1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(245, 142);
             this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(200, 47);
+            this.button1.Size = new System.Drawing.Size(200, 61);
             this.button1.TabIndex = 2;
             this.button1.Text = "Powrót";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

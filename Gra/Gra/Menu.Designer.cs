@@ -43,11 +43,11 @@
             // 
             this.Start.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.Start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Start.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
-            this.Start.Location = new System.Drawing.Point(953, 450);
+            this.Start.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.Start.Location = new System.Drawing.Point(944, 445);
             this.Start.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Start.Name = "Start";
-            this.Start.Size = new System.Drawing.Size(180, 71);
+            this.Start.Size = new System.Drawing.Size(227, 71);
             this.Start.TabIndex = 0;
             this.Start.Text = "Start";
             this.Start.UseVisualStyleBackColor = false;
@@ -57,11 +57,11 @@
             // 
             this.Quit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.Quit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Quit.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
-            this.Quit.Location = new System.Drawing.Point(953, 716);
+            this.Quit.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.Quit.Location = new System.Drawing.Point(944, 711);
             this.Quit.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Quit.Name = "Quit";
-            this.Quit.Size = new System.Drawing.Size(180, 71);
+            this.Quit.Size = new System.Drawing.Size(227, 71);
             this.Quit.TabIndex = 1;
             this.Quit.Text = "Wyjście";
             this.Quit.UseVisualStyleBackColor = false;
@@ -71,11 +71,11 @@
             // 
             this.Help.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.Help.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Help.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
-            this.Help.Location = new System.Drawing.Point(953, 585);
+            this.Help.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.Help.Location = new System.Drawing.Point(944, 580);
             this.Help.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Help.Name = "Help";
-            this.Help.Size = new System.Drawing.Size(180, 71);
+            this.Help.Size = new System.Drawing.Size(227, 71);
             this.Help.TabIndex = 2;
             this.Help.Text = "Pomoc";
             this.Help.UseVisualStyleBackColor = false;
@@ -85,7 +85,7 @@
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
             this.axWindowsMediaPlayer1.Location = new System.Drawing.Point(12, 12);
-            this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.axWindowsMediaPlayer1.Margin = new System.Windows.Forms.Padding(4);
             this.axWindowsMediaPlayer1.Name = "axWindowsMediaPlayer1";
             this.axWindowsMediaPlayer1.OcxState = ((System.Windows.Forms.AxHost.State)(resources.GetObject("axWindowsMediaPlayer1.OcxState")));
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(249, 193);
@@ -104,10 +104,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("BankGothic Md BT", 50F, System.Drawing.FontStyle.Bold);
-            this.label1.Location = new System.Drawing.Point(873, 65);
+            this.label1.Font = new System.Drawing.Font("GothicE", 40.2F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(900, 80);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(327, 88);
+            this.label1.Size = new System.Drawing.Size(289, 98);
             this.label1.TabIndex = 0;
             this.label1.Text = "MENU";
             // 

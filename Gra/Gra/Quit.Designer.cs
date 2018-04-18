@@ -55,12 +55,12 @@
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
+            this.button1.Font = new System.Drawing.Font("GothicE", 18.2F, System.Drawing.FontStyle.Bold);
             this.button1.Location = new System.Drawing.Point(90, 141);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(122, 48);
             this.button1.TabIndex = 1;
-            this.button1.Text = "TAK";
+            this.button1.Text = "Tak";
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
@@ -68,23 +68,23 @@
             // 
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("BankGothic Md BT", 16.2F, System.Drawing.FontStyle.Bold);
+            this.button2.Font = new System.Drawing.Font("GothicE", 18.2F, System.Drawing.FontStyle.Bold);
             this.button2.Location = new System.Drawing.Point(358, 141);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(122, 48);
             this.button2.TabIndex = 2;
-            this.button2.Text = "NIE";
+            this.button2.Text = "Nie";
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("BankGothic Md BT", 22F, System.Drawing.FontStyle.Bold);
+            this.label1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.label1.Location = new System.Drawing.Point(115, 48);
+            this.label1.Location = new System.Drawing.Point(118, 51);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(334, 39);
+            this.label1.Size = new System.Drawing.Size(348, 55);
             this.label1.TabIndex = 3;
             this.label1.Text = "Jesteś pewien?";
             // 
