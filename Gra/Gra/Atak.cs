@@ -12,14 +12,16 @@ namespace Gra
         Postac Parent;   // postac posiadajaca pewien atak, potrzebne aby wyliczac obrazenia pod wzgledem statystyk
         private string Nazwa;
         private string Opis;
+        private int ManaCost;
 
         public virtual int GetObrazenia() { return 0; }
 
-        public Atak(int _id, string _nazwa, string _opis)
+        public Atak(int _id, string _nazwa, string _opis, int _manacost)
         {
             id = _id;
             Nazwa = _nazwa;
             Opis = _opis;
+            ManaCost = _manacost;
         }
 
         public void AssignParent(Postac _parent)  // parent przypisywany atakowi podczas jego dodawania w klasie postaci
@@ -46,13 +48,18 @@ namespace Gra
         {
             return Opis;
         }
+
+        public int GetManaCost()
+        {
+            return ManaCost;
+        }
     }
 
 
     public class AtkObrazenia : Atak   // ataki majace pewna okreslona ilosc obrazen
     {
         private int Obrazenia;
-        public AtkObrazenia(int _id, string _nazwa, string _opis, int obrazenia) : base(_id, _nazwa, _opis)
+        public AtkObrazenia(int _id, string _nazwa, string _opis, int _manacost, int obrazenia) : base(_id, _nazwa, _opis, _manacost)
         {
             Obrazenia = obrazenia;
         }
@@ -66,7 +73,7 @@ namespace Gra
     public class AtkMultiplier : Atak   // ataki zwracajace obrazenia postaci pomnozone przez multiplier
     {
         private double Multiplier;
-        public AtkMultiplier(int _id, string _nazwa, string _opis, double _multiplier) : base(_id, _nazwa, _opis)
+        public AtkMultiplier(int _id, string _nazwa, string _opis, int _manacost, double _multiplier) : base(_id, _nazwa, _opis, _manacost)
         {
             Multiplier = _multiplier;
         }
@@ -104,10 +111,10 @@ namespace Gra
 
         private static void zaladujAtaki()
         {
-            DamageATK.Add(new AtkObrazenia(AtakId_MagicznyPocisk, "Magiczny pocisk", "Prosty magiczny pocisk zadający niewielkie obrażenia", 75));
+            DamageATK.Add(new AtkObrazenia(AtakId_MagicznyPocisk, "Magiczny pocisk", "Prosty magiczny pocisk zadający niewielkie obrażenia", 8, 75));
 
 
-            DamageMultiply.Add(new AtkMultiplier(AtakId_SkupionyAtak, "Skupiony atak", "Specjalny cios zadający większe obrażenia niż zwykły atak", 1.5));
+            DamageMultiply.Add(new AtkMultiplier(AtakId_SkupionyAtak, "Skupiony atak", "Specjalny cios zadający większe obrażenia niż zwykły atak", 10, 1.5));
         }
 
         public static Atak AttacksById(int _id)
@@ -116,7 +123,7 @@ namespace Gra
             {
                 if (atak.GetId() == _id)
                 {
-                    AtkObrazenia temp = new AtkObrazenia(atak.GetId(), atak.GetNazwa(), atak.GetOpis(), atak.GetObrazenia());
+                    AtkObrazenia temp = new AtkObrazenia(atak.GetId(), atak.GetNazwa(), atak.GetOpis(), atak.GetManaCost(), atak.GetObrazenia());
                     return temp;
                 }
             }
@@ -124,7 +131,7 @@ namespace Gra
             {
                 if (atak.GetId() == _id)
                 {
-                    AtkMultiplier temp = new AtkMultiplier(atak.GetId(), atak.GetNazwa(), atak.GetOpis(), atak.GetMultiplier());
+                    AtkMultiplier temp = new AtkMultiplier(atak.GetId(), atak.GetNazwa(), atak.GetOpis(), atak.GetManaCost(), atak.GetMultiplier());
                     return temp;
                 }
             }
