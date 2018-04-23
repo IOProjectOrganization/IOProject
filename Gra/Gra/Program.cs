@@ -32,10 +32,19 @@ namespace Gra
         public PictureBox WorldMapPB; //Ustawienie zmiennej PictureBox'a
 
         Bohater Player; //Tworzymy gracza
+        Przeciwnik przeciwnik;
+
         Equipment equipment = new Equipment();
+
+        Combat combat;
+
         Quit quit = new Quit();
 
         Timer timer = new Timer();
+        Timer CombatTimer = new Timer();
+
+        Random random = new Random();
+        int MTB = 0;
 
         public int mapX = 0; //Zmienna X świata
         public int mapY = 0; //Zmienna Y świata
@@ -60,6 +69,7 @@ namespace Gra
             LoadNewMap(0, 0);
 
             Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // nowy konstruktor ze statystykami(4 do wszystkich)
+            przeciwnik = new Przeciwnik("Test1", 0, 4, 1000, 1000, 100, 100, new Point(10 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1);
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -70,11 +80,15 @@ namespace Gra
             timer.Tick += timer_Tick;
             timer.Interval = 10;
 
+            CombatTimer.Tick += combatTimer_Tick;
+            CombatTimer.Interval = 100;
+
             Draw();
         }
 
         void LoadNewMap(int MoveX, int MoveY)
         {
+            MTB = random.Next(15, 20);
             mapX += MoveX;
             mapY += MoveY;
             worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true);
@@ -97,6 +111,10 @@ namespace Gra
             worldMap.DrawMap(Device, mapX, mapY, _Width, _Height);
             Player.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
 
+            if (przeciwnik != null)
+                przeciwnik.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
+
+
             WorldMapPB.Image = Img;
         }
 
@@ -107,16 +125,15 @@ namespace Gra
             if (Player.GetIsMoving() == false)
             {
                 Point p = new Point(0, 0);
-
-                if (worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y)) ||
+                if (e.KeyCode == Keys.E)
+                {
+                    if (worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X - _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X + _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
-                {
-                    if (e.KeyCode == Keys.E)
                     {
-                        //########################################################
+
                         WorldMapItem item = null;
 
                         if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X - _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
@@ -156,7 +173,6 @@ namespace Gra
                             worldMap.worldMapItems.Remove(item);
                             ReloadMap();
                         }
-                        //########################################################
                     }
                 }
 
@@ -165,16 +181,9 @@ namespace Gra
                     equipment.UpdateEquipment(Player);
                     equipment.Show();
                     equipment.Focus();
-
-
-                    //MessageBox.Show(Player.Ekwipunek.ElementAt(0).getNazwa().ToString());
-                    //foreach (Przedmiot item in Player.Ekwipunek)
-                    //{
-                    //    MessageBox.Show(item.getNazwa().ToString());
-                    //}
                 }
 
-                if(e.KeyCode == Keys.W)
+                if (e.KeyCode == Keys.W)
                 {
                     Player.DodajEXP(20);
                 }
@@ -234,11 +243,6 @@ namespace Gra
 
                 if (e.KeyCode == Keys.Escape)
                 {
-                    //if (DialogResult.Yes == MessageBox.Show("Are you sure?", "Quit", MessageBoxButtons.YesNo)) // zamyka program, jeśli w wyświetlonym oknie Quit wybrano Yes
-                    //{
-                    //    GameForm.Close();
-                    //}
-
                     quit.Show();
                     quit.sendForm(GameForm);
                     quit.Focus();
@@ -319,7 +323,24 @@ namespace Gra
                         Player.GetCharacterSprite().SetLocation(z);
                     }
                 }
+
                 Player.SetIsMoving(false);
+
+                MTB--;
+
+                if (MTB <= 0)
+                {
+                    combat = new Combat();
+
+                    combat.StartCombat(Player, new Przeciwnik("RandomTest", 0, 10, 10, 10, 50, 50, new Point(9 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1));
+                    combat.Show();
+                    combat.Focus();
+
+                    CombatTimer.Start();
+
+                    MTB = random.Next(15, 20);
+                }
+
                 timer.Stop();
             }
             else
@@ -348,10 +369,44 @@ namespace Gra
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                 }
+
+                if (isInEnemyRange(przeciwnik))
+                {
+                    if (przeciwnik != null)
+                    {
+                        combat = new Combat();
+
+                        combat.StartCombat(Player, przeciwnik);
+                        combat.Show();
+                        combat.Focus();
+
+                        CombatTimer.Start();
+                    }
+                }
             }
 
             Draw();
         }
+
+        void combatTimer_Tick(object sender, System.EventArgs e)
+        {
+            if (!combat.GetIsInCombat())
+            {
+                if (combat.GetIsPlayerWinner())
+                {
+                    przeciwnik = null;
+
+                    CombatTimer.Stop();
+                    Draw();
+                }
+                else
+                {
+                    CombatTimer.Stop();
+                    Draw();
+                }
+            }
+        }
+
 
         bool CanMove(Point p)
         {
@@ -359,5 +414,25 @@ namespace Gra
                 return true;
             return false;
         }
+
+        bool isInEnemyRange(Przeciwnik Enemy)
+        {
+            if (Enemy != null)
+            {
+                if ((Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
     }
 }
