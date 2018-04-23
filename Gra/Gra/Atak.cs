@@ -91,7 +91,7 @@ namespace Gra
 
 
 
-    public static class Ataki
+    public static class Ataki   // do zrobienia: oprocz id przeciwnikow tez do jakich atakow maja dostep
     {
         public static readonly List<AtkObrazenia> DamageATK = new List<AtkObrazenia>(); // ataki zwracajace czysta ilosc obrazen
         public static readonly List<AtkMultiplier> DamageMultiply = new List<AtkMultiplier>(); // ataki zwracajace obrazenia postaci pomnozone przez multiplier
@@ -127,7 +127,7 @@ namespace Gra
                     return temp;
                 }
             }
-            foreach (AtkMultiplier atak in DamageMultiply)   //dodatkowo przeszukiwanie Weapon
+            foreach (AtkMultiplier atak in DamageMultiply)
             {
                 if (atak.GetId() == _id)
                 {
