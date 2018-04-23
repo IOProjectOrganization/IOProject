@@ -60,6 +60,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Atak.cs" />
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -76,6 +76,11 @@ namespace Gra
         {
             return maxMP;
         }
+
+        public virtual int GetObrazenia()
+        {
+            return 0;
+        }
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -111,6 +116,8 @@ namespace Gra
 
         public List<Przedmiot> Ekwipunek;
 
+        public List<Atak> SpecjalneAtaki;
+
         public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
         {
             Level = level;
@@ -120,6 +127,7 @@ namespace Gra
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
             Ekwipunek = new List<Przedmiot>();
+            SpecjalneAtaki = new List<Atak>();
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
@@ -137,13 +145,13 @@ namespace Gra
             if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
             if (UzywanaBron != null)
             {
-                Obrazenia = UzywanaBron.getObrazenia() + Strength * 5;
+                Obrazenia = UzywanaBron.getObrazenia() + Strength * 3;
             }
             else
-                Obrazenia = Strength * 5;
+                Obrazenia = Strength * 3;
         }
 
-        public int GetObrazenia()
+        public override int GetObrazenia()
         {
             return Obrazenia;
         }
@@ -250,6 +258,25 @@ namespace Gra
             }
             else
                 return false;
+        }
+
+        public void PoznajAtak(int id)
+        {
+            bool JuzPoznany=false;
+            Atak PoznawanyAtak = Ataki.AttacksById(id);
+            PoznawanyAtak.AssignParent(this);
+            foreach(Atak ZnanyAtak in SpecjalneAtaki)
+            {
+                if (ZnanyAtak.GetId() == PoznawanyAtak.GetId())
+                {
+                    JuzPoznany = true;
+                }
+            }
+
+            if(JuzPoznany==false)
+            {
+                SpecjalneAtaki.Add(PoznawanyAtak);
+            }
         }
 
         public void DodajPrzedmiot(int id)
@@ -383,7 +410,7 @@ namespace Gra
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
         }
 
-        public int GetObrazenia()
+        public override int GetObrazenia()
         {
             return Obrazenia;
         }
@@ -419,10 +446,10 @@ namespace Gra
 
         static Wrog()
         {
-            zaladujPrzedmioty();
+            zaladujWrogow();
         }
 
-        private static void zaladujPrzedmioty()
+        private static void zaladujWrogow()
         {
             //Przeciwnik.Add(new Przeciwnik("Szkielet", enemyId_szkielet, 20, 25, 10, 80, 0, jakassciezkaobrazu));
         }
