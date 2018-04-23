@@ -264,7 +264,10 @@ namespace Gra
                                 postac.addIntelligence(istniejacyPrzedmiot.getItemIntelligence());
                             }
 
-                            postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
+                            if (postac.Ekwipunek.ElementAt(i).getIlosc() == 1)
+                                postac.Ekwipunek.RemoveAt(i);
+                            else
+                                postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
 
                             break;
                         }

@@ -81,6 +81,15 @@ namespace Gra
         {
             return 0;
         }
+
+        public WorldMapSprite GetCharacterSprite()
+        { return CharacterSprite; }
+
+        public void SetCharacterSprite(Point location, Image img)
+        {
+            CharacterSprite.SetLocation(location);
+            CharacterSprite.SetImage(img);
+        }
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -350,15 +359,6 @@ namespace Gra
             Gold = gold;
         }
 
-        public WorldMapSprite GetCharacterSprite()
-        { return CharacterSprite; }
-
-        public void SetCharacterSprite(Point location, Image img)
-        {
-            CharacterSprite.SetLocation(location);
-            CharacterSprite.SetImage(img);
-        }
-
         public void SetMoveDirection(MoveDirection dir)
         { Direction = dir; }
 
@@ -387,16 +387,15 @@ namespace Gra
 
     public class Przeciwnik : Postac
     {
-       //private Image ObrazekPostaci;  // obrazek ktory ma przedstawiac postac
-       //private Point PlayerLoc;
         private int id;
         private Image ObrazekPostaci;
+        private Point EnemyLoc;
         private string Nazwa;
         private int Obrazenia;
         private int NagrodaExp;
         private int NagrodaGold;
 
-        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Image SciezkaObrazku) : base(basehp, basemp) // dodane mp
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Point Location, Image SciezkaObrazku) : base(basehp, basemp)
         {
             id = _id;
             SetMaxHP(basehp);
@@ -408,6 +407,8 @@ namespace Gra
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
+            EnemyLoc = Location;
+            CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
         public override int GetObrazenia()
@@ -461,7 +462,7 @@ namespace Gra
             {
                 if (enemy.getId() == _id)
                 {
-                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.getObrazekPostaci());
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.GetCharacterSprite().GetLocation(), enemy.getObrazekPostaci());
                     return temp;
                 }
             }

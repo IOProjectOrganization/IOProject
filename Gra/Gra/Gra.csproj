@@ -61,6 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Atak.cs" />
+    <Compile Include="Combat.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Combat.Designer.cs">
+      <DependentUpon>Combat.cs</DependentUpon>
+    </Compile>
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +101,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Combat.resx">
+      <DependentUpon>Combat.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Equipment.resx">
       <DependentUpon>Equipment.cs</DependentUpon>
     </EmbeddedResource>
@@ -195,6 +204,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\sword_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enemy1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
