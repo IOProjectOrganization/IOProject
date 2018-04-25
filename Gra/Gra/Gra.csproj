@@ -92,6 +92,12 @@
     <Compile Include="Quit.Designer.cs">
       <DependentUpon>Quit.cs</DependentUpon>
     </Compile>
+    <Compile Include="Shop.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Shop.Designer.cs">
+      <DependentUpon>Shop.cs</DependentUpon>
+    </Compile>
     <Compile Include="World.cs" />
     <Compile Include="Equipment.cs">
       <SubType>Form</SubType>
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Quit.resx">
       <DependentUpon>Quit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Shop.resx">
+      <DependentUpon>Shop.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -207,6 +216,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\enemy1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zloto.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

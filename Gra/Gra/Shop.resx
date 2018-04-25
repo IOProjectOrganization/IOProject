@@ -117,47 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="GrassTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GrassTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="healthpotion_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\healthpotion_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="manapotion_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\manapotion_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Player" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Player.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sword_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sword_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="sword_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\sword_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="WaterTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\WaterTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="world00" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world00.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="world10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="world20" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="world_10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="enemy1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\enemy1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="zloto" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\zloto.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>

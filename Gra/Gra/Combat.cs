@@ -188,7 +188,7 @@ namespace Gra
         {
             Player.SetHP(Player.GetHP() - (Enemy.GetObrazenia() * EnemyDmgMultiplier) / PlayerDefMultiplier);
 
-            if (Enemy.GetHP() <= 0)
+            if (Player.GetHP() <= 0)
             {
                 Player.SetHP(0);
                 Player.SetMP(0);

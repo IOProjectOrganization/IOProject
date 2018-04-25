@@ -20,6 +20,7 @@ namespace Gra
             public bool isInteractive; //Czy obiekt jest interaktywny
             public bool isMapLoader; //Czy wczytuje mape
             public bool SwitchState;
+            public bool isShop; // Czy pole nalezy do obszaru sklepu
         }
 
         public List<WorldMapItem> worldMapItems; //Lista przedmiotów na danym świecie
@@ -59,6 +60,16 @@ namespace Gra
                         T.isInteractive = false; //Sprawdzamy czy jest interaktywny
                         T.isMapLoader = true; //Sprawdzamy czy wczytuje świat
                         T.SwitchState = false; //Sprawdzamy czy przycisko został przełączony
+                        T.isShop = false;
+                    }
+                    if(line[z].ToString() == "s") // dostęp do sklepu
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Player, TileWidth, TileHeight);
+                        T.isWalkable = false;
+                        T.isInteractive = true;
+                        T.isMapLoader = false;
+                        T.SwitchState = false;
+                        T.isShop = true;
                     }
                     if (line[z].ToString() == "0") //Zablokowana przestrzeń
                     {
@@ -67,6 +78,7 @@ namespace Gra
                         T.isInteractive = false;
                         T.isMapLoader = false;
                         T.SwitchState = false;
+                        T.isShop = false;
                     }
                     if (line[z].ToString() == "1") //Domyślna, możliwa do chodzenia przestrzeć
                     {
@@ -75,6 +87,7 @@ namespace Gra
                         T.isInteractive = false;
                         T.isMapLoader = false;
                         T.SwitchState = false;
+                        T.isShop = false;
                     }
                     if (line[z].ToString() == "2") //Przedmiot
                     {
@@ -83,6 +96,7 @@ namespace Gra
                         T.isInteractive = true;
                         T.isMapLoader = false;
                         T.SwitchState = false;
+                        T.isShop = false;
 
                         if (line[z + 1].ToString() == "0")
                         {
@@ -126,6 +140,12 @@ namespace Gra
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.sword_2, TileWidth, TileHeight);
                             }
                         }
+                        if(line[z+1].ToString() == "2")
+                        {
+                            worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(8)));
+                            item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
+                            T.TileImage = new Bitmap(Gra.Properties.Resources.zloto, TileWidth*2/3, TileHeight*2/3);
+                        }
                     }
                     if (line[z].ToString() == "3") //Zablokowana przestrzeń
                     {
@@ -134,6 +154,7 @@ namespace Gra
                         T.isInteractive = true;
                         T.isMapLoader = false;
                         T.SwitchState = false;
+                        T.isShop = false;
                     }
 
                     MapTiles.Add(T); //Dodajemy dany obiekt mapy do listy
@@ -198,6 +219,16 @@ namespace Gra
             return false;
         }
 
+        public bool GetIsShop(Point Loc)
+        {
+            foreach (Tile T in MapTiles)
+                if (T.TileLoc == Loc)
+                    if (T.isShop)
+                        return true;
+
+            return false;
+        }
+
         public bool GetIsMapLoader(Point Loc)
         {
             foreach (Tile T in MapTiles)
@@ -244,15 +275,22 @@ namespace Gra
     public class WorldMapItem : WorldMapSprite
     {
         int id;
+        int amount;
 
         public WorldMapItem(Point location, Image image, Przedmiot item) : base(location, image)
         {
             id = item.getId();
+            amount = item.getIlosc();
         }
 
         public int getID()
         {
             return id;
+        }
+
+        public int getAmount()
+        {
+            return amount;
         }
 
         public void Draw(Graphics Device, int Width, int Height)

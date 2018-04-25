@@ -36,6 +36,9 @@ namespace Gra
 
         Equipment equipment = new Equipment();
 
+        Shop shop = new Shop();
+        Bohater sklepikarz= new Bohater(0, 0);
+
         Combat combat;
 
         Quit quit = new Quit();
@@ -88,10 +91,18 @@ namespace Gra
 
         void LoadNewMap(int MoveX, int MoveY)
         {
+            sklepikarz.WyczyscEkwipunek();
+
             MTB = random.Next(15, 20);
             mapX += MoveX;
             mapY += MoveY;
             worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true);
+
+            System.Random product = new Random(System.DateTime.Now.Millisecond);
+            for(int i = 0; i < 3; i++)
+            {
+                sklepikarz.DodajPrzedmiot(product.Next(1, 7));
+            }
         }
 
         void ReloadMap()
@@ -133,48 +144,78 @@ namespace Gra
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
                     worldMap.GetInteractiveAt(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
                     {
-
-                        WorldMapItem item = null;
-
-                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X - _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
-                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X + _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
-                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y - _Height / 18);
-                        if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y + _Height / 18);
-
-                        if (item != null)
+                        if ((worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y)) ||
+                            worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X - _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                            worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X + _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                            worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
+                            worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18))))
                         {
-                            Player.DodajPrzedmiot(item.getID());
-                            ReloadMap();
+                            shop.UpdateEquipment(Player);
+                            shop.UpdateProducts(sklepikarz);
+                            shop.Show();
+                            shop.Focus();
+                        }
+                        else
+                        {
 
-                            int i = 0;
-                            StringBuilder newFile = new StringBuilder();
-                            string[] text = File.ReadAllLines(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt");
-                            string temp = "";
 
-                            foreach (string line in text)
+                            WorldMapItem item = null;
+
+                            if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X - _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
+                            if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X + _Width / 32 && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y);
+                            if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y - _Height / 18);
+                            if (item == null) item = worldMap.worldMapItems.Find(c => c.GetLocation().X == Player.GetCharacterSprite().GetLocation().X && c.GetLocation().Y == Player.GetCharacterSprite().GetLocation().Y + _Height / 18);
+
+                            if (item != null)
                             {
-                                if (i != item.GetLocation().Y / (_Height / 18))
+                                if (item.getID() != Item.itemId_gold)
                                 {
-                                    newFile.AppendLine(line);
+                                    Player.DodajPrzedmiot(item.getID());
                                 }
-                                if (i == item.GetLocation().Y / (_Height / 18))
+                                else
                                 {
-                                    temp = line.Substring(0, item.GetLocation().X / (_Width / 32) * 4);
-                                    temp += "1";
-                                    temp += line.Substring(item.GetLocation().X / (_Width / 32) * 4 + 1);
+                                    System.Random goldToGet = new Random();
+                                    int gold;
+                                    gold = goldToGet.Next(1, 500);
 
-                                    newFile.Append(temp + "\r\n");
+                                    Player.DodajGold(gold);
                                 }
 
-                                i++;
+
+                                ReloadMap();
+
+                                int i = 0;
+                                StringBuilder newFile = new StringBuilder();
+                                string[] text = File.ReadAllLines(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt");
+                                string temp = "";
+
+                                foreach (string line in text)
+                                {
+                                    if (i != item.GetLocation().Y / (_Height / 18))
+                                    {
+                                        newFile.AppendLine(line);
+                                    }
+                                    if (i == item.GetLocation().Y / (_Height / 18))
+                                    {
+                                        temp = line.Substring(0, item.GetLocation().X / (_Width / 32) * 4);
+                                        temp += "1";
+                                        temp += line.Substring(item.GetLocation().X / (_Width / 32) * 4 + 1);
+
+                                        newFile.Append(temp + "\r\n");
+                                    }
+
+                                    i++;
+                                }
+
+                                File.WriteAllText(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt", newFile.ToString());
+                                worldMap.worldMapItems.Remove(item);
+                                ReloadMap();
                             }
-
-                            File.WriteAllText(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt", newFile.ToString());
-                            worldMap.worldMapItems.Remove(item);
-                            ReloadMap();
                         }
                     }
-                }
+            }
+
+                //
 
                 if (e.KeyCode == Keys.I)
                 {

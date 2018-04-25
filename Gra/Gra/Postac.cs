@@ -167,6 +167,11 @@ namespace Gra
             Skillpoints = 0;
         }
 
+        public Bohater(int basehp, int basemp) : base(basehp,basemp)
+        {
+            Ekwipunek = new List<Przedmiot>();
+        }
+
         public void UpdateStats()  // zapewnić aktualność danych kiedykolwiek zmienią się statystyki
         {
             SetMaxHP(GetBaseHP() + Strength * 7);
@@ -334,6 +339,11 @@ namespace Gra
             }
         }
 
+        public void WyczyscEkwipunek()
+        {
+            Ekwipunek.Clear();
+        }
+
         public void ZalozBron(Bron bron)
         {
             UzywanaBron = bron;
@@ -354,6 +364,11 @@ namespace Gra
         public void DodajGold(int gold)
         {
             Gold += gold;
+        }
+
+        public void DecreaseGold(int gold)
+        {
+            Gold -= gold;
         }
 
         public void SetGold(int gold)
