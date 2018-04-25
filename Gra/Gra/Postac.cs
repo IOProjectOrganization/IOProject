@@ -24,10 +24,13 @@ namespace Gra
 
         protected WorldMapSprite CharacterSprite; //Pozwala na obsługę postaci w świecie gry
 
+        public List<Atak> SpecjalneAtaki;
+
         public Postac(int basehp, int basemp)
         {
             BaseHP = basehp;
             BaseMP = basemp;
+            SpecjalneAtaki = new List<Atak>();
         }
 
         public int GetBaseHP()
@@ -90,6 +93,26 @@ namespace Gra
             CharacterSprite.SetLocation(location);
             CharacterSprite.SetImage(img);
         }
+
+        public void PoznajAtak(int id)
+        {
+            bool JuzPoznany = false;
+            Atak PoznawanyAtak = Ataki.AttacksById(id);
+            PoznawanyAtak.AssignParent(this);
+            foreach (Atak ZnanyAtak in SpecjalneAtaki)
+            {
+                if (ZnanyAtak.GetId() == PoznawanyAtak.GetId())
+                {
+                    JuzPoznany = true;
+                }
+            }
+
+            if (JuzPoznany == false)
+            {
+                SpecjalneAtaki.Add(PoznawanyAtak);
+            }
+        }
+
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -125,7 +148,6 @@ namespace Gra
 
         public List<Przedmiot> Ekwipunek;
 
-        public List<Atak> SpecjalneAtaki;
 
         public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
         {
@@ -136,7 +158,6 @@ namespace Gra
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
             Ekwipunek = new List<Przedmiot>();
-            SpecjalneAtaki = new List<Atak>();
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
@@ -267,25 +288,6 @@ namespace Gra
             }
             else
                 return false;
-        }
-
-        public void PoznajAtak(int id)
-        {
-            bool JuzPoznany=false;
-            Atak PoznawanyAtak = Ataki.AttacksById(id);
-            PoznawanyAtak.AssignParent(this);
-            foreach(Atak ZnanyAtak in SpecjalneAtaki)
-            {
-                if (ZnanyAtak.GetId() == PoznawanyAtak.GetId())
-                {
-                    JuzPoznany = true;
-                }
-            }
-
-            if(JuzPoznany==false)
-            {
-                SpecjalneAtaki.Add(PoznawanyAtak);
-            }
         }
 
         public void DodajPrzedmiot(int id)

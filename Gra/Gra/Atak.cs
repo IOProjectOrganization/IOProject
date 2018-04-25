@@ -111,7 +111,7 @@ namespace Gra
 
         private static void zaladujAtaki()
         {
-            DamageATK.Add(new AtkObrazenia(AtakId_MagicznyPocisk, "Magiczny pocisk", "Prosty magiczny pocisk zadający niewielkie obrażenia", 8, 75));
+            DamageATK.Add(new AtkObrazenia(AtakId_MagicznyPocisk, "Magiczny pocisk", "Prosty magiczny pocisk zadający niewielkie obrażenia", 8, 40));
 
 
             DamageMultiply.Add(new AtkMultiplier(AtakId_SkupionyAtak, "Skupiony atak", "Specjalny cios zadający większe obrażenia niż zwykły atak", 10, 1.5));
