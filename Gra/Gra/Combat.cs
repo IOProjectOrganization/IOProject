@@ -109,6 +109,8 @@ namespace Gra
                     Player.DodajEXP(Enemy.getNagrodaExp());
                     Player.DodajGold(Enemy.getNagrodaGold());
 
+                    
+
                     this.Hide();
                 }
             }

@@ -218,6 +218,10 @@
     <None Include="Resources\enemy1.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="Resources\zloto.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -372,7 +372,6 @@ namespace Gra
                 if (MTB <= 0)
                 {
                     combat = new Combat();
-
                     combat.StartCombat(Player, new Przeciwnik("RandomTest", 0, 10, 10, 10, 50, 50, new Point(9 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1));
                     combat.Show();
                     combat.Focus();
@@ -422,6 +421,8 @@ namespace Gra
                         combat.Focus();
 
                         CombatTimer.Start();
+
+                        MTB = random.Next(15, 20);
                     }
                 }
             }
