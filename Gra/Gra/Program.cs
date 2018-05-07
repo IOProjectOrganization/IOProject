@@ -37,7 +37,7 @@ namespace Gra
         Equipment equipment = new Equipment();
 
         Shop shop = new Shop();
-        Bohater sklepikarz= new Bohater(0, 0);
+        Postac sklepikarz= new Postac();   // Bohater zmieniony na Postac
 
         Combat combat;
 

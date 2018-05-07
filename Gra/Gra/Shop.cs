@@ -12,7 +12,8 @@ namespace Gra
 {
     public partial class Shop : Form
     {
-        Bohater postac, seller;
+        Bohater postac;
+        Postac seller;    // seller przeniesiony na Postac
 
         public Shop()
         {
@@ -35,7 +36,7 @@ namespace Gra
             }
         }
 
-        public void UpdateProducts(Bohater Seller)
+        public void UpdateProducts(Postac Seller)   //Bohater zmienony na Postac
         {
             seller = Seller;
 
