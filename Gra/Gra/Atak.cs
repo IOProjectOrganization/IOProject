@@ -14,7 +14,7 @@ namespace Gra
 
     public class Atak  // klasa bazowa
     {
-        protected TypAtaku Typ;    // dla rozroznienia w jaki sposob wybrana umiejetnosc ma wykonac system walki
+        public TypAtaku Typ;    // dla rozroznienia w jaki sposob wybrana umiejetnosc ma wykonac system walki     if (wybranyatak.Typ == TypAtaku.Obrazenia)  .....
         protected bool AppliesStun;
         int id;
         Postac Parent;   // postac posiadajaca pewien atak, potrzebne aby wyliczac obrazenia pod wzgledem statystyk

@@ -285,7 +285,7 @@ namespace Gra
         private int Intelligence;
         private int Skillpoints;
 
-        private int Obrazenia;
+        //private int Obrazenia;
         //private int Obrona;       //kiedy/jesli dodamy armor
 
             // przeniesione do klasy postaci
