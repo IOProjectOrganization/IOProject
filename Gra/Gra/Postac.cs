@@ -335,17 +335,23 @@ namespace Gra
             if (GetHP() > GetMaxHP()) SetHP(GetMaxHP());
             SetMaxMP(GetBaseMP() + Intelligence * 5);
             if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
-            if (UzywanaBron != null)
+          /*  if (UzywanaBron != null)
             {
                 Obrazenia = UzywanaBron.getObrazenia() + Strength * 3;
             }
             else
-                Obrazenia = Strength * 3;
+                Obrazenia = Strength * 3; */
         }
 
         public override int GetObrazenia()
         {
-            return Obrazenia;
+            if (UzywanaBron != null)
+            {
+                return UzywanaBron.getObrazenia() + Strength * 3;
+            }
+            else
+                return Strength * 3;
+            //return Obrazenia;
         }
 
         public int GetEXP()
@@ -591,6 +597,19 @@ namespace Gra
             CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
+        {
+            id = _id;
+            SetMaxHP(basehp);
+            SetHP(basehp);
+            SetMaxMP(basemp);
+            SetMP(basemp);
+            Nazwa = nazwa;
+            Obrazenia = obrazenia;
+            NagrodaExp = nagrodaexp;
+            NagrodaGold = nagrodagold;
+        }
+
         public override int GetObrazenia()
         {
             return Obrazenia;
@@ -617,22 +636,50 @@ namespace Gra
         }
     }
     
-    public static class Wrog   // baza przeciwnikow
+    public static class Wrog   // baza przeciwnikow losowych
     {
         public static readonly List<Przeciwnik> Przeciwnik = new List<Przeciwnik>();
 
         // ID
 
-        //public const int enemyId_szkielet = 1;
+        public const int enemyId_nietoperz = 1;
+        public const int enemyId_ogromnyszczur = 2;
+        public const int enemyId_wilk = 3;
+        public const int enemyId_szkielet = 4;
+        public const int enemyId_szkielet_czarownik = 5;
+        public const int enemyId_minotaur = 6;
 
         static Wrog()
         {
             zaladujWrogow();
         }
 
-        private static void zaladujWrogow()
+        //public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
+        private static void zaladujWrogow()   // wykorzystany konstruktor bez obrazka postaci i lokacji, przeznaczony wiec dla walk losowych gdzie nie sa potrzebne
         {
-            //Przeciwnik.Add(new Przeciwnik("Szkielet", enemyId_szkielet, 20, 25, 10, 80, 0, jakassciezkaobrazu));
+            Przeciwnik temp;
+
+            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30);
+            temp.PoznajAtak(1);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30);
+            temp.PoznajAtak(2);
+            temp.PoznajAtak(4);
+            Przeciwnik.Add(temp);
+
         }
 
 
@@ -642,7 +689,15 @@ namespace Gra
             {
                 if (enemy.getId() == _id)
                 {
-                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.GetCharacterSprite().GetLocation(), enemy.getObrazekPostaci());
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP());
+                    foreach(Atak atak in enemy.SpecjalneAtaki)
+                    {
+                        temp.PoznajAtak(atak.GetId());
+                    }
+                    foreach(Przedmiot przedmiot in enemy.Ekwipunek)
+                    {
+                        temp.DodajPrzedmiot(przedmiot.getId());
+                    }
                     return temp;
                 }
             }
