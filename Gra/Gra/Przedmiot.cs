@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace Gra
 {
+    public enum ItemType { None, Consumable, Weapon, Armor };
+
     public class Przedmiot
     {
         private int ilosc;
@@ -21,13 +23,15 @@ namespace Gra
         private int itemDexterity;
         private int itemIntelligence;
 
+        private ItemType itemType;
+
         public Przedmiot()
         {
             ilosc = 0;
             nazwa = "";
         }
 
-        public Przedmiot(int _ilosc, int _id, string _nazwa, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellPrice, int _buyPrice)
+        public Przedmiot(int _ilosc, int _id, string _nazwa, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellPrice, int _buyPrice, ItemType _itemType)
         {
             ilosc = _ilosc;
             id = _id;
@@ -41,11 +45,14 @@ namespace Gra
             itemDexterity = dex;
             itemIntelligence = intel;
             itemStrength = str;
+
+            itemType = _itemType;
+
         }
 
         public virtual Przedmiot Kopia()  //wirtualna metoda glebokiej kopii
         {
-            Przedmiot temp = new Przedmiot(this.getIlosc(), this.getId(), this.getNazwa(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice());
+            Przedmiot temp = new Przedmiot(this.getIlosc(), this.getId(), this.getNazwa(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
             return temp;
         }
 
@@ -138,6 +145,11 @@ namespace Gra
         {
             ilosc += _x;
         }
+
+        public ItemType getItemType()
+        {
+            return itemType;
+        }
     }
 
     public class Bron : Przedmiot
@@ -146,14 +158,14 @@ namespace Gra
         //private int zuzycie; // dwa kolejne, jesli uwzgledniamy zuzycie
         //private int zywotnosc; // 
 
-        public Bron(int _ilosc, int _id, string _nazwa, int _obrazenia, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice)
+        public Bron(int _ilosc, int _id, string _nazwa, int _obrazenia, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
         {
             obrazenia = _obrazenia;
         }
 
         public override Przedmiot Kopia()  //gleboka kopia
         {
-            Przedmiot temp = new Bron(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrazenia(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice());
+            Przedmiot temp = new Bron(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrazenia(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
             return temp;
         }
 
@@ -164,12 +176,35 @@ namespace Gra
 
     }
 
+    public class Zbroja : Przedmiot
+    {
+        private int obrona;
+        //private int zuzycie; //
+        //private int zywotnosc; //
+
+        public Zbroja(int _ilosc, int _id, string _nazwa, int _obrona, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
+        {
+            obrona = _obrona;
+        }
+
+        public override Przedmiot Kopia()
+        {
+            Przedmiot temp = new Zbroja(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrona(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
+            return temp;
+        }
+
+        public int getObrona()
+        {
+            return obrona;
+        }
+    }
+
     public class Mikstury : Przedmiot // zmienione tak, by obslugiwalo zarowno przedmioty zwiekszajace HP, jak i te zwiekszajace MP
     {
         private int potionHp;
         private int potionMp;
 
-        public Mikstury(int _ilosc, int _id, string _nazwa, int _potionHp, int _potionMP, bool _stackable, int hp ,int mp, int str, int dex, int intel, int _sellprice, int _buyprice) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice)
+        public Mikstury(int _ilosc, int _id, string _nazwa, int _potionHp, int _potionMP, bool _stackable, int hp ,int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
         {
             potionHp = _potionHp;
             potionMp = _potionMP;
@@ -177,7 +212,7 @@ namespace Gra
 
         public override Przedmiot Kopia()  //gleboka kopia
         {
-            Przedmiot temp = new Mikstury(this.getIlosc(), this.getId(), this.getNazwa(), this.getPotionHp(), this.getPotionMp(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice());
+            Przedmiot temp = new Mikstury(this.getIlosc(), this.getId(), this.getNazwa(), this.getPotionHp(), this.getPotionMp(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
             return temp;
         }
 
@@ -199,7 +234,12 @@ namespace Gra
         public static readonly List<Przedmiot> Items = new List<Przedmiot>(); // uzytkowe temp
         public static readonly List<Mikstury> Medicine = new List<Mikstury>(); // lekarstwa
         public static readonly List<Bron> Weapon = new List<Bron>(); // bron
+        public static readonly List<Zbroja> Armor = new List<Zbroja>(); // zbroja
 
+        // Zloto
+        
+        public const int itemId_gold = 0;
+        
         // Mikstury
 
         public const int itemId_smallPotion = 1;
@@ -216,9 +256,9 @@ namespace Gra
         public static int weaponId_normalSword = 6;
         public static int weaponId_bigSword = 7;
 
-        // Zloto
+        // Zbroje
 
-        public const int itemId_gold = 8;
+        public static int armorId_lightSteelArmor = 8;
 
         static Item()
         {
@@ -227,16 +267,18 @@ namespace Gra
 
         private static void zaladujPrzedmioty()
         {
-            Medicine.Add(new Mikstury(0, itemId_smallPotion, "Mala mikstura", 50, 0, true, 0, 0, 50, 0, 0, 10, 20));
-            Medicine.Add(new Mikstury(0, itemId_bigPotion, "Duza mikstura", 100, 0, true, 0, 0, 0, 0, 0, 50, 100));
-            Medicine.Add(new Mikstury(0, itemId_smallMpPotion, "Ether", 0, 25, true, 0, 0, 0, 0, 0, 10, 20));
-            Medicine.Add(new Mikstury(0, itemId_bigMpPotion, "Mega Ether", 0, 50, true, 0, 0, 0, 0, 0, 50, 100));
+            Medicine.Add(new Mikstury(0, itemId_smallPotion, "Mala mikstura", 50, 0, true, 0, 0, 0, 0, 0, 10, 20, ItemType.Consumable));
+            Medicine.Add(new Mikstury(0, itemId_bigPotion, "Duza mikstura", 100, 0, true, 0, 0, 0, 0, 0, 50, 100, ItemType.Consumable));
+            Medicine.Add(new Mikstury(0, itemId_smallMpPotion, "Ether", 0, 25, true, 0, 0, 0, 0, 0, 10, 20, ItemType.Consumable));
+            Medicine.Add(new Mikstury(0, itemId_bigMpPotion, "Mega Ether", 0, 50, true, 0, 0, 0, 0, 0, 50, 100, ItemType.Consumable));
 
-            Items.Add(new Przedmiot(0, itemId_bone, "Ludzka kosc", true, 0, 0, 0, 0, 0, 2, -1));
-            Items.Add(new Przedmiot(0, itemId_gold, "Zloto", true, 0, 0, 0, 0, 0, 0, 0));
+            Items.Add(new Przedmiot(0, itemId_bone, "Ludzka kosc", true, 0, 0, 0, 0, 0, 2, -1, ItemType.None));
+            Items.Add(new Przedmiot(0, itemId_gold, "Zloto", true, 0, 0, 0, 0, 0, 0, 0, ItemType.None));
 
-            Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 70, false, 0, 0, 0, 0, 0, 200, 350));
-            Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 120, false, 0, 0, 0, 0, 0, 400, 600));
+            Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 70, false, 0, 0, 0, 0, 0, 200, 350, ItemType.Weapon));
+            Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 120, false, 0, 0, 0, 0, 0, 400, 600, ItemType.Weapon));
+
+            Armor.Add(new Zbroja(0, armorId_lightSteelArmor, "Lekka stalowa zbroja", 30, false, 0, 0, 0, 0, 0, 300, 500, ItemType.Armor));
         }
 
         public static Przedmiot ItemsById(int _id)
@@ -262,6 +304,13 @@ namespace Gra
                     return item;
                 }
 
+            }
+            foreach (Przedmiot item in Armor)
+            {
+                if (item.getId() == _id)
+                {
+                    return item;
+                }
             }
 
             return null;

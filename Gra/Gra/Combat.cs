@@ -25,6 +25,8 @@ namespace Gra
         Bohater Player = null;
         Przeciwnik Enemy = null;
 
+        Random random = new Random();
+
 
         public Combat()
         {
@@ -59,6 +61,8 @@ namespace Gra
             inCombat = true;
             playerTurn = true;
 
+            PlayerPB.Image = Gra.Properties.Resources.PlayerCombat;
+
             UpdateStats();
         }
 
@@ -89,6 +93,7 @@ namespace Gra
                 EnemyMPCurrentLabel.Text = Enemy.GetMP().ToString();
                 EnemyMPSlashLabel.Text = "/";
                 EnemyMPMaxLabel.Text = Enemy.GetMaxMP().ToString();
+                label1.Text = Enemy.getNazwa();
             }
         }
 
@@ -102,6 +107,7 @@ namespace Gra
                 {
                     Enemy.SetHP(0);
                     Enemy.SetMP(0);
+                    Enemy.setIsAlive(false);
 
                     playerWin = true;
                     inCombat = false;
@@ -109,7 +115,7 @@ namespace Gra
                     Player.DodajEXP(Enemy.getNagrodaExp());
                     Player.DodajGold(Enemy.getNagrodaGold());
 
-                    
+                    Enemy = null;
 
                     this.Hide();
                 }
@@ -122,15 +128,17 @@ namespace Gra
 
             playerTurn = false;
             AttackBtn.Enabled = false;
-            SpecialAttackBtn.Enabled = false;
+            SpecialSkillBtn.Enabled = false;
             BlockBtn.Enabled = false;
             ItemsBtn.Enabled = false;
 
             UpdateStats();
         }
 
-        private void SpecialAttackBtn_Click(object sender, EventArgs e)
+        private void SpecialSkillBtn_Click(object sender, EventArgs e)
         {
+
+
             PlayerDmgMultiplier = 1;
             PlayerDefMultiplier = 1;
             EnemyDmgMultiplier = 1;
@@ -138,7 +146,7 @@ namespace Gra
 
             playerTurn = false;
             AttackBtn.Enabled = false;
-            SpecialAttackBtn.Enabled = false;
+            SpecialSkillBtn.Enabled = false;
             BlockBtn.Enabled = false;
             ItemsBtn.Enabled = false;
 
@@ -154,7 +162,7 @@ namespace Gra
 
             playerTurn = false;
             AttackBtn.Enabled = false;
-            SpecialAttackBtn.Enabled = false;
+            SpecialSkillBtn.Enabled = false;
             BlockBtn.Enabled = false;
             ItemsBtn.Enabled = false;
 
@@ -174,7 +182,7 @@ namespace Gra
 
             playerTurn = false;
             AttackBtn.Enabled = false;
-            SpecialAttackBtn.Enabled = false;
+            SpecialSkillBtn.Enabled = false;
             BlockBtn.Enabled = false;
             ItemsBtn.Enabled = false;
 
@@ -208,27 +216,47 @@ namespace Gra
 
             playerTurn = true;
             AttackBtn.Enabled = true;
-            SpecialAttackBtn.Enabled = true;
+            SpecialSkillBtn.Enabled = true;
             BlockBtn.Enabled = true;
             ItemsBtn.Enabled = true;
 
             UpdateStats();
         }
 
-        private void EnemySpecialAttack()
+        private void EnemySpecialSkill()
         {
-            PlayerDmgMultiplier = 1;
-            PlayerDefMultiplier = 1;
-            EnemyDmgMultiplier = 1;
-            EnemyDefMultiplier = 1;
+            int randomValue = random.Next(Enemy.SpecjalneAtaki.Count);
+           
+            if (Enemy.GetMP() >= Enemy.SpecjalneAtaki.ElementAt(randomValue).GetManaCost())
+            {
+                if (Enemy.SpecjalneAtaki.ElementAt(randomValue).GetType() == typeof(AtkLeczenie))
+                {
+                    Enemy.SetHP(Enemy.GetHP() + Enemy.SpecjalneAtaki.ElementAt(randomValue).GetValue());
 
-            playerTurn = true;
-            AttackBtn.Enabled = true;
-            SpecialAttackBtn.Enabled = true;
-            BlockBtn.Enabled = true;
-            ItemsBtn.Enabled = true;
+                    if (Enemy.GetHP() > Enemy.GetMaxHP())
+                        Enemy.SetHP(Enemy.GetMaxHP());
+                }
+                else
+                    Player.SetHP(Player.GetHP() - (Enemy.SpecjalneAtaki.ElementAt(randomValue).GetValue() * EnemyDmgMultiplier) / PlayerDefMultiplier);
 
-            UpdateStats();
+                Enemy.SetMP(Enemy.GetMP() - Enemy.SpecjalneAtaki.ElementAt(randomValue).GetManaCost());
+
+                if (Enemy.GetMP() <= 0)
+                    Enemy.SetMP(0);
+
+                PlayerDmgMultiplier = 1;
+                PlayerDefMultiplier = 1;
+                EnemyDmgMultiplier = 1;
+                EnemyDefMultiplier = 1;
+
+                playerTurn = true;
+                AttackBtn.Enabled = true;
+                SpecialSkillBtn.Enabled = true;
+                BlockBtn.Enabled = true;
+                ItemsBtn.Enabled = true;
+
+                UpdateStats();
+            }
         }
 
         private void EnemyBlock()
@@ -240,7 +268,7 @@ namespace Gra
 
             playerTurn = true;
             AttackBtn.Enabled = true;
-            SpecialAttackBtn.Enabled = true;
+            SpecialSkillBtn.Enabled = true;
             BlockBtn.Enabled = true;
             ItemsBtn.Enabled = true;
 
@@ -260,7 +288,7 @@ namespace Gra
 
             playerTurn = true;
             AttackBtn.Enabled = true;
-            SpecialAttackBtn.Enabled = true;
+            SpecialSkillBtn.Enabled = true;
             BlockBtn.Enabled = true;
             ItemsBtn.Enabled = true;
 
@@ -269,9 +297,36 @@ namespace Gra
 
         private void Delay_Tick(object sender, EventArgs e)
         {
-            if (!playerTurn)
+            if (Enemy != null)
             {
-                EnemyAttack();
+                if (!playerTurn)
+                {
+                    int randomValue;
+
+                    if (Enemy.GetMP() > 0 && Enemy.SpecjalneAtaki.Count > 0)
+                    {
+                        randomValue = random.Next(1000);
+
+                        if (randomValue < 500)
+                            EnemyAttack();
+
+                        else if (randomValue < 800)
+                            EnemySpecialSkill();
+
+                        else
+                            EnemyBlock();
+                    }
+                    else
+                    {
+                        randomValue = random.Next(1000);
+                        
+                        if (randomValue < 800)
+                            EnemyAttack();
+
+                        else
+                            EnemyBlock();
+                    }
+                }
             }
         }
     }

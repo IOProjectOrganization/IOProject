@@ -96,6 +96,11 @@ namespace Gra
                             else
                                 postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
 
+                            seller.DodajPrzedmiot(istniejacyPrzedmiot.getId());
+
+                            UpdateEquipment(postac);
+                            UpdateProducts(seller);
+
                             break;
                         }
                         else
@@ -151,7 +156,9 @@ namespace Gra
                                     seller.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
 
                                 postac.DodajPrzedmiot(istniejacyPrzedmiot.getId());
-                                
+
+                                UpdateEquipment(postac);
+                                UpdateProducts(seller);
                             }
 
                             break;
@@ -162,8 +169,6 @@ namespace Gra
                 }
             }
 
-            UpdateEquipment(postac);
-            UpdateProducts(seller);
         }
     }
 }

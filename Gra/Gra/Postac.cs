@@ -20,6 +20,8 @@ namespace Gra
         private int MP;
         private int maxMP;
 
+        private bool isAlive = true;
+
         private int Gold;
 
         public enum MoveDirection { None, Up, Down, Left, Right };
@@ -105,6 +107,12 @@ namespace Gra
             CharacterSprite.SetLocation(location);
             CharacterSprite.SetImage(img);
         }
+
+        public bool getIsAlive()
+        { return isAlive; }
+
+        public void setIsAlive(bool b)
+        { isAlive = b; }
 
         public int GetGold()
         {
@@ -273,6 +281,7 @@ namespace Gra
     public class Bohater : Postac   // klasa bohatera
     {
         private Image ObrazekPostaci;  // obrazek ktory ma przedstawiac postac
+        private Image BattleImage;
         private Point PlayerLoc;
         private MoveDirection Direction = MoveDirection.None;
         private bool isMoving = false;
@@ -301,12 +310,13 @@ namespace Gra
         }
         //{ get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
         private Bron UzywanaBron;
+        private Zbroja UzywanaZbroja;
 
         // ekwipunek przeniesiony do klasy postaci
         //public List<Przedmiot> Ekwipunek;
 
 
-        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
+        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor
         {
             Level = level;
             SetGold(gold);
@@ -314,7 +324,6 @@ namespace Gra
             PlayerLoc = Location;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
-            //Ekwipunek = new List<Przedmiot>();    przeniesione do klasy postaci
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
@@ -453,63 +462,27 @@ namespace Gra
             else
                 return false;
         }
-        
-        // funkcje ekwipunku przeniesione do klasy postaci
-        /*
-        public void DodajPrzedmiot(int id)
-        {
-            Przedmiot DodawanyPrzedmiot = Item.ItemsById(id).Kopia();
-            if (DodawanyPrzedmiot.getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
-            {
-                DodawanyPrzedmiot.setIlosc(1);
-                Ekwipunek.Add(DodawanyPrzedmiot);
-            }
-            else
-            {
-                bool czyZnaleziono = false;
-                foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek) // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
-                {
-                    if (istniejacyPrzedmiot.getId() == id)
-                    {
-                        czyZnaleziono = true;
-                        istniejacyPrzedmiot.zwiekszIlosc(1);
-                        break;
-                    }
-                }
-                if (czyZnaleziono == false)  // jesli przedmiot jest stackowalny i go nie znaleziono w ekwipunku do stackowania to go dodaje w ilosci 1
-                {
-                    DodawanyPrzedmiot.setIlosc(1);
-                    Ekwipunek.Add(DodawanyPrzedmiot);
-                }
-            }
-        }
-
-        public void UsunPrzedmiot(int id)
-        {
-            foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek)
-            {
-                if (istniejacyPrzedmiot.getId() == id)
-                {
-                    istniejacyPrzedmiot.zmniejszIlosc(1);
-                    if(istniejacyPrzedmiot.getIlosc()==0)
-                    {
-                        Ekwipunek.Remove(istniejacyPrzedmiot);
-                    }
-                    break;
-                }
-            }
-        }
-
-        public void WyczyscEkwipunek()
-        {
-            Ekwipunek.Clear();
-        }
-        */
 
         public void ZalozBron(Bron bron)
         {
             UzywanaBron = bron;
             UpdateStats();
+        }
+
+        public Bron getZalozonaBron()
+        {
+            return UzywanaBron;
+        }
+
+        public void ZalozZbroje(Zbroja zbroja)
+        {
+            UzywanaZbroja = zbroja;
+            UpdateStats();
+        }
+
+        public Zbroja getZalozonaZbroja()
+        {
+            return UzywanaZbroja;
         }
 
         public void DodajEXP(int exp)
@@ -523,28 +496,6 @@ namespace Gra
             EXP = exp;
         }
 
-        //przeniesione do klasy postaci
-        /*
-        public int GetGold()
-        {
-            return Gold;
-        }
-
-        public void DodajGold(int gold)
-        {
-            Gold += gold;
-        }
-
-        public void DecreaseGold(int gold)
-        {
-            Gold -= gold;
-        }
-
-        public void SetGold(int gold)
-        {
-            Gold = gold;
-        }
-        */
         public void SetMoveDirection(MoveDirection dir)
         { Direction = dir; }
 
@@ -575,13 +526,14 @@ namespace Gra
     {
         private int id;
         private Image ObrazekPostaci;
+        private Image BattleImage;
         private Point EnemyLoc;
         private string Nazwa;
         private int Obrazenia;
         private int NagrodaExp;
         private int NagrodaGold;
 
-        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Point Location, Image SciezkaObrazku) : base(basehp, basemp)
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Point Location, Image SciezkaObrazku, Image BattleImagePath) : base(basehp, basemp)
         {
             id = _id;
             SetMaxHP(basehp);
@@ -593,11 +545,12 @@ namespace Gra
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
+            BattleImage = new Bitmap(BattleImagePath);
             EnemyLoc = Location;
             CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
-        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Image BattleImagePath) : base(basehp, basemp)
         {
             id = _id;
             SetMaxHP(basehp);
@@ -608,6 +561,7 @@ namespace Gra
             Obrazenia = obrazenia;
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
+            BattleImage = BattleImagePath;
         }
 
         public override int GetObrazenia()
@@ -634,6 +588,10 @@ namespace Gra
         {
             return ObrazekPostaci;
         }
+        public Image getBattleImage()
+        {
+            return BattleImage;
+        }
     }
     
     public static class Wrog   // baza przeciwnikow losowych
@@ -659,23 +617,23 @@ namespace Gra
         {
             Przeciwnik temp;
 
-            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0);
+            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0, Gra.Properties.Resources.Empty);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0);
+            temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0, Gra.Properties.Resources.Empty);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0);
+            temp = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0, Gra.Properties.Resources.Empty);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0);
+            temp = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0, Gra.Properties.Resources.Empty);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30);
+            temp = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30, Gra.Properties.Resources.Empty);
             temp.PoznajAtak(1);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30);
+            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30, Gra.Properties.Resources.Empty);
             temp.PoznajAtak(2);
             temp.PoznajAtak(4);
             Przeciwnik.Add(temp);
@@ -689,7 +647,7 @@ namespace Gra
             {
                 if (enemy.getId() == _id)
                 {
-                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP());
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.getBattleImage());
                     foreach(Atak atak in enemy.SpecjalneAtaki)
                     {
                         temp.PoznajAtak(atak.GetId());

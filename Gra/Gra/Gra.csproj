@@ -220,6 +220,8 @@
   <ItemGroup>
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+    <None Include="Resources\PlayerCombat.png" />
+    <None Include="Resources\shop.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\zloto.png" />

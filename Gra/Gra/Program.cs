@@ -32,12 +32,12 @@ namespace Gra
         public PictureBox WorldMapPB; //Ustawienie zmiennej PictureBox'a
 
         Bohater Player; //Tworzymy gracza
-        Przeciwnik przeciwnik;
+        public List<Przeciwnik> worldEnemies;
 
         Equipment equipment = new Equipment();
 
         Shop shop = new Shop();
-        Postac sklepikarz= new Postac();   // Bohater zmieniony na Postac
+        Postac sklepikarz = new Postac();   // Bohater zmieniony na Postac
 
         Combat combat;
 
@@ -62,6 +62,7 @@ namespace Gra
 
             worldMap = new WorldMap(GameForm);
             worldMap.worldMapItems = new List<WorldMapItem>();
+            worldEnemies = new List<Przeciwnik>();
 
             mapX = 0;
             mapY = 0;
@@ -72,7 +73,7 @@ namespace Gra
             LoadNewMap(0, 0);
 
             Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // nowy konstruktor ze statystykami(4 do wszystkich)
-            przeciwnik = new Przeciwnik("Test1", 0, 4, 1000, 1000, 100, 100, new Point(10 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1);
+            worldEnemies.Add(new Przeciwnik("Test1", 0, 4, 1000, 1000, 100, 100, new Point(10 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1, Gra.Properties.Resources.Empty));
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -96,7 +97,7 @@ namespace Gra
             MTB = random.Next(15, 20);
             mapX += MoveX;
             mapY += MoveY;
-            worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true);
+            worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true, worldEnemies);
 
             System.Random product = new Random(System.DateTime.Now.Millisecond);
             for(int i = 0; i < 3; i++)
@@ -106,7 +107,7 @@ namespace Gra
         }
 
         void ReloadMap()
-        { worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, false); }
+        { worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, false, worldEnemies); }
 
         public void Draw()
         {
@@ -122,8 +123,11 @@ namespace Gra
             worldMap.DrawMap(Device, mapX, mapY, _Width, _Height);
             Player.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
 
-            if (przeciwnik != null)
-                przeciwnik.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
+            foreach (Przeciwnik P in worldEnemies)
+            {
+                if (P != null && P.getIsAlive() == true)
+                    P.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
+            }
 
 
             WorldMapPB.Image = Img;
@@ -214,8 +218,6 @@ namespace Gra
                         }
                     }
             }
-
-                //
 
                 if (e.KeyCode == Keys.I)
                 {
@@ -372,7 +374,7 @@ namespace Gra
                 if (MTB <= 0)
                 {
                     combat = new Combat();
-                    combat.StartCombat(Player, new Przeciwnik("RandomTest", 0, 10, 10, 10, 50, 50, new Point(9 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1));
+                    combat.StartCombat(Player, Wrog.EnemyById(Wrog.enemyId_minotaur));
                     combat.Show();
                     combat.Focus();
 
@@ -410,19 +412,22 @@ namespace Gra
                     Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                 }
 
-                if (isInEnemyRange(przeciwnik))
+                foreach (Przeciwnik P in worldEnemies)
                 {
-                    if (przeciwnik != null)
+                    if (isInEnemyRange(P))
                     {
-                        combat = new Combat();
+                        if (P != null)
+                        {
+                            combat = new Combat();
 
-                        combat.StartCombat(Player, przeciwnik);
-                        combat.Show();
-                        combat.Focus();
+                            combat.StartCombat(Player, P);
+                            combat.Show();
+                            combat.Focus();
 
-                        CombatTimer.Start();
+                            CombatTimer.Start();
 
-                        MTB = random.Next(15, 20);
+                            MTB = random.Next(15, 20);
+                        }
                     }
                 }
             }
@@ -436,7 +441,41 @@ namespace Gra
             {
                 if (combat.GetIsPlayerWinner())
                 {
-                    przeciwnik = null;
+                    int i = 0;
+                    StringBuilder newFile = new StringBuilder();
+                    string[] text = File.ReadAllLines(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt");
+                    string temp = "";
+
+                    foreach (Przeciwnik P in worldEnemies)
+                    {
+                        if (!P.getIsAlive())
+                        {
+                            foreach (string line in text)
+                            {
+                                if (i != P.GetCharacterSprite().GetLocation().Y / (_Height / 18))
+                                {
+                                    newFile.AppendLine(line);
+                                }
+                                if (i == P.GetCharacterSprite().GetLocation().Y / (_Height / 18))
+                                {
+                                    temp = line.Substring(0, P.GetCharacterSprite().GetLocation().X / (_Width / 32) * 4);
+                                    temp += 1;
+                                    temp += 0;
+                                    temp += 0;
+                                    temp += line.Substring(P.GetCharacterSprite().GetLocation().X / (_Width / 32) * 4 + 3);
+
+                                    newFile.Append(temp + "\r\n");
+                                }
+
+                                i++;
+                            }
+
+                            File.WriteAllText(@"MapTileData\1_maptiles" + mapX + "" + mapY + ".txt", newFile.ToString());
+                        }
+                    }
+
+                    worldEnemies.RemoveAll(P => P.getIsAlive() == false);
+                    ReloadMap();
 
                     CombatTimer.Stop();
                     Draw();

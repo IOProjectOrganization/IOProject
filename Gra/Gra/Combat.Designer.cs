@@ -49,11 +49,12 @@
             this.EnemyHPMaxLabel = new System.Windows.Forms.Label();
             this.EnemyHPCurrentLabel = new System.Windows.Forms.Label();
             this.AttackBtn = new System.Windows.Forms.Button();
-            this.SpecialAttackBtn = new System.Windows.Forms.Button();
+            this.SpecialSkillBtn = new System.Windows.Forms.Button();
             this.BlockBtn = new System.Windows.Forms.Button();
             this.ItemsBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.Delay = new System.Windows.Forms.Timer(this.components);
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnemyPB)).BeginInit();
@@ -71,7 +72,7 @@
             // 
             this.PlayerPB.Location = new System.Drawing.Point(62, 30);
             this.PlayerPB.Name = "PlayerPB";
-            this.PlayerPB.Size = new System.Drawing.Size(290, 450);
+            this.PlayerPB.Size = new System.Drawing.Size(340, 450);
             this.PlayerPB.TabIndex = 1;
             this.PlayerPB.TabStop = false;
             // 
@@ -253,15 +254,15 @@
             this.AttackBtn.UseVisualStyleBackColor = true;
             this.AttackBtn.Click += new System.EventHandler(this.AttackBtn_Click);
             // 
-            // SpecialAttackBtn
+            // SpecialSkillBtn
             // 
-            this.SpecialAttackBtn.Location = new System.Drawing.Point(570, 560);
-            this.SpecialAttackBtn.Name = "SpecialAttackBtn";
-            this.SpecialAttackBtn.Size = new System.Drawing.Size(140, 45);
-            this.SpecialAttackBtn.TabIndex = 19;
-            this.SpecialAttackBtn.Text = "Atak specjalny";
-            this.SpecialAttackBtn.UseVisualStyleBackColor = true;
-            this.SpecialAttackBtn.Click += new System.EventHandler(this.SpecialAttackBtn_Click);
+            this.SpecialSkillBtn.Location = new System.Drawing.Point(570, 560);
+            this.SpecialSkillBtn.Name = "SpecialSkillBtn";
+            this.SpecialSkillBtn.Size = new System.Drawing.Size(140, 45);
+            this.SpecialSkillBtn.TabIndex = 19;
+            this.SpecialSkillBtn.Text = "Umiejętności specjalne";
+            this.SpecialSkillBtn.UseVisualStyleBackColor = true;
+            this.SpecialSkillBtn.Click += new System.EventHandler(this.SpecialSkillBtn_Click);
             // 
             // BlockBtn
             // 
@@ -299,15 +300,25 @@
             this.Delay.Interval = 1000;
             this.Delay.Tick += new System.EventHandler(this.Delay_Tick);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(603, 353);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(35, 13);
+            this.label1.TabIndex = 21;
+            this.label1.Text = "label1";
+            // 
             // Combat
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ItemsBtn);
             this.Controls.Add(this.BlockBtn);
-            this.Controls.Add(this.SpecialAttackBtn);
+            this.Controls.Add(this.SpecialSkillBtn);
             this.Controls.Add(this.AttackBtn);
             this.Controls.Add(this.EnemyMPBP);
             this.Controls.Add(this.EnemyHPBP);
@@ -362,10 +373,11 @@
         private System.Windows.Forms.Label EnemyHPMaxLabel;
         private System.Windows.Forms.Label EnemyHPCurrentLabel;
         private System.Windows.Forms.Button AttackBtn;
-        private System.Windows.Forms.Button SpecialAttackBtn;
+        private System.Windows.Forms.Button SpecialSkillBtn;
         private System.Windows.Forms.Button BlockBtn;
         private System.Windows.Forms.Button ItemsBtn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer Delay;
+        private System.Windows.Forms.Label label1;
     }
 }

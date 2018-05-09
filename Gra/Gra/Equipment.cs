@@ -13,6 +13,7 @@ namespace Gra
     public partial class Equipment : Form
     {
         Bohater postac;
+        List<Przedmiot> przedmioty = new List<Przedmiot>();
 
         public Equipment()
         {
@@ -31,12 +32,15 @@ namespace Gra
             setTextColor();
 
             listBox1.Items.Clear();
+            przedmioty.Clear();
 
             int i = 0;
 
             foreach (Przedmiot item in Player.Ekwipunek)
             {
-                if(Player.Ekwipunek.ElementAt(i).getIlosc() > 0)
+                for (int j = 0; j < Player.Ekwipunek.ElementAt(i).getIlosc(); j++)
+                    przedmioty.Add(Player.Ekwipunek.ElementAt(i));
+
                 listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
                 i++;
             }
@@ -57,6 +61,12 @@ namespace Gra
 
             bohaterExp.Maximum = Player.GetEXPtoLevel();
             bohaterExp.Value = Player.GetEXP();
+
+            uzycie.Enabled = false;
+            uzycie.Visible = false;
+
+            zdjecie.Enabled = false;
+            zdjecie.Visible = false;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -219,66 +229,256 @@ namespace Gra
 
         private void uzycie_Click(object sender, EventArgs e)
         {
-            string listbox_nazwa;
-            int indeks;
-
-            for(int i = 0; i < listBox1.Items.Count; i++)
+            if (listBox1.SelectedItem != null)
             {
-                if(listBox1.GetSelected(i) == true)
+                Przedmiot P = przedmioty.ElementAt(listBox1.SelectedIndex) as Przedmiot;
+                if (P != null)
                 {
-                    listbox_nazwa = listBox1.SelectedItem.ToString();
-
-                    bool czySpacja = false;
-
-                    for(int k = listbox_nazwa.Length -1; k >=0 ; k--)
+                    if (P.getItemType() == ItemType.Armor)
                     {
-                        if (listbox_nazwa[k] == ' ' && czySpacja == true)
+                        if (postac.getZalozonaZbroja() != null)
                         {
-                            indeks = listbox_nazwa.Length - k;
-                            listbox_nazwa = listbox_nazwa.Remove(k, indeks);
-
-                            break;
+                            przedmioty.Add(postac.getZalozonaZbroja());
+                            listBox1.Items.Add(postac.getZalozonaZbroja().getNazwa().ToString() + " - " + postac.getZalozonaZbroja().getIlosc().ToString());
+                            postac.Ekwipunek.Add(postac.getZalozonaZbroja());
+                            EquippedArmor.Clear();
+                            imageList1.Images.RemoveAt(0);
                         }
-                        else if (listbox_nazwa[k] == ' ' && czySpacja == false)
-                            czySpacja = true;
+
+                        postac.ZalozZbroje(P as Zbroja);
+                        imageList1.Images.Add(Gra.Properties.Resources.zloto);
+
+                        ListViewItem listViewItem = new ListViewItem();
+                        listViewItem.ImageIndex = 0;
+                        EquippedArmor.Items.Add(listViewItem);
+
+                        postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
+                        przedmioty.RemoveAt(listBox1.SelectedIndex);
+                        listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                        listBox1.ClearSelected();
                     }
-
-                    int j = 0;
-
-                    foreach(Przedmiot istniejacyPrzedmiot in postac.Ekwipunek)
+                    else if (P.getItemType() == ItemType.Consumable)
                     {
-                        if (istniejacyPrzedmiot.getNazwa().ToString() == listbox_nazwa)
+                        if (P.GetType() == typeof(Mikstury))
                         {
-                            if(istniejacyPrzedmiot.getId() <= 4)
-                            {
-                                Mikstury potka = (Mikstury)istniejacyPrzedmiot;
+                            Mikstury potion = P as Mikstury;
+                            postac.SetHP(postac.GetHP() + potion.getPotionHp());
+                            postac.SetMP(postac.GetMP() + potion.getPotionMp());
+                        }
 
-                                postac.SetHP(postac.GetHP() + istniejacyPrzedmiot.getItemHP());
-                                postac.SetMP(postac.GetMP() + istniejacyPrzedmiot.getItemMP());
+                        postac.addStrenght(P.getItemStrength());
+                        postac.addDexterity(P.getItemDexterity());
+                        postac.addIntelligence(P.getItemIntelligence());
 
-                                postac.SetHP(postac.GetHP() + potka.getPotionHp());
-                                postac.SetMP(postac.GetMP() + potka.getPotionMp());
 
-                                postac.addStrenght(istniejacyPrzedmiot.getItemStrength());
-                                postac.addDexterity(istniejacyPrzedmiot.getItemDexterity());
-                                postac.addIntelligence(istniejacyPrzedmiot.getItemIntelligence());
-                            }
-
-                            if (postac.Ekwipunek.ElementAt(i).getIlosc() == 1)
-                                postac.Ekwipunek.RemoveAt(i);
-                            else
-                                postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
-
-                            break;
+                        if (postac.Ekwipunek.ElementAt(listBox1.SelectedIndex).getIlosc() == 1)
+                        {
+                            postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
+                            przedmioty.RemoveAt(listBox1.SelectedIndex);
+                            listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                            listBox1.ClearSelected();
                         }
                         else
-                            j++;
+                        {
+                            postac.Ekwipunek.ElementAt(listBox1.SelectedIndex).zmniejszIlosc(1);
+                            przedmioty.RemoveAt(listBox1.SelectedIndex);
+                            listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                            listBox1.ClearSelected();
+                        }
+                    }
+                    else if (P.getItemType() == ItemType.Weapon)
+                    {
+                        if (postac.getZalozonaBron() != null)
+                        {
+                            przedmioty.Add(postac.getZalozonaBron());
+                            listBox1.Items.Add(postac.getZalozonaBron().getNazwa().ToString() + " - " + postac.getZalozonaBron().getIlosc().ToString());
+                            postac.Ekwipunek.Add(postac.getZalozonaBron());
+                            EquippedWeapon.Clear();
+                            imageList2.Images.RemoveAt(0);
+                        }
+
+                        postac.ZalozBron(P as Bron);
+                        imageList2.Images.Add(Gra.Properties.Resources.sword_1);
+
+                        ListViewItem listViewItem = new ListViewItem();
+                        listViewItem.ImageIndex = 0;
+                        EquippedWeapon.Items.Add(listViewItem);
+
+                        postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
+                        przedmioty.RemoveAt(listBox1.SelectedIndex);
+                        listBox1.Items.RemoveAt(listBox1.SelectedIndex);
+                        listBox1.ClearSelected();
                     }
                 }
+
+                P = null;
             }
 
             UpdateEquipment(postac);
 
+        }
+
+        private void zdjecie_Click(object sender, EventArgs e)
+        {
+            if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
+            {
+                Przedmiot P = postac.getZalozonaZbroja() as Przedmiot;
+                if (P != null)
+                {
+                    EquippedArmor.Items[0].Selected = false;
+
+                    if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == true)
+                        EquippedWeapon.Items[0].Selected = false;
+
+                    przedmioty.Add(postac.getZalozonaZbroja());
+                    listBox1.Items.Add(postac.getZalozonaZbroja().getNazwa().ToString() + " - " + postac.getZalozonaZbroja().getIlosc().ToString());
+                    postac.Ekwipunek.Add(postac.getZalozonaZbroja());
+                    EquippedArmor.Clear();
+                    imageList1.Images.RemoveAt(0);
+                    postac.ZalozZbroje(null);
+
+                }
+
+                P = null;
+            }
+            else if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == true)
+            {
+                Przedmiot P = postac.getZalozonaBron() as Przedmiot;
+                if (P != null)
+                {
+                    EquippedWeapon.SelectedItems[0].Selected = false;
+
+                    if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
+                        EquippedArmor.Items[0].Selected = false;
+
+                    przedmioty.Add(postac.getZalozonaBron());
+                    listBox1.Items.Add(postac.getZalozonaBron().getNazwa().ToString() + " - " + postac.getZalozonaBron().getIlosc().ToString());
+                    postac.Ekwipunek.Add(postac.getZalozonaBron());
+                    EquippedWeapon.Clear();
+                    imageList2.Images.RemoveAt(0);
+                    postac.ZalozBron(null);
+                }
+
+                P = null;
+            }
+
+            UpdateEquipment(postac);
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBox1.SelectedItem != null)
+            {
+                Przedmiot P = przedmioty.ElementAt(listBox1.SelectedIndex) as Przedmiot;
+                if (P != null)
+                {
+                    if (P.getItemType() == ItemType.None)
+                    {
+                        uzycie.Enabled = false;
+                        uzycie.Visible = false;
+                    }
+                    else if (P.getItemType() == ItemType.Armor)
+                    {
+                        uzycie.Enabled = true;
+                        uzycie.Visible = true;
+                        uzycie.Text = "Załóż";
+                    }
+                    else if (P.getItemType() == ItemType.Consumable)
+                    {
+                        uzycie.Enabled = true;
+                        uzycie.Visible = true;
+                        uzycie.Text = "Użyj";
+                    }
+                    else if (P.getItemType() == ItemType.Weapon)
+                    {
+                        uzycie.Enabled = true;
+                        uzycie.Visible = true;
+                        uzycie.Text = "Wyposaż";
+                    }
+                }
+            }
+        }
+
+        private void EquippedArmor_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
+            {
+                zdjecie.Enabled = true;
+                zdjecie.Visible = true;
+
+                if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == true)
+                    EquippedWeapon.Items[0].Selected = false;
+            }
+            else
+            {
+                if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == false)
+                {
+                    if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == false)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                    else if (EquippedWeapon.Items.Count == 0)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                }
+                else if (EquippedArmor.Items.Count == 0)
+                {
+                    if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == false)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                    else if (EquippedWeapon.Items.Count == 0)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                }
+            }
+        }
+
+        private void EquippedWeapon_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == true)
+            {
+                zdjecie.Enabled = true;
+                zdjecie.Visible = true;
+
+                if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
+                    EquippedArmor.Items[0].Selected = false;
+            }
+            /*else
+            {
+                if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == false)
+                {
+                    if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == false)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                    else if (EquippedArmor.Items.Count == 0)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                }
+                else if (EquippedWeapon.Items.Count == 0)
+                {
+                    if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == false)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                    else if (EquippedArmor.Items.Count == 0)
+                    {
+                        zdjecie.Enabled = false;
+                        zdjecie.Visible = false;
+                    }
+                }
+            }*/
         }
     }
 }

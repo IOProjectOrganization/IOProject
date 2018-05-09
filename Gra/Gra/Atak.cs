@@ -130,16 +130,13 @@ namespace Gra
         public static readonly List<AtkLeczenie> HealingATK = new List<AtkLeczenie>();  // ataki sluzace leczeniu postaci
 
         // AtkObrazenia
-
         public const int AtakId_MagicznyPocisk = 1;
 
         // AtkMultiplier
-
         public const int AtakId_SkupionyAtak = 2;
         public const int AtakId_Hak = 4;
 
         //AtkLeczenie
-
         public const int AtakId_PomniejszeUzdrowienie = 3;
 
         static Ataki()
