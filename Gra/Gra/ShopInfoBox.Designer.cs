@@ -1,6 +1,6 @@
 ﻿namespace Gra
 {
-    partial class Help
+    partial class ShopInfoBox
     {
         /// <summary>
         /// Required designer variable.
@@ -30,8 +30,8 @@
         {
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.tradeInfo = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // panel1
@@ -39,58 +39,58 @@
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(700, 19);
-            this.panel1.TabIndex = 1;
+            this.panel1.Size = new System.Drawing.Size(1337, 19);
+            this.panel1.TabIndex = 2;
             // 
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.panel2.Location = new System.Drawing.Point(0, 235);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(700, 19);
-            this.panel2.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.label1.Location = new System.Drawing.Point(225, 52);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(256, 55);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Sterowanie";
+            this.panel2.Size = new System.Drawing.Size(1337, 19);
+            this.panel2.TabIndex = 3;
             // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.button1.FlatAppearance.BorderSize = 0;
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
-            this.button1.Location = new System.Drawing.Point(250, 142);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(591, 141);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(200, 61);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Powrót";
-            this.button1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Help
+            // tradeInfo
+            // 
+            this.tradeInfo.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tradeInfo.AutoSize = true;
+            this.tradeInfo.Font = new System.Drawing.Font("GothicE", 22.2F, System.Drawing.FontStyle.Bold);
+            this.tradeInfo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.tradeInfo.Location = new System.Drawing.Point(440, 48);
+            this.tradeInfo.Name = "tradeInfo";
+            this.tradeInfo.Size = new System.Drawing.Size(151, 55);
+            this.tradeInfo.TabIndex = 5;
+            this.tradeInfo.Text = "label1";
+            // 
+            // ShopInfoBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
-            this.ClientSize = new System.Drawing.Size(700, 254);
+            this.ClientSize = new System.Drawing.Size(1337, 253);
+            this.Controls.Add(this.tradeInfo);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.label1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Help";
+            this.Name = "ShopInfoBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "help";
+            this.Text = "ShopInfoBox";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -100,7 +100,7 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label tradeInfo;
     }
 }

@@ -31,6 +31,7 @@ namespace Gra
         public Combat()
         {
             InitializeComponent();
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
         }

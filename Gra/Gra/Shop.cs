@@ -13,7 +13,9 @@ namespace Gra
     public partial class Shop : Form
     {
         Bohater postac;
-        Postac seller;    // seller przeniesiony na Postac
+        Postac seller;
+        ShopInfoBox infoBox = new ShopInfoBox();
+        bool selling;
 
         public Shop()
         {
@@ -34,6 +36,8 @@ namespace Gra
                     listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
                 i++;
             }
+
+            bohaterZloto.Text = postac.GetGold().ToString();
         }
 
         public void UpdateProducts(Postac Seller)   //Bohater zmienony na Postac
@@ -61,6 +65,8 @@ namespace Gra
         {
             string listbox_nazwa;
             int indeks;
+
+            selling = true;
 
             for (int i = 0; i < listBox1.Items.Count; i++)
             {
@@ -98,8 +104,13 @@ namespace Gra
 
                             seller.DodajPrzedmiot(istniejacyPrzedmiot.getId());
 
-                            UpdateEquipment(postac);
                             UpdateProducts(seller);
+                            UpdateEquipment(postac);
+
+                            infoBox.checkTradeState(selling, istniejacyPrzedmiot.getNazwa().ToString());
+
+                            infoBox.Show();
+                            infoBox.Focus();
 
                             break;
                         }
@@ -109,14 +120,14 @@ namespace Gra
                 }
             }
 
-            UpdateEquipment(postac);
-
         }
 
         private void button_kupno_Click(object sender, EventArgs e)
         {
             string listbox_nazwa;
             int indeks;
+
+            selling = false;
 
             for (int i = 0; i < listBox2.Items.Count; i++)
             {
@@ -157,9 +168,14 @@ namespace Gra
 
                                 postac.DodajPrzedmiot(istniejacyPrzedmiot.getId());
 
-                                UpdateEquipment(postac);
-                                UpdateProducts(seller);
+                                infoBox.checkTradeState(selling, istniejacyPrzedmiot.getNazwa().ToString());
+
+                                infoBox.Show();
+                                infoBox.Focus();
                             }
+                            
+                            UpdateEquipment(postac);
+                            UpdateProducts(seller);
 
                             break;
                         }
@@ -168,7 +184,6 @@ namespace Gra
                     }
                 }
             }
-
         }
     }
 }
