@@ -20,17 +20,29 @@ namespace Gra
         private int MP;
         private int maxMP;
 
+        private int Gold;
+
         public enum MoveDirection { None, Up, Down, Left, Right };
 
         protected WorldMapSprite CharacterSprite; //Pozwala na obsługę postaci w świecie gry
 
         public List<Atak> SpecjalneAtaki;
+        public List<Przedmiot> Ekwipunek;
 
         public Postac(int basehp, int basemp)
         {
             BaseHP = basehp;
             BaseMP = basemp;
+            Ekwipunek = new List<Przedmiot>();
             SpecjalneAtaki = new List<Atak>();
+            StunResistance = BaseStunResistance;
+            StunRecoveryChance = BaseStunRecoveryChance;
+            Stunned = false;
+        }
+
+        public Postac()
+        {
+            Ekwipunek = new List<Przedmiot>();
         }
 
         public int GetBaseHP()
@@ -94,6 +106,75 @@ namespace Gra
             CharacterSprite.SetImage(img);
         }
 
+        public int GetGold()
+        {
+            return Gold;
+        }
+
+        public void DodajGold(int gold)
+        {
+            Gold += gold;
+        }
+
+        public void DecreaseGold(int gold)
+        {
+            Gold -= gold;
+        }
+
+        public void SetGold(int gold)
+        {
+            Gold = gold;
+        }
+
+        public void DodajPrzedmiot(int id)
+        {
+            Przedmiot DodawanyPrzedmiot = Item.ItemsById(id).Kopia();
+            if (DodawanyPrzedmiot.getStackable() == false)  // jesli przedmiot nie jest stackowalny to go dodaje do ekwipunku
+            {
+                DodawanyPrzedmiot.setIlosc(1);
+                Ekwipunek.Add(DodawanyPrzedmiot);
+            }
+            else
+            {
+                bool czyZnaleziono = false;
+                foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek) // jesli przedmiot jest stackowalny, sprawdza czy w ekwipunku jest juz przedmiot o tej samej nazwie aby jedynie zwiekszyc jego ilosc o 1
+                {
+                    if (istniejacyPrzedmiot.getId() == id)
+                    {
+                        czyZnaleziono = true;
+                        istniejacyPrzedmiot.zwiekszIlosc(1);
+                        break;
+                    }
+                }
+                if (czyZnaleziono == false)  // jesli przedmiot jest stackowalny i go nie znaleziono w ekwipunku do stackowania to go dodaje w ilosci 1
+                {
+                    DodawanyPrzedmiot.setIlosc(1);
+                    Ekwipunek.Add(DodawanyPrzedmiot);
+                }
+            }
+        }
+
+        public void UsunPrzedmiot(int id)
+        {
+            foreach (Przedmiot istniejacyPrzedmiot in Ekwipunek)
+            {
+                if (istniejacyPrzedmiot.getId() == id)
+                {
+                    istniejacyPrzedmiot.zmniejszIlosc(1);
+                    if (istniejacyPrzedmiot.getIlosc() == 0)
+                    {
+                        Ekwipunek.Remove(istniejacyPrzedmiot);
+                    }
+                    break;
+                }
+            }
+        }
+
+        public void WyczyscEkwipunek()
+        {
+            Ekwipunek.Clear();
+        }
+
         public void PoznajAtak(int id)
         {
             bool JuzPoznany = false;
@@ -113,6 +194,80 @@ namespace Gra
             }
         }
 
+        //  Obsluga statusów(oszołomienie, krwawienie itd)   wyjasnienie na dole
+
+        private bool Stunned;
+        public bool IsStunned()
+        {
+            return Stunned;
+        }
+
+        protected int BaseStunResistance = 30;
+        protected int StunResistance;
+        public int GetStunResistance()
+        { return StunResistance; }
+        protected int BaseStunRecoveryChance = 40;
+        protected int StunRecoveryChance;
+        public int GetStunRecoveryChance()
+        { return StunRecoveryChance; }
+
+        public void ApplyStun()   // probuje nalozyc oszolomienie, sprawdza czy sie powiodlo
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 101);
+            if (randomNumber > GetStunResistance())
+            {
+                if(Stunned!=true)
+                { StunResistance = StunResistance + 50; }      // oszolomiona postac bedzie mniej podatna na kolejne proby oszolomienia
+                Stunned=true;
+            }
+        }
+        public void StunEscapeCheck()
+        {
+            Random random = new Random();
+            int randomNumber = random.Next(0, 101);
+            if (randomNumber > GetStunRecoveryChance())
+            {
+                StunRecoveryChance = StunRecoveryChance + 20;     // im dluzej postac jest oszolomiona tym bardziej prawdopodobne wydostanie sie
+            }
+            else
+            {
+                Stunned = false;
+                StunRecoveryChance = BaseStunRecoveryChance;
+            }
+        }
+        public void ResolveStatuses()  // wykonywane co ture, sprawdza czy udalo sie wydostac z oszolomienia, obrazenia z krwawienia pozniej
+        {
+            StunEscapeCheck();
+
+            if (StunResistance > BaseStunResistance)
+            { StunResistance = StunResistance - 10; }      // zmniejsza odpornosc postaci na kolejne proby oszolomienia wraz z traktem walki
+        }
+
+        public void ClearStatuses()
+        {
+            StunResistance = BaseStunResistance;
+            StunRecoveryChance = BaseStunRecoveryChance;
+            Stunned = false;
+        }
+
+        /*
+          Wyjasnienie:
+          Walka
+          Na poczatku albo na koncu tury dla postaci wykonujacej swoja ture powinna byc wywolywana funkcja ResolveStatuses(), ktora bedzie zajmowala sie obsluga roznych
+          statusow(oszolomienie, krwawienie, itd)
+          Gdy wybrany jest atak specjalny z atrybutem IsStun=true, to atak oprocz swoich zwyklych czynnosci(obrazenia) wykonuje na przeciwniku funkcje Applystun()
+          Kazda postac ma poczatkowo bazowo stunresistance 30% aby nie zostac oszolomiona oraz stunrecoverychance 40% aby sie wydostac z tego statusu
+          Kiedy postac jest oszolomiona, dostaje ona premie do stunresistance +50%, ktora zmniejsza sie o 10 co ture, co oznacza ze kolejne proby oszolomienia
+          w bliskim przedziale czasowym beda mniej efektywne.
+          Co ture postac ktora jest oszolomiona probuje sie wydostac(wykonywane w funkcji ResolveStatuses()). Jesli sie to nie powiedzie to dostaje bonus +20% do stunrecoverychance
+          az uda sie jej wydostac z oszolomienia, jest to resetowane wtedy spowrotem do domyslnej bazowej szansy.
+          Mechanizm walki powinien omijac ture gracza, ktorego IsStunned() zwraca true, poki nie zmieni tego na false funkcja ResolveStatuses()
+
+
+          Po zakonczeniu walki, powinna byc wywolywana na bohaterze funkcja ClearStatuses, aby zapewnic ze rzeczy takie jak stan oszolomienia i premie statystykowe beda
+          spowrotem w domyslnych postaciach
+        */
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -130,10 +285,11 @@ namespace Gra
         private int Intelligence;
         private int Skillpoints;
 
-        private int Obrazenia;
+        //private int Obrazenia;
         //private int Obrona;       //kiedy/jesli dodamy armor
 
-        private int Gold;
+            // przeniesione do klasy postaci
+        //private int Gold;
         private int EXP;
         private int Level;
         private int EXPtoLevel
@@ -146,18 +302,19 @@ namespace Gra
         //{ get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
         private Bron UzywanaBron;
 
-        public List<Przedmiot> Ekwipunek;
+        // ekwipunek przeniesiony do klasy postaci
+        //public List<Przedmiot> Ekwipunek;
 
 
         public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, /*int posx, int posy,*/ Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor // dodane mp
         {
             Level = level;
-            Gold = gold;
+            SetGold(gold);
             EXP = exp;
             PlayerLoc = Location;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
-            Ekwipunek = new List<Przedmiot>();
+            //Ekwipunek = new List<Przedmiot>();    przeniesione do klasy postaci
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
@@ -178,17 +335,23 @@ namespace Gra
             if (GetHP() > GetMaxHP()) SetHP(GetMaxHP());
             SetMaxMP(GetBaseMP() + Intelligence * 5);
             if (GetMP() > GetMaxMP()) SetMP(GetMaxMP());
-            if (UzywanaBron != null)
+          /*  if (UzywanaBron != null)
             {
                 Obrazenia = UzywanaBron.getObrazenia() + Strength * 3;
             }
             else
-                Obrazenia = Strength * 3;
+                Obrazenia = Strength * 3; */
         }
 
         public override int GetObrazenia()
         {
-            return Obrazenia;
+            if (UzywanaBron != null)
+            {
+                return UzywanaBron.getObrazenia() + Strength * 3;
+            }
+            else
+                return Strength * 3;
+            //return Obrazenia;
         }
 
         public int GetEXP()
@@ -236,10 +399,6 @@ namespace Gra
             UpdateStats();
         }
 
-        public int GetGold()
-        {
-            return Gold;
-        }
         public int GetIntelligence()
         {
             return Intelligence;
@@ -294,7 +453,9 @@ namespace Gra
             else
                 return false;
         }
-
+        
+        // funkcje ekwipunku przeniesione do klasy postaci
+        /*
         public void DodajPrzedmiot(int id)
         {
             Przedmiot DodawanyPrzedmiot = Item.ItemsById(id).Kopia();
@@ -343,6 +504,7 @@ namespace Gra
         {
             Ekwipunek.Clear();
         }
+        */
 
         public void ZalozBron(Bron bron)
         {
@@ -361,6 +523,13 @@ namespace Gra
             EXP = exp;
         }
 
+        //przeniesione do klasy postaci
+        /*
+        public int GetGold()
+        {
+            return Gold;
+        }
+
         public void DodajGold(int gold)
         {
             Gold += gold;
@@ -375,7 +544,7 @@ namespace Gra
         {
             Gold = gold;
         }
-
+        */
         public void SetMoveDirection(MoveDirection dir)
         { Direction = dir; }
 
@@ -428,6 +597,19 @@ namespace Gra
             CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
+        {
+            id = _id;
+            SetMaxHP(basehp);
+            SetHP(basehp);
+            SetMaxMP(basemp);
+            SetMP(basemp);
+            Nazwa = nazwa;
+            Obrazenia = obrazenia;
+            NagrodaExp = nagrodaexp;
+            NagrodaGold = nagrodagold;
+        }
+
         public override int GetObrazenia()
         {
             return Obrazenia;
@@ -454,22 +636,50 @@ namespace Gra
         }
     }
     
-    public static class Wrog   // baza przeciwnikow
+    public static class Wrog   // baza przeciwnikow losowych
     {
         public static readonly List<Przeciwnik> Przeciwnik = new List<Przeciwnik>();
 
         // ID
 
-        //public const int enemyId_szkielet = 1;
+        public const int enemyId_nietoperz = 1;
+        public const int enemyId_ogromnyszczur = 2;
+        public const int enemyId_wilk = 3;
+        public const int enemyId_szkielet = 4;
+        public const int enemyId_szkielet_czarownik = 5;
+        public const int enemyId_minotaur = 6;
 
         static Wrog()
         {
             zaladujWrogow();
         }
 
-        private static void zaladujWrogow()
+        //public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
+        private static void zaladujWrogow()   // wykorzystany konstruktor bez obrazka postaci i lokacji, przeznaczony wiec dla walk losowych gdzie nie sa potrzebne
         {
-            //Przeciwnik.Add(new Przeciwnik("Szkielet", enemyId_szkielet, 20, 25, 10, 80, 0, jakassciezkaobrazu));
+            Przeciwnik temp;
+
+            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30);
+            temp.PoznajAtak(1);
+            Przeciwnik.Add(temp);
+
+            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30);
+            temp.PoznajAtak(2);
+            temp.PoznajAtak(4);
+            Przeciwnik.Add(temp);
+
         }
 
 
@@ -479,7 +689,15 @@ namespace Gra
             {
                 if (enemy.getId() == _id)
                 {
-                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.GetCharacterSprite().GetLocation(), enemy.getObrazekPostaci());
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP());
+                    foreach(Atak atak in enemy.SpecjalneAtaki)
+                    {
+                        temp.PoznajAtak(atak.GetId());
+                    }
+                    foreach(Przedmiot przedmiot in enemy.Ekwipunek)
+                    {
+                        temp.DodajPrzedmiot(przedmiot.getId());
+                    }
                     return temp;
                 }
             }

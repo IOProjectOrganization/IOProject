@@ -12,7 +12,8 @@ namespace Gra
 {
     public partial class Shop : Form
     {
-        Bohater postac, seller;
+        Bohater postac;
+        Postac seller;
         ShopInfoBox infoBox = new ShopInfoBox();
         bool selling;
 
@@ -39,7 +40,7 @@ namespace Gra
             bohaterZloto.Text = postac.GetGold().ToString();
         }
 
-        public void UpdateProducts(Bohater Seller)
+        public void UpdateProducts(Postac Seller)   //Bohater zmienony na Postac
         {
             seller = Seller;
 
