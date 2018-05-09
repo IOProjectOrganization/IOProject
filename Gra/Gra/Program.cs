@@ -372,7 +372,8 @@ namespace Gra
                 if (MTB <= 0)
                 {
                     combat = new Combat();
-                    combat.StartCombat(Player, new Przeciwnik("RandomTest", 0, 10, 10, 10, 50, 50, new Point(9 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1));
+                    Przeciwnik test1 = new Przeciwnik("RandomTest", 0, 10, 10, 10, 50, 50, new Point(9 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1);
+                    combat.StartCombat(Player, ref test1);
                     combat.Show();
                     combat.Focus();
 
@@ -416,7 +417,7 @@ namespace Gra
                     {
                         combat = new Combat();
 
-                        combat.StartCombat(Player, przeciwnik);
+                        combat.StartCombat(Player, ref przeciwnik);
                         combat.Show();
                         combat.Focus();
 
@@ -436,7 +437,7 @@ namespace Gra
             {
                 if (combat.GetIsPlayerWinner())
                 {
-                    przeciwnik = null;
+                    //przeciwnik = null;
 
                     CombatTimer.Stop();
                     Draw();

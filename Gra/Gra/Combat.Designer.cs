@@ -54,6 +54,8 @@
             this.ItemsBtn = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.Delay = new System.Windows.Forms.Timer(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.BackgroundPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerPB)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.EnemyPB)).BeginInit();
@@ -61,35 +63,40 @@
             // 
             // BackgroundPB
             // 
-            this.BackgroundPB.Location = new System.Drawing.Point(12, 12);
+            this.BackgroundPB.Location = new System.Drawing.Point(16, 15);
+            this.BackgroundPB.Margin = new System.Windows.Forms.Padding(4);
             this.BackgroundPB.Name = "BackgroundPB";
-            this.BackgroundPB.Size = new System.Drawing.Size(1256, 491);
+            this.BackgroundPB.Size = new System.Drawing.Size(1675, 604);
             this.BackgroundPB.TabIndex = 0;
             this.BackgroundPB.TabStop = false;
             // 
             // PlayerPB
             // 
-            this.PlayerPB.Location = new System.Drawing.Point(62, 30);
+            this.PlayerPB.Location = new System.Drawing.Point(83, 37);
+            this.PlayerPB.Margin = new System.Windows.Forms.Padding(4);
             this.PlayerPB.Name = "PlayerPB";
-            this.PlayerPB.Size = new System.Drawing.Size(290, 450);
+            this.PlayerPB.Size = new System.Drawing.Size(387, 554);
             this.PlayerPB.TabIndex = 1;
             this.PlayerPB.TabStop = false;
             // 
             // EnemyPB
             // 
-            this.EnemyPB.Location = new System.Drawing.Point(928, 30);
+            this.EnemyPB.Location = new System.Drawing.Point(1237, 37);
+            this.EnemyPB.Margin = new System.Windows.Forms.Padding(4);
             this.EnemyPB.Name = "EnemyPB";
-            this.EnemyPB.Size = new System.Drawing.Size(290, 450);
+            this.EnemyPB.Size = new System.Drawing.Size(387, 554);
             this.EnemyPB.TabIndex = 2;
             this.EnemyPB.TabStop = false;
             // 
             // PlayerHPCurrentLabel
             // 
             this.PlayerHPCurrentLabel.AutoSize = true;
+            this.PlayerHPCurrentLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerHPCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerHPCurrentLabel.Location = new System.Drawing.Point(141, 534);
+            this.PlayerHPCurrentLabel.Location = new System.Drawing.Point(188, 657);
+            this.PlayerHPCurrentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerHPCurrentLabel.Name = "PlayerHPCurrentLabel";
-            this.PlayerHPCurrentLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerHPCurrentLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerHPCurrentLabel.TabIndex = 3;
             this.PlayerHPCurrentLabel.Text = "label1";
             this.PlayerHPCurrentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -97,10 +104,12 @@
             // PlayerHPMaxLabel
             // 
             this.PlayerHPMaxLabel.AutoSize = true;
+            this.PlayerHPMaxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerHPMaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerHPMaxLabel.Location = new System.Drawing.Point(257, 534);
+            this.PlayerHPMaxLabel.Location = new System.Drawing.Point(343, 657);
+            this.PlayerHPMaxLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerHPMaxLabel.Name = "PlayerHPMaxLabel";
-            this.PlayerHPMaxLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerHPMaxLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerHPMaxLabel.TabIndex = 4;
             this.PlayerHPMaxLabel.Text = "label1";
             this.PlayerHPMaxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -108,10 +117,12 @@
             // PlayerHPSlashLabel
             // 
             this.PlayerHPSlashLabel.AutoSize = true;
+            this.PlayerHPSlashLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerHPSlashLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerHPSlashLabel.Location = new System.Drawing.Point(199, 534);
+            this.PlayerHPSlashLabel.Location = new System.Drawing.Point(265, 657);
+            this.PlayerHPSlashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerHPSlashLabel.Name = "PlayerHPSlashLabel";
-            this.PlayerHPSlashLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerHPSlashLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerHPSlashLabel.TabIndex = 5;
             this.PlayerHPSlashLabel.Text = "label1";
             this.PlayerHPSlashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -119,10 +130,12 @@
             // PlayerMPSlashLabel
             // 
             this.PlayerMPSlashLabel.AutoSize = true;
+            this.PlayerMPSlashLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerMPSlashLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerMPSlashLabel.Location = new System.Drawing.Point(199, 618);
+            this.PlayerMPSlashLabel.Location = new System.Drawing.Point(265, 761);
+            this.PlayerMPSlashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerMPSlashLabel.Name = "PlayerMPSlashLabel";
-            this.PlayerMPSlashLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerMPSlashLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerMPSlashLabel.TabIndex = 8;
             this.PlayerMPSlashLabel.Text = "label1";
             this.PlayerMPSlashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -130,10 +143,12 @@
             // PlayerMPMaxLabel
             // 
             this.PlayerMPMaxLabel.AutoSize = true;
+            this.PlayerMPMaxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerMPMaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerMPMaxLabel.Location = new System.Drawing.Point(257, 618);
+            this.PlayerMPMaxLabel.Location = new System.Drawing.Point(343, 761);
+            this.PlayerMPMaxLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerMPMaxLabel.Name = "PlayerMPMaxLabel";
-            this.PlayerMPMaxLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerMPMaxLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerMPMaxLabel.TabIndex = 7;
             this.PlayerMPMaxLabel.Text = "label1";
             this.PlayerMPMaxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -141,49 +156,57 @@
             // PlayerMPCurrentLabel
             // 
             this.PlayerMPCurrentLabel.AutoSize = true;
+            this.PlayerMPCurrentLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.PlayerMPCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.PlayerMPCurrentLabel.Location = new System.Drawing.Point(141, 618);
+            this.PlayerMPCurrentLabel.Location = new System.Drawing.Point(188, 761);
+            this.PlayerMPCurrentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.PlayerMPCurrentLabel.Name = "PlayerMPCurrentLabel";
-            this.PlayerMPCurrentLabel.Size = new System.Drawing.Size(52, 17);
+            this.PlayerMPCurrentLabel.Size = new System.Drawing.Size(59, 20);
             this.PlayerMPCurrentLabel.TabIndex = 6;
             this.PlayerMPCurrentLabel.Text = "label1";
             this.PlayerMPCurrentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PlayerHPBP
             // 
-            this.PlayerHPBP.Location = new System.Drawing.Point(62, 560);
+            this.PlayerHPBP.Location = new System.Drawing.Point(83, 689);
+            this.PlayerHPBP.Margin = new System.Windows.Forms.Padding(4);
             this.PlayerHPBP.Name = "PlayerHPBP";
-            this.PlayerHPBP.Size = new System.Drawing.Size(290, 45);
+            this.PlayerHPBP.Size = new System.Drawing.Size(387, 55);
             this.PlayerHPBP.TabIndex = 9;
             // 
             // PlayerMPBP
             // 
-            this.PlayerMPBP.Location = new System.Drawing.Point(62, 638);
+            this.PlayerMPBP.Location = new System.Drawing.Point(83, 785);
+            this.PlayerMPBP.Margin = new System.Windows.Forms.Padding(4);
             this.PlayerMPBP.Name = "PlayerMPBP";
-            this.PlayerMPBP.Size = new System.Drawing.Size(290, 45);
+            this.PlayerMPBP.Size = new System.Drawing.Size(387, 55);
             this.PlayerMPBP.TabIndex = 10;
             // 
             // EnemyMPBP
             // 
-            this.EnemyMPBP.Location = new System.Drawing.Point(928, 638);
+            this.EnemyMPBP.Location = new System.Drawing.Point(1237, 785);
+            this.EnemyMPBP.Margin = new System.Windows.Forms.Padding(4);
             this.EnemyMPBP.Name = "EnemyMPBP";
-            this.EnemyMPBP.Size = new System.Drawing.Size(290, 45);
+            this.EnemyMPBP.Size = new System.Drawing.Size(387, 55);
             this.EnemyMPBP.TabIndex = 18;
             // 
             // EnemyHPBP
             // 
-            this.EnemyHPBP.Location = new System.Drawing.Point(928, 560);
+            this.EnemyHPBP.Location = new System.Drawing.Point(1237, 689);
+            this.EnemyHPBP.Margin = new System.Windows.Forms.Padding(4);
             this.EnemyHPBP.Name = "EnemyHPBP";
-            this.EnemyHPBP.Size = new System.Drawing.Size(290, 45);
+            this.EnemyHPBP.Size = new System.Drawing.Size(387, 55);
             this.EnemyHPBP.TabIndex = 17;
             // 
             // EnemyMPSlashLabel
             // 
             this.EnemyMPSlashLabel.AutoSize = true;
+            this.EnemyMPSlashLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyMPSlashLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyMPSlashLabel.Location = new System.Drawing.Point(1065, 618);
+            this.EnemyMPSlashLabel.Location = new System.Drawing.Point(1420, 761);
+            this.EnemyMPSlashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyMPSlashLabel.Name = "EnemyMPSlashLabel";
-            this.EnemyMPSlashLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyMPSlashLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyMPSlashLabel.TabIndex = 16;
             this.EnemyMPSlashLabel.Text = "label1";
             this.EnemyMPSlashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -191,10 +214,12 @@
             // EnemyMPMaxLabel
             // 
             this.EnemyMPMaxLabel.AutoSize = true;
+            this.EnemyMPMaxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyMPMaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyMPMaxLabel.Location = new System.Drawing.Point(1123, 618);
+            this.EnemyMPMaxLabel.Location = new System.Drawing.Point(1497, 761);
+            this.EnemyMPMaxLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyMPMaxLabel.Name = "EnemyMPMaxLabel";
-            this.EnemyMPMaxLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyMPMaxLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyMPMaxLabel.TabIndex = 15;
             this.EnemyMPMaxLabel.Text = "label1";
             this.EnemyMPMaxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -202,10 +227,12 @@
             // EnemyMPCurrentLabel
             // 
             this.EnemyMPCurrentLabel.AutoSize = true;
+            this.EnemyMPCurrentLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyMPCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyMPCurrentLabel.Location = new System.Drawing.Point(1007, 618);
+            this.EnemyMPCurrentLabel.Location = new System.Drawing.Point(1343, 761);
+            this.EnemyMPCurrentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyMPCurrentLabel.Name = "EnemyMPCurrentLabel";
-            this.EnemyMPCurrentLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyMPCurrentLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyMPCurrentLabel.TabIndex = 14;
             this.EnemyMPCurrentLabel.Text = "label1";
             this.EnemyMPCurrentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -213,10 +240,12 @@
             // EnemyHPSlashLabel
             // 
             this.EnemyHPSlashLabel.AutoSize = true;
+            this.EnemyHPSlashLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyHPSlashLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyHPSlashLabel.Location = new System.Drawing.Point(1065, 534);
+            this.EnemyHPSlashLabel.Location = new System.Drawing.Point(1420, 657);
+            this.EnemyHPSlashLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyHPSlashLabel.Name = "EnemyHPSlashLabel";
-            this.EnemyHPSlashLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyHPSlashLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyHPSlashLabel.TabIndex = 13;
             this.EnemyHPSlashLabel.Text = "label1";
             this.EnemyHPSlashLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -224,10 +253,12 @@
             // EnemyHPMaxLabel
             // 
             this.EnemyHPMaxLabel.AutoSize = true;
+            this.EnemyHPMaxLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyHPMaxLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyHPMaxLabel.Location = new System.Drawing.Point(1123, 534);
+            this.EnemyHPMaxLabel.Location = new System.Drawing.Point(1497, 657);
+            this.EnemyHPMaxLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyHPMaxLabel.Name = "EnemyHPMaxLabel";
-            this.EnemyHPMaxLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyHPMaxLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyHPMaxLabel.TabIndex = 12;
             this.EnemyHPMaxLabel.Text = "label1";
             this.EnemyHPMaxLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -235,62 +266,84 @@
             // EnemyHPCurrentLabel
             // 
             this.EnemyHPCurrentLabel.AutoSize = true;
+            this.EnemyHPCurrentLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.EnemyHPCurrentLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold);
-            this.EnemyHPCurrentLabel.Location = new System.Drawing.Point(1007, 534);
+            this.EnemyHPCurrentLabel.Location = new System.Drawing.Point(1343, 657);
+            this.EnemyHPCurrentLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.EnemyHPCurrentLabel.Name = "EnemyHPCurrentLabel";
-            this.EnemyHPCurrentLabel.Size = new System.Drawing.Size(52, 17);
+            this.EnemyHPCurrentLabel.Size = new System.Drawing.Size(59, 20);
             this.EnemyHPCurrentLabel.TabIndex = 11;
             this.EnemyHPCurrentLabel.Text = "label1";
             this.EnemyHPCurrentLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // AttackBtn
             // 
-            this.AttackBtn.Location = new System.Drawing.Point(570, 509);
+            this.AttackBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.AttackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.AttackBtn.Font = new System.Drawing.Font("GothicE", 10.2F, System.Drawing.FontStyle.Bold);
+            this.AttackBtn.Location = new System.Drawing.Point(760, 626);
+            this.AttackBtn.Margin = new System.Windows.Forms.Padding(4);
             this.AttackBtn.Name = "AttackBtn";
-            this.AttackBtn.Size = new System.Drawing.Size(140, 45);
+            this.AttackBtn.Size = new System.Drawing.Size(187, 55);
             this.AttackBtn.TabIndex = 19;
             this.AttackBtn.Text = "Atak";
-            this.AttackBtn.UseVisualStyleBackColor = true;
+            this.AttackBtn.UseVisualStyleBackColor = false;
             this.AttackBtn.Click += new System.EventHandler(this.AttackBtn_Click);
             // 
             // SpecialAttackBtn
             // 
-            this.SpecialAttackBtn.Location = new System.Drawing.Point(570, 560);
+            this.SpecialAttackBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.SpecialAttackBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.SpecialAttackBtn.Font = new System.Drawing.Font("GothicE", 10.2F, System.Drawing.FontStyle.Bold);
+            this.SpecialAttackBtn.Location = new System.Drawing.Point(760, 689);
+            this.SpecialAttackBtn.Margin = new System.Windows.Forms.Padding(4);
             this.SpecialAttackBtn.Name = "SpecialAttackBtn";
-            this.SpecialAttackBtn.Size = new System.Drawing.Size(140, 45);
+            this.SpecialAttackBtn.Size = new System.Drawing.Size(187, 55);
             this.SpecialAttackBtn.TabIndex = 19;
             this.SpecialAttackBtn.Text = "Atak specjalny";
-            this.SpecialAttackBtn.UseVisualStyleBackColor = true;
+            this.SpecialAttackBtn.UseVisualStyleBackColor = false;
             this.SpecialAttackBtn.Click += new System.EventHandler(this.SpecialAttackBtn_Click);
             // 
             // BlockBtn
             // 
-            this.BlockBtn.Location = new System.Drawing.Point(570, 611);
+            this.BlockBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.BlockBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BlockBtn.Font = new System.Drawing.Font("GothicE", 10.2F, System.Drawing.FontStyle.Bold);
+            this.BlockBtn.Location = new System.Drawing.Point(760, 752);
+            this.BlockBtn.Margin = new System.Windows.Forms.Padding(4);
             this.BlockBtn.Name = "BlockBtn";
-            this.BlockBtn.Size = new System.Drawing.Size(140, 45);
+            this.BlockBtn.Size = new System.Drawing.Size(187, 55);
             this.BlockBtn.TabIndex = 19;
             this.BlockBtn.Text = "Obrona";
-            this.BlockBtn.UseVisualStyleBackColor = true;
+            this.BlockBtn.UseVisualStyleBackColor = false;
             this.BlockBtn.Click += new System.EventHandler(this.BlockBtn_Click);
             // 
             // ItemsBtn
             // 
-            this.ItemsBtn.Location = new System.Drawing.Point(570, 662);
+            this.ItemsBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.ItemsBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.ItemsBtn.Font = new System.Drawing.Font("GothicE", 10.2F, System.Drawing.FontStyle.Bold);
+            this.ItemsBtn.Location = new System.Drawing.Point(760, 815);
+            this.ItemsBtn.Margin = new System.Windows.Forms.Padding(4);
             this.ItemsBtn.Name = "ItemsBtn";
-            this.ItemsBtn.Size = new System.Drawing.Size(140, 45);
+            this.ItemsBtn.Size = new System.Drawing.Size(187, 55);
             this.ItemsBtn.TabIndex = 19;
             this.ItemsBtn.Text = "Przedmioty";
-            this.ItemsBtn.UseVisualStyleBackColor = true;
+            this.ItemsBtn.UseVisualStyleBackColor = false;
             this.ItemsBtn.Click += new System.EventHandler(this.ItemsBtn_Click);
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(782, 616);
+            this.button1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button1.Font = new System.Drawing.Font("GothicE", 10.2F, System.Drawing.FontStyle.Bold);
+            this.button1.Location = new System.Drawing.Point(1043, 758);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(100, 49);
             this.button1.TabIndex = 20;
             this.button1.Text = "Exit";
-            this.button1.UseVisualStyleBackColor = true;
+            this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Delay
@@ -299,11 +352,28 @@
             this.Delay.Interval = 1000;
             this.Delay.Tick += new System.EventHandler(this.Delay_Tick);
             // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.panel1.Location = new System.Drawing.Point(46, 626);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(470, 244);
+            this.panel1.TabIndex = 21;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.panel2.Location = new System.Drawing.Point(1197, 630);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(470, 244);
+            this.panel2.TabIndex = 22;
+            // 
             // Combat
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1280, 720);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
+            this.ClientSize = new System.Drawing.Size(1707, 886);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.ItemsBtn);
             this.Controls.Add(this.BlockBtn);
@@ -328,7 +398,10 @@
             this.Controls.Add(this.EnemyPB);
             this.Controls.Add(this.PlayerPB);
             this.Controls.Add(this.BackgroundPB);
+            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Combat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Combat";
@@ -367,5 +440,7 @@
         private System.Windows.Forms.Button ItemsBtn;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Timer Delay;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }

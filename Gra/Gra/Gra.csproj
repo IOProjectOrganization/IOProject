@@ -98,6 +98,12 @@
     <Compile Include="Shop.Designer.cs">
       <DependentUpon>Shop.cs</DependentUpon>
     </Compile>
+    <Compile Include="ShopInfoBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ShopInfoBox.Designer.cs">
+      <DependentUpon>ShopInfoBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="World.cs" />
     <Compile Include="Equipment.cs">
       <SubType>Form</SubType>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Shop.resx">
       <DependentUpon>Shop.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ShopInfoBox.resx">
+      <DependentUpon>ShopInfoBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

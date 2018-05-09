@@ -36,6 +36,10 @@
             this.button_powrot = new System.Windows.Forms.Button();
             this.listBox2 = new System.Windows.Forms.ListBox();
             this.towar_label = new System.Windows.Forms.Label();
+            this.bohaterZloto = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -66,7 +70,7 @@
             this.listBox1.ItemHeight = 24;
             this.listBox1.Location = new System.Drawing.Point(28, 191);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(533, 480);
+            this.listBox1.Size = new System.Drawing.Size(533, 360);
             this.listBox1.TabIndex = 2;
             // 
             // button_sprzedaz
@@ -131,6 +135,36 @@
             this.towar_label.TabIndex = 7;
             this.towar_label.Text = "Towar";
             // 
+            // bohaterZloto
+            // 
+            this.bohaterZloto.AutoSize = true;
+            this.bohaterZloto.Font = new System.Drawing.Font("Book Antiqua", 15.2F, System.Drawing.FontStyle.Bold);
+            this.bohaterZloto.Location = new System.Drawing.Point(366, 29);
+            this.bohaterZloto.Name = "bohaterZloto";
+            this.bohaterZloto.Size = new System.Drawing.Size(87, 31);
+            this.bohaterZloto.TabIndex = 8;
+            this.bohaterZloto.Text = "label1";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.panel2.Controls.Add(this.label1);
+            this.panel2.Controls.Add(this.bohaterZloto);
+            this.panel2.Location = new System.Drawing.Point(28, 586);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(533, 93);
+            this.panel2.TabIndex = 9;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Book Antiqua", 15.2F, System.Drawing.FontStyle.Bold);
+            this.label1.Location = new System.Drawing.Point(54, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(209, 31);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Posiadane złoto:";
+            // 
             // Shop
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -146,6 +180,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.ekwipunek_label);
             this.Controls.Add(this.panel1);
+            this.Controls.Add(this.panel2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -153,6 +188,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Shop";
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -168,5 +205,8 @@
         private System.Windows.Forms.Button button_powrot;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Label towar_label;
+        private System.Windows.Forms.Label bohaterZloto;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label1;
     }
 }

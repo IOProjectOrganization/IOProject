@@ -269,6 +269,8 @@ namespace Gra
                             else
                                 postac.Ekwipunek.ElementAt(i).zmniejszIlosc(1);
 
+                            UpdateEquipment(postac);
+
                             break;
                         }
                         else
@@ -276,8 +278,6 @@ namespace Gra
                     }
                 }
             }
-
-            UpdateEquipment(postac);
 
         }
     }

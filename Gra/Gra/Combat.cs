@@ -29,6 +29,7 @@ namespace Gra
         public Combat()
         {
             InitializeComponent();
+
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
         }
@@ -48,7 +49,7 @@ namespace Gra
             return playerWin;
         }
 
-        public void StartCombat(Bohater player, Przeciwnik enemy)
+        public void StartCombat(Bohater player, ref Przeciwnik enemy)
         {
             if (Player == null)
                 Player = player;
@@ -89,6 +90,9 @@ namespace Gra
                 EnemyMPCurrentLabel.Text = Enemy.GetMP().ToString();
                 EnemyMPSlashLabel.Text = "/";
                 EnemyMPMaxLabel.Text = Enemy.GetMaxMP().ToString();
+
+                if (Enemy.GetHP() <= 0)
+                    Enemy = null;
             }
         }
 
@@ -109,7 +113,7 @@ namespace Gra
                     Player.DodajEXP(Enemy.getNagrodaExp());
                     Player.DodajGold(Enemy.getNagrodaGold());
 
-                    
+                    UpdateStats();
 
                     this.Hide();
                 }
@@ -269,9 +273,12 @@ namespace Gra
 
         private void Delay_Tick(object sender, EventArgs e)
         {
-            if (!playerTurn)
+            if (Enemy != null)
             {
-                EnemyAttack();
+                if (!playerTurn)
+                {
+                    EnemyAttack();
+                }
             }
         }
     }
