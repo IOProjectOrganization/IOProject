@@ -303,7 +303,7 @@
             this.SpecialSkillBtn.TabIndex = 19;
             this.SpecialSkillBtn.Text = "Atak specjalny";
             this.SpecialSkillBtn.UseVisualStyleBackColor = false;
-            this.SpecialSkillBtn.Click += new System.EventHandler(this.SpecialAttackBtn_Click);
+            this.SpecialSkillBtn.Click += new System.EventHandler(this.SpecialSkillBtn_Click);
             // 
             // BlockBtn
             // 
