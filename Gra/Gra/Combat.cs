@@ -27,18 +27,36 @@ namespace Gra
 
         Random random = new Random();
 
-
         public Combat()
         {
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
-        }
+            tableLayoutPanel2.Parent = BackgroundPB;
 
-        private void Combat_Load(object sender, EventArgs e)
-        {
-            
+            PlayerHPCurrentLabel.Scale(2);
+            PlayerHPSlashLabel.Scale(2);
+            PlayerHPMaxLabel.Scale(2);
+            PlayerMPCurrentLabel.Scale(2);
+            PlayerMPSlashLabel.Scale(2);
+            PlayerMPMaxLabel.Scale(2);
+
+            EnemyHPCurrentLabel.Scale(2);
+            EnemyHPSlashLabel.Scale(2);
+            EnemyHPMaxLabel.Scale(2);
+            EnemyMPCurrentLabel.Scale(2);
+            EnemyMPSlashLabel.Scale(2);
+            EnemyMPMaxLabel.Scale(2);
+
+            AttackBtn.Scale(2);
+            SpecialSkillBtn.Scale(2);
+            BlockBtn.Scale(2);
+            ItemsBtn.Scale(2);
+            button1.Scale(2);
+
+            Delay.Enabled = true;
+            Delay.Stop();
         }
 
         public bool GetIsInCombat()
@@ -62,7 +80,8 @@ namespace Gra
             inCombat = true;
             playerTurn = true;
 
-            PlayerPB.Image = Gra.Properties.Resources.PlayerCombat;
+            PlayerPB.Image = Player.getBattleImage();
+            EnemyPB.Image = Enemy.getBattleImage();
 
             UpdateStats();
         }
@@ -94,8 +113,69 @@ namespace Gra
                 EnemyMPCurrentLabel.Text = Enemy.GetMP().ToString();
                 EnemyMPSlashLabel.Text = "/";
                 EnemyMPMaxLabel.Text = Enemy.GetMaxMP().ToString();
-                label1.Text = Enemy.getNazwa();
             }
+        }
+
+        private void scaleFont(Button Btn)
+        {
+            Image fakeImage = new Bitmap(1, 1);
+            Graphics graphics = Graphics.FromImage(fakeImage);
+
+
+            SizeF extent = graphics.MeasureString(Btn.Text, Btn.Font);
+
+
+            float hRatio = Btn.Height / extent.Height / 2;
+            float wRatio = Btn.Width / extent.Width / 2;
+            float ratio = (hRatio < wRatio) ? hRatio : wRatio;
+
+            float newSize = Btn.Font.Size * ratio;
+
+            Btn.Font = new Font(Btn.Font.FontFamily, newSize, Btn.Font.Style);
+        }
+
+        private void scaleFont(Label lab)
+        {
+            Image fakeImage = new Bitmap(1, 1);
+            Graphics graphics = Graphics.FromImage(fakeImage);
+
+
+            SizeF extent = graphics.MeasureString(lab.Text, lab.Font);
+
+
+            float hRatio = lab.Height / extent.Height;
+            float wRatio = lab.Width / extent.Width;
+            float ratio = (hRatio < wRatio) ? hRatio : wRatio;
+
+            float newSize = lab.Font.Size * ratio;
+            
+            lab.Font = new Font(lab.Font.FontFamily, newSize, lab.Font.Style);
+        }
+
+        private void Label_SizeChanged(object sender, EventArgs e)
+        {
+            scaleFont(PlayerHPCurrentLabel);
+            scaleFont(PlayerHPSlashLabel);
+            scaleFont(PlayerHPMaxLabel);
+            scaleFont(PlayerMPCurrentLabel);
+            scaleFont(PlayerMPSlashLabel);
+            scaleFont(PlayerMPMaxLabel);
+
+            scaleFont(EnemyHPCurrentLabel);
+            scaleFont(EnemyHPSlashLabel);
+            scaleFont(EnemyHPMaxLabel);
+            scaleFont(EnemyMPCurrentLabel);
+            scaleFont(EnemyMPSlashLabel);
+            scaleFont(EnemyMPMaxLabel);
+        }
+
+        private void Button_SizeChanged(object sender, EventArgs e)
+        {
+            scaleFont(AttackBtn);
+            scaleFont(SpecialSkillBtn);
+            scaleFont(BlockBtn);
+            scaleFont(ItemsBtn);
+            scaleFont(button1);
         }
 
         private void AttackBtn_Click(object sender, EventArgs e)
@@ -134,6 +214,7 @@ namespace Gra
             ItemsBtn.Enabled = false;
 
             UpdateStats();
+            Delay.Start();
         }
 
         private void SpecialSkillBtn_Click(object sender, EventArgs e)
@@ -152,6 +233,7 @@ namespace Gra
             ItemsBtn.Enabled = false;
 
             UpdateStats();
+            Delay.Start();
         }
 
         private void BlockBtn_Click(object sender, EventArgs e)
@@ -168,6 +250,7 @@ namespace Gra
             ItemsBtn.Enabled = false;
 
             UpdateStats();
+            Delay.Start();
         }
 
         private void ItemsBtn_Click(object sender, EventArgs e)
@@ -188,6 +271,7 @@ namespace Gra
             ItemsBtn.Enabled = false;
 
             UpdateStats();
+            Delay.Start();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -316,6 +400,8 @@ namespace Gra
 
                         else
                             EnemyBlock();
+
+                        Delay.Stop();
                     }
                     else
                     {
@@ -326,6 +412,8 @@ namespace Gra
 
                         else
                             EnemyBlock();
+
+                        Delay.Stop();
                     }
                 }
             }

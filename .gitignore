@@ -286,3 +286,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/Gra/Gra/DataClasses1.dbml
+/Gra/Gra/DataClasses1.dbml.layout
+/Gra/Gra/DataClasses1.designer.cs

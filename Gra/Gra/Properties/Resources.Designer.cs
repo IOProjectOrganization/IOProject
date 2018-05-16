@@ -73,16 +73,6 @@ namespace Gra.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap enemy1 {
-            get {
-                object obj = ResourceManager.GetObject("enemy1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap GrassTile {
             get {
                 object obj = ResourceManager.GetObject("GrassTile", resourceCulture);
@@ -106,6 +96,26 @@ namespace Gra.Properties {
         internal static System.Drawing.Bitmap manapotion_1 {
             get {
                 object obj = ResourceManager.GetObject("manapotion_1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Minotaur {
+            get {
+                object obj = ResourceManager.GetObject("Minotaur", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Minotaur_battleimage {
+            get {
+                object obj = ResourceManager.GetObject("Minotaur_battleimage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

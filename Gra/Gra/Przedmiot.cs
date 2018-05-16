@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Gra
 {
@@ -47,7 +48,6 @@ namespace Gra
             itemStrength = str;
 
             itemType = _itemType;
-
         }
 
         public virtual Przedmiot Kopia()  //wirtualna metoda glebokiej kopii
@@ -155,17 +155,19 @@ namespace Gra
     public class Bron : Przedmiot
     {
         private int obrazenia;
+        private Image WeaponImage;
         //private int zuzycie; // dwa kolejne, jesli uwzgledniamy zuzycie
         //private int zywotnosc; // 
 
-        public Bron(int _ilosc, int _id, string _nazwa, int _obrazenia, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
+        public Bron(int _ilosc, int _id, string _nazwa, int _obrazenia, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType, Image WeaponImagePath) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
         {
             obrazenia = _obrazenia;
+            WeaponImage = new Bitmap(WeaponImagePath);
         }
 
         public override Przedmiot Kopia()  //gleboka kopia
         {
-            Przedmiot temp = new Bron(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrazenia(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
+            Przedmiot temp = new Bron(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrazenia(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType(), this.getWeaponImage());
             return temp;
         }
 
@@ -174,28 +176,39 @@ namespace Gra
             return obrazenia;
         }
 
+        public Image getWeaponImage()
+        {
+            return WeaponImage;
+        }
     }
 
     public class Zbroja : Przedmiot
     {
         private int obrona;
+        private Image ArmorImage;
         //private int zuzycie; //
         //private int zywotnosc; //
 
-        public Zbroja(int _ilosc, int _id, string _nazwa, int _obrona, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
+        public Zbroja(int _ilosc, int _id, string _nazwa, int _obrona, bool _stackable, int hp, int mp, int str, int dex, int intel, int _sellprice, int _buyprice, ItemType _itemType, Image ArmorImagePath) : base(_ilosc, _id, _nazwa, _stackable, hp, mp, str, dex, intel, _sellprice, _buyprice, _itemType)
         {
             obrona = _obrona;
+            ArmorImage = new Bitmap(ArmorImagePath);
         }
 
         public override Przedmiot Kopia()
         {
-            Przedmiot temp = new Zbroja(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrona(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType());
+            Przedmiot temp = new Zbroja(this.getIlosc(), this.getId(), this.getNazwa(), this.getObrona(), this.getStackable(), this.getItemHP(), this.getItemMP(), this.getItemStrength(), this.getItemDexterity(), this.getItemIntelligence(), this.getItemSellPrice(), this.getItemBuyPrice(), this.getItemType(), this.getArmorImage());
             return temp;
         }
 
         public int getObrona()
         {
             return obrona;
+        }
+
+        public Image getArmorImage()
+        {
+            return ArmorImage;
         }
     }
 
@@ -275,10 +288,10 @@ namespace Gra
             Items.Add(new Przedmiot(0, itemId_bone, "Ludzka kosc", true, 0, 0, 0, 0, 0, 2, -1, ItemType.None));
             Items.Add(new Przedmiot(0, itemId_gold, "Zloto", true, 0, 0, 0, 0, 0, 0, 0, ItemType.None));
 
-            Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 70, false, 0, 0, 0, 0, 0, 200, 350, ItemType.Weapon));
-            Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 120, false, 0, 0, 0, 0, 0, 400, 600, ItemType.Weapon));
+            Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 7, false, 0, 0, 2, 0, 0, 200, 350, ItemType.Weapon, Gra.Properties.Resources.sword_1));
+            Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 12, false, 0, 0, 0, 0, 0, 400, 600, ItemType.Weapon, Gra.Properties.Resources.sword_2));
 
-            Armor.Add(new Zbroja(0, armorId_lightSteelArmor, "Lekka stalowa zbroja", 30, false, 0, 0, 0, 0, 0, 300, 500, ItemType.Armor));
+            Armor.Add(new Zbroja(0, armorId_lightSteelArmor, "Lekka stalowa zbroja", 30, false, 0, 0, 0, 0, 0, 300, 500, ItemType.Armor, Gra.Properties.Resources.zloto));
         }
 
         public static Przedmiot ItemsById(int _id)

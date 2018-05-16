@@ -66,9 +66,9 @@ namespace Gra
                         T.isShop = false;
                         T.isNPC = false;
                     }
-                    if (line[z].ToString() == "s") // dostęp do sklepu
+                    else if (line[z].ToString() == "s") // dostęp do sklepu
                     {
-                        T.TileImage = new Bitmap(Gra.Properties.Resources.Player, TileWidth, TileHeight);
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.shop, TileWidth * 3, TileHeight * 2);
                         T.isWalkable = false;
                         T.isInteractive = true;
                         T.isMapLoader = false;
@@ -76,7 +76,17 @@ namespace Gra
                         T.isShop = true;
                         T.isNPC = false;
                     }
-                    if (line[z].ToString() == "0") //Zablokowana przestrzeń
+                    else if (line[z].ToString() == "S") // dostęp do sklepu
+                    {
+                        T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
+                        T.isWalkable = false;
+                        T.isInteractive = true;
+                        T.isMapLoader = false;
+                        T.SwitchState = false;
+                        T.isShop = true;
+                        T.isNPC = false;
+                    }
+                    else if (line[z].ToString() == "0") //Zablokowana przestrzeń
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
                         T.isWalkable = false;
@@ -86,7 +96,7 @@ namespace Gra
                         T.isShop = false;
                         T.isNPC = false;
                     }
-                    if (line[z].ToString() == "1") //Domyślna, możliwa do chodzenia przestrzeć
+                    else if (line[z].ToString() == "1") //Domyślna, możliwa do chodzenia przestrzeć
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
                         T.isWalkable = true;
@@ -96,7 +106,7 @@ namespace Gra
                         T.isShop = false;
                         T.isNPC = false;
                     }
-                    if (line[z].ToString() == "2") //Przedmiot
+                    else if (line[z].ToString() == "2") //Przedmiot
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
                         T.isWalkable = false;
@@ -106,34 +116,34 @@ namespace Gra
                         T.isShop = false;
                         T.isNPC = false;
 
-                        if (line[z + 1].ToString() == "0")
+                        if (line[z + 1].ToString() == "0") // potions
                         {
-                            if (line[z + 2].ToString() == "0")
+                            if (line[z + 2].ToString() == "0") 
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(1)));
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.healthpotion_1, TileWidth, TileHeight);
                             }
-                            if (line[z + 2].ToString() == "1")
+                            else if (line[z + 2].ToString() == "1")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.GrassTile), Item.ItemsById(2)));
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.healthpotion_1, TileWidth, TileHeight);
                             }
-                            if (line[z + 2].ToString() == "2")
+                            else if (line[z + 2].ToString() == "2")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(3)));
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.manapotion_1, TileWidth, TileHeight);
                             }
-                            if (line[z + 2].ToString() == "3")
+                            else if (line[z + 2].ToString() == "3")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(4)));
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.manapotion_1, TileWidth, TileHeight);
                             }
                         }
-                        if (line[z + 1].ToString() == "1")
+                        else if (line[z + 1].ToString() == "1") // weapons
                         {
                             if (line[z + 2].ToString() == "0")
                             {
@@ -141,14 +151,14 @@ namespace Gra
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.sword_1, TileWidth, TileHeight);
                             }
-                            if (line[z + 2].ToString() == "1")
+                            else if (line[z + 2].ToString() == "1")
                             {
                                 worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(7)));
                                 item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.sword_2, TileWidth, TileHeight);
                             }
                         }
-                        if (line[z + 1].ToString() == "2")
+                        else if (line[z + 1].ToString() == "2") // armors
                         {
                             if (line[z + 2].ToString() == "0")
                             {
@@ -157,14 +167,14 @@ namespace Gra
                                 T.TileImage = new Bitmap(Gra.Properties.Resources.zloto, TileWidth, TileHeight);
                             }
                         }
-                        if (line[z + 1].ToString() == "3")
+                        else if (line[z + 1].ToString() == "3") // gold
                         {
                             worldMapItems.Add(new WorldMapItem(new Point(x * TileWidth, y * TileHeight), new Bitmap(Gra.Properties.Resources.WaterTile), Item.ItemsById(0)));
                             item = worldMapItems.Find(c => c.GetLocation() == new Point(x * TileWidth, y * TileHeight));
                             T.TileImage = new Bitmap(Gra.Properties.Resources.zloto, TileWidth * 2 / 3, TileHeight * 2 / 3);
                         }
                     }
-                    if (line[z].ToString() == "3") //Przeciwnik
+                    else if (line[z].ToString() == "3") //Przeciwnik
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
                         T.isWalkable = true;
@@ -181,51 +191,51 @@ namespace Gra
                                 EnemiesList.Add(new Przeciwnik( Wrog.EnemyById(Wrog.enemyId_nietoperz).getNazwa(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_nietoperz).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
                             }
-                            if (line[z + 2].ToString() == "1")
+                            else if (line[z + 2].ToString() == "1")
                             {
                                 EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
                             }
-                            if (line[z + 2].ToString() == "2")
+                            else if (line[z + 2].ToString() == "2")
                             {
                                 EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_wilk).getNazwa(), Wrog.EnemyById(Wrog.enemyId_wilk).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_wilk).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_wilk).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_wilk).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
                             }
-                            if (line[z + 2].ToString() == "3")
+                            else if (line[z + 2].ToString() == "3")
                             {
                                 EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_szkielet).getNazwa(), Wrog.EnemyById(Wrog.enemyId_szkielet).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_szkielet).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
                             }
-                            if (line[z + 2].ToString() == "4")
+                            else if (line[z + 2].ToString() == "4")
                             {
                                 EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNazwa(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
                             }
-                            if (line[z + 2].ToString() == "5")
+                            else if (line[z + 2].ToString() == "5")
                             {
                                 EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_minotaur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_minotaur).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_minotaur).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.enemy1,
+                                                                Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Minotaur,
                                                                 Gra.Properties.Resources.Empty));
                             }
                         }
-                        if (line[z + 1].ToString() == "1") //Przyjazny
+                        else if (line[z + 1].ToString() == "1") //Przyjazny
                         {
                             if (line[z + 2].ToString() == "0")
                             {

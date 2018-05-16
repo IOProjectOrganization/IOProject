@@ -309,14 +309,16 @@ namespace Gra
             }
         }
         //{ get { return ((EXP / 100) + 1); } }   // prawdopodobnie do zastąpienia w przyszłości
+
         private Bron UzywanaBron;
         private Zbroja UzywanaZbroja;
+        public List<Quest> quests;
 
         // ekwipunek przeniesiony do klasy postaci
         //public List<Przedmiot> Ekwipunek;
 
 
-        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, Point Location, Image SciezkaObrazku) : base(basehp, basemp)  // konstruktor
+        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, Point Location, Image SciezkaObrazku, Image BattleImagePath) : base(basehp, basemp)  // konstruktor
         {
             Level = level;
             SetGold(gold);
@@ -324,6 +326,7 @@ namespace Gra
             PlayerLoc = Location;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
+            BattleImage = new Bitmap(BattleImagePath);
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
@@ -331,11 +334,13 @@ namespace Gra
             SetHP(GetMaxHP());
             SetMP(GetMaxMP());
             Skillpoints = 0;
+            quests = new List<Quest>();
         }
 
         public Bohater(int basehp, int basemp) : base(basehp,basemp)
         {
             Ekwipunek = new List<Przedmiot>();
+            quests = new List<Quest>();
         }
 
         public void UpdateStats()  // zapewnić aktualność danych kiedykolwiek zmienią się statystyki
@@ -520,6 +525,72 @@ namespace Gra
         public int GetYTileIndex()
         { return YTileIndex; }
 
+        public void AddQuest(Quest quest)
+        { quests.Add(quest); }
+
+        public void AddQuest(int questID)
+        { quests.Add(Task.questsById(questID)); }
+
+        public void ChangeQuestName(Quest quest, string name)
+        {
+            Quest _quest = quests.Find(q => q.getId() == quest.getId());
+
+            _quest.setName(name);
+        }
+
+        public void ChangeQuestName(int questID, string name)
+        {
+            Quest _quest = quests.Find(q => q.getId() == questID);
+
+            _quest.setName(name);
+        }
+
+        public void ChangeQuestDescription(Quest quest, string description)
+        {
+            Quest _quest = quests.Find(q => q.getId() == quest.getId());
+
+            _quest.setDescription(description);
+        }
+
+        public void ChangeQuestDescription(int questID, string description)
+        {
+            Quest _quest = quests.Find(q => q.getId() == questID);
+
+            _quest.setDescription(description);
+        }
+
+        public void ChangeQuestIsActive(Quest quest, bool isactive)
+        {
+            Quest _quest = quests.Find(q => q.getId() == quest.getId());
+
+            _quest.setIsActive(isactive);
+        }
+
+        public void ChangeQuestIsActive(int questID, bool isactive)
+        {
+            Quest _quest = quests.Find(q => q.getId() == questID);
+
+            _quest.setIsActive(isactive);
+        }
+
+        public void ChangeQuestStatus(Quest quest, QuestStatus status)
+        {
+            Quest _quest = quests.Find(q => q.getId() == quest.getId());
+
+            _quest.setStatus(status);
+        }
+
+        public void ChangeQuestStatus(int questID, QuestStatus status)
+        {
+            Quest _quest = quests.Find(q => q.getId() == questID);
+
+            _quest.setStatus(status);
+        }
+
+        public Image getBattleImage()
+        {
+            return BattleImage;
+        }
     }
 
     public class Przeciwnik : Postac
@@ -633,7 +704,7 @@ namespace Gra
             temp.PoznajAtak(1);
             Przeciwnik.Add(temp);
 
-            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30, Gra.Properties.Resources.Empty);
+            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30, Gra.Properties.Resources.Minotaur_battleimage);
             temp.PoznajAtak(2);
             temp.PoznajAtak(4);
             Przeciwnik.Add(temp);

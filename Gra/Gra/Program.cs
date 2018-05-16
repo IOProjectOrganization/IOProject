@@ -39,6 +39,8 @@ namespace Gra
         Shop shop = new Shop();
         Postac sklepikarz = new Postac();   // Bohater zmieniony na Postac
 
+        QuestsList questsList = new QuestsList();
+
         Combat combat;
 
         Quit quit = new Quit();
@@ -72,8 +74,12 @@ namespace Gra
 
             LoadNewMap(0, 0);
 
-            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player); // nowy konstruktor ze statystykami(4 do wszystkich)
-            worldEnemies.Add(new Przeciwnik("Test1", 0, 4, 1000, 1000, 100, 100, new Point(10 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.enemy1, Gra.Properties.Resources.Empty));
+            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat); // nowy konstruktor ze statystykami(4 do wszystkich)
+
+            Player.AddQuest(Task.questId_Cave);
+            Player.ChangeQuestIsActive(Task.questId_Cave, true);
+            Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
+            
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -217,21 +223,41 @@ namespace Gra
                             }
                         }
                     }
-            }
+                }
 
-                if (e.KeyCode == Keys.I)
+                else if (e.KeyCode == Keys.I)
                 {
+                    equipment.Height = _Height * 2 / 3;
+                    equipment.Width = _Width * 2 / 3;
                     equipment.UpdateEquipment(Player);
                     equipment.Show();
                     equipment.Focus();
                 }
 
-                if (e.KeyCode == Keys.W)
+                else if (e.KeyCode == Keys.L)
+                {
+                    questsList.Height = _Height * 2 / 3;
+                    questsList.Width = _Width * 2 / 3;
+                    questsList.UpdateQuestsList(Player);
+                    questsList.Show();
+                    questsList.Focus();
+                }
+
+                else if (e.KeyCode == Keys.Escape)
+                {
+                    quit.Height = _Height / 6;
+                    quit.Width = _Width / 4;
+                    quit.Show();
+                    quit.sendForm(GameForm);
+                    quit.Focus();
+                }
+
+                else if (e.KeyCode == Keys.W)
                 {
                     Player.DodajEXP(20);
                 }
 
-                if (e.KeyCode == Keys.Left)
+                else if (e.KeyCode == Keys.Left)
                 {
                     p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
                     DesiredMove = p;
@@ -244,7 +270,7 @@ namespace Gra
                     }
                 }
 
-                if (e.KeyCode == Keys.Right)
+                else if (e.KeyCode == Keys.Right)
                 {
                     p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32), Player.GetCharacterSprite().GetLocation().Y);
                     DesiredMove = p;
@@ -257,7 +283,7 @@ namespace Gra
                     }
                 }
 
-                if (e.KeyCode == Keys.Up)
+                else if (e.KeyCode == Keys.Up)
                 {
                     p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18));
                     DesiredMove = p;
@@ -271,7 +297,7 @@ namespace Gra
                 }
 
 
-                if (e.KeyCode == Keys.Down)
+                else if (e.KeyCode == Keys.Down)
                 {
                     p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18));
                     DesiredMove = p;
@@ -283,14 +309,8 @@ namespace Gra
                         timer.Start();
                     }
                 }
-
-                if (e.KeyCode == Keys.Escape)
-                {
-                    quit.Show();
-                    quit.sendForm(GameForm);
-                    quit.Focus();
-                }
             }
+
             Draw();
         }
 
@@ -316,7 +336,7 @@ namespace Gra
                         Player.GetCharacterSprite().SetLocation(z);
                     }
 
-                    if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
+                    else if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
                     {
                         LoadNewMap(1, 0);
 
@@ -333,7 +353,7 @@ namespace Gra
                         Player.GetCharacterSprite().SetLocation(z);
                     }
 
-                    if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
+                    else if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
                     {
                         LoadNewMap(0, -1);
 
@@ -350,7 +370,7 @@ namespace Gra
                         Player.GetCharacterSprite().SetLocation(z);
                     }
 
-                    if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
+                    else if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
                     {
                         LoadNewMap(0, 1);
 
@@ -374,7 +394,7 @@ namespace Gra
                 if (MTB <= 0)
                 {
                     combat = new Combat();
-                    combat.StartCombat(Player, Wrog.EnemyById(Wrog.enemyId_minotaur));
+                    combat.StartCombat(Player, Wrog.EnemyById(Wrog.enemyId_nietoperz));
                     combat.Show();
                     combat.Focus();
 
@@ -393,19 +413,22 @@ namespace Gra
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetXTileIndex(Player.GetXTileIndex() - 1);
                 }
-                if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
+
+                else if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32) / 4, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetXTileIndex(Player.GetXTileIndex() + 1);
                 }
-                if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
+
+                else if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);
                     Player.SetYTileIndex(Player.GetYTileIndex() - 1);
                 }
-                if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
+
+                else if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);

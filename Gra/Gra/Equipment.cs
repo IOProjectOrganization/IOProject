@@ -8,19 +8,62 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Runtime.InteropServices;
+
+
 namespace Gra
 {
     public partial class Equipment : Form
     {
         Bohater postac;
-        List<Przedmiot> przedmioty = new List<Przedmiot>();
+
+        float LBHeight;
 
         public Equipment()
         {
             InitializeComponent();
+
+            //bohaterExp.ForeColor = Color.WhiteSmoke;
+            //bohaterExp.BackColor = Color.FromArgb(154, 116, 52);
+            //bohaterExp.Style = ProgressBarStyle.Continuous;
+
+            LBHeight = listBox1.Height;
+            tableLayoutPanel2.Parent = PlayerPB;
+
+            Level.Scale(2);
+            HP.Scale(2);
+            MP.Scale(2);
+            PunktyD.Scale(2);
+            Exp.Scale(2);
+            Sila.Scale(2);
+            Zrecznosc.Scale(2);
+            Inteligencja.Scale(2);
+            Zloto.Scale(2);
+
+            bohaterLevel.Scale(2);
+            bohaterHP.Scale(2);
+            ukosnik1.Scale(2);
+            bohaterHPMax.Scale(2);
+            bohaterMP.Scale(2);
+            ukosnik2.Scale(2);
+            bohaterMPMax.Scale(2);
+            bohaterPunktyD.Scale(2);
+            bohaterSila.Scale(2);
+            bohaterZrecznosc.Scale(2);
+            bohaterInteligencja.Scale(2);
+            bohaterZloto.Scale(2);
+
+            ekwipunek_label.Scale(2);
+            statystyki_label.Scale(2);
+
+            uzycie.Scale(2);
+            zdjecie.Scale(2);
+            button1.Scale(2);
+
+            listBox1.Scale(2);
         }
 
-        private void Equipment_Load(object sender, EventArgs e)
+    private void Equipment_Load(object sender, EventArgs e)
         {
             //this.TopMost = true;
         }
@@ -28,20 +71,18 @@ namespace Gra
         public void UpdateEquipment(Bohater Player)
         {
             postac = Player;
+            PlayerPB.Image = postac.getBattleImage();
 
             setTextColor();
 
             listBox1.Items.Clear();
-            przedmioty.Clear();
 
             int i = 0;
 
             foreach (Przedmiot item in Player.Ekwipunek)
             {
-                for (int j = 0; j < Player.Ekwipunek.ElementAt(i).getIlosc(); j++)
-                    przedmioty.Add(Player.Ekwipunek.ElementAt(i));
-
-                listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
+                listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + 
+                                   Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
                 i++;
             }
 
@@ -69,12 +110,79 @@ namespace Gra
             zdjecie.Visible = false;
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void scaleFont(Button Btn)
         {
-            this.Hide();
+            Image fakeImage = new Bitmap(1, 1);
+            Graphics graphics = Graphics.FromImage(fakeImage);
+
+
+            SizeF extent = graphics.MeasureString(Btn.Text, Btn.Font);
+
+
+            float hRatio = Btn.Height / extent.Height / 2;
+            float wRatio = Btn.Width / extent.Width / 2;
+            float ratio = (hRatio < wRatio) ? hRatio : wRatio;
+
+            float newSize = Btn.Font.Size * ratio;
+
+            Btn.Font = new Font(Btn.Font.FontFamily, newSize, Btn.Font.Style);
         }
 
-        private void Equipment_KeyDown(object sender, KeyEventArgs e)
+        private void scaleFont(Label lab)
+        {
+            Image fakeImage = new Bitmap(1, 1);
+            Graphics graphics = Graphics.FromImage(fakeImage);
+
+
+            SizeF extent = graphics.MeasureString(lab.Text, lab.Font);
+
+
+            float hRatio = lab.Height / extent.Height * 2 / 3;
+            float wRatio = lab.Width / extent.Width * 2 / 3;
+            float ratio = hRatio;//(hRatio < wRatio) ? hRatio : wRatio;
+
+            float newSize = lab.Font.Size * ratio;
+
+            lab.Font = new Font(lab.Font.FontFamily, newSize, lab.Font.Style);
+        }
+
+        private void Label_SizeChanged(object sender, EventArgs e)
+        {
+            scaleFont(Level);
+            scaleFont(HP);
+            scaleFont(MP);
+            scaleFont(PunktyD);
+            scaleFont(Exp);
+            scaleFont(Sila);
+            scaleFont(Zrecznosc);
+            scaleFont(Inteligencja);
+            scaleFont(Zloto);
+
+            scaleFont(bohaterLevel);
+            scaleFont(bohaterHP);
+            scaleFont(ukosnik1);
+            scaleFont(bohaterHPMax);
+            scaleFont(bohaterMP);
+            scaleFont(ukosnik2);
+            scaleFont(bohaterMPMax);
+            scaleFont(bohaterPunktyD);
+            scaleFont(bohaterSila);
+            scaleFont(bohaterZrecznosc);
+            scaleFont(bohaterInteligencja);
+            scaleFont(bohaterZloto);
+
+            scaleFont(ekwipunek_label);
+            scaleFont(statystyki_label);
+        }
+
+        private void Button_SizeChanged(object sender, EventArgs e)
+        {
+            scaleFont(uzycie);
+            scaleFont(zdjecie);
+            scaleFont(button1);
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
@@ -86,70 +194,70 @@ namespace Gra
             //bohaterHP.Parent = pictureBox1;
             //bohaterHP.Location = pos;
             bohaterHP.ForeColor = Color.Black;
-            bohaterHP.BackColor = pictureBox1.BackColor;
+            //bohaterHP.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterMP.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterMP.Parent = pictureBox1;
             //bohaterMP.Location = pos;
             bohaterMP.ForeColor = Color.Black;
-            bohaterMP.BackColor = pictureBox1.BackColor;
+            //bohaterMP.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterHPMax.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterHPMax.Parent = pictureBox1;
             //bohaterHPMax.Location = pos;
             bohaterHPMax.ForeColor = Color.Black;
-            bohaterHPMax.BackColor = pictureBox1.BackColor;
+            //bohaterHPMax.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterMPMax.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterMPMax.Parent = pictureBox1;
             //bohaterMPMax.Location = pos;
             bohaterMPMax.ForeColor = Color.Black;
-            bohaterMPMax.BackColor = pictureBox1.BackColor;
+            //bohaterMPMax.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterZloto.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterZloto.Parent = pictureBox1;
             //bohaterZloto.Location = pos;
             bohaterZloto.ForeColor = Color.Black;
-            bohaterZloto.BackColor = pictureBox1.BackColor;
+            //bohaterZloto.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterLevel.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterLevel.Parent = pictureBox1;
             //bohaterLevel.Location = pos;
             bohaterLevel.ForeColor = Color.Black;
-            bohaterLevel.BackColor = pictureBox1.BackColor;
+            //bohaterLevel.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterPunktyD.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterPunktyD.Parent = pictureBox1;
             //bohaterPunktyD.Location = pos;
             bohaterPunktyD.ForeColor = Color.Black;
-            bohaterPunktyD.BackColor = pictureBox1.BackColor;
+            //bohaterPunktyD.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterInteligencja.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterInteligencja.Parent = pictureBox1;
             //bohaterInteligencja.Location = pos;
             bohaterInteligencja.ForeColor = Color.Black;
-            bohaterInteligencja.BackColor = pictureBox1.BackColor;
+            //bohaterInteligencja.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterZrecznosc.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterZrecznosc.Parent = pictureBox1;
             //bohaterZrecznosc.Location = pos;
             bohaterZrecznosc.ForeColor = Color.Black;
-            bohaterZrecznosc.BackColor = pictureBox1.BackColor;
+            //bohaterZrecznosc.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(bohaterSila.Location);
             //pos = pictureBox1.PointToClient(pos);
             //bohaterSila.Parent = pictureBox1;
             //bohaterSila.Location = pos;
             bohaterSila.ForeColor = Color.Black;
-            bohaterSila.BackColor = pictureBox1.BackColor;
+            //bohaterSila.BackColor = pictureBox1.BackColor;
 
             //
 
@@ -158,87 +266,86 @@ namespace Gra
             //HP.Parent = pictureBox1;
             //HP.Location = pos;
             HP.ForeColor = Color.Black;
-            HP.BackColor = pictureBox1.BackColor;
+            //HP.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(MP.Location);
             //pos = pictureBox1.PointToClient(pos);
             //MP.Parent = pictureBox1;
             //MP.Location = pos;
             MP.ForeColor = Color.Black;
-            MP.BackColor = pictureBox1.BackColor;
+            //MP.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(Zloto.Location);
             //pos = pictureBox1.PointToClient(pos);
             //Zloto.Parent = pictureBox1;
             //Zloto.Location = pos;
             Zloto.ForeColor = Color.Black;
-            Zloto.BackColor = pictureBox1.BackColor;
+            //Zloto.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(Level.Location);
             //pos = pictureBox1.PointToClient(pos);
             //Level.Parent = pictureBox1;
             //Level.Location = pos;
             Level.ForeColor = Color.Black;
-            Level.BackColor = pictureBox1.BackColor;
+            //Level.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(PunktyD.Location);
             //pos = pictureBox1.PointToClient(pos);
             //PunktyD.Parent = pictureBox1;
             //PunktyD.Location = pos;
             PunktyD.ForeColor = Color.Black;
-            PunktyD.BackColor = pictureBox1.BackColor;
+            //PunktyD.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(Inteligencja.Location);
             //pos = pictureBox1.PointToClient(pos);
             //Inteligencja.Parent = pictureBox1;
             //Inteligencja.Location = pos;
             Inteligencja.ForeColor = Color.Black;
-            Inteligencja.BackColor = pictureBox1.BackColor;
+            //Inteligencja.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(Zrecznosc.Location);
             //pos = pictureBox1.PointToClient(pos);
             //Zrecznosc.Parent = pictureBox1;
             //Zrecznosc.Location = pos;
             Zrecznosc.ForeColor = Color.Black;
-            Zrecznosc.BackColor = pictureBox1.BackColor;
+            //Zrecznosc.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(Sila.Location);
             //pos = pictureBox1.PointToClient(pos);
             //Sila.Parent = pictureBox1;
             //Sila.Location = pos;
             Sila.ForeColor = Color.Black;
-            Sila.BackColor = pictureBox1.BackColor;
+            //Sila.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(ukosnik1.Location);
             //pos = pictureBox1.PointToClient(pos);
             //ukosnik1.Parent = pictureBox1;
             //ukosnik1.Location = pos;
             ukosnik1.ForeColor = Color.Black;
-            ukosnik1.BackColor = pictureBox1.BackColor;
+            //ukosnik1.BackColor = pictureBox1.BackColor;
 
             //pos = this.PointToScreen(ukosnik2.Location);
             //pos = pictureBox1.PointToClient(pos);
             ////ukosnik2.Parent = pictureBox1;
             //ukosnik2.Location = pos;
             ukosnik2.ForeColor = Color.Black;
-            ukosnik2.BackColor = pictureBox1.BackColor;
+            //ukosnik2.BackColor = pictureBox1.BackColor;
 
             Exp.ForeColor = Color.Black;
-            Exp.BackColor = pictureBox1.BackColor;
+            //Exp.BackColor = pictureBox1.BackColor;
         }
 
         private void uzycie_Click(object sender, EventArgs e)
         {
             if (listBox1.SelectedItem != null)
             {
-                Przedmiot P = przedmioty.ElementAt(listBox1.SelectedIndex) as Przedmiot;
+                Przedmiot P = postac.Ekwipunek.ElementAt(listBox1.SelectedIndex) as Przedmiot;
                 if (P != null)
                 {
                     if (P.getItemType() == ItemType.Armor)
                     {
                         if (postac.getZalozonaZbroja() != null)
                         {
-                            przedmioty.Add(postac.getZalozonaZbroja());
                             listBox1.Items.Add(postac.getZalozonaZbroja().getNazwa().ToString() + " - " + postac.getZalozonaZbroja().getIlosc().ToString());
                             postac.Ekwipunek.Add(postac.getZalozonaZbroja());
                             EquippedArmor.Clear();
@@ -246,14 +353,13 @@ namespace Gra
                         }
 
                         postac.ZalozZbroje(P as Zbroja);
-                        imageList1.Images.Add(Gra.Properties.Resources.zloto);
+                        imageList1.Images.Add((P as Zbroja).getArmorImage());
 
                         ListViewItem listViewItem = new ListViewItem();
                         listViewItem.ImageIndex = 0;
                         EquippedArmor.Items.Add(listViewItem);
 
                         postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
-                        przedmioty.RemoveAt(listBox1.SelectedIndex);
                         listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                         listBox1.ClearSelected();
                     }
@@ -274,14 +380,12 @@ namespace Gra
                         if (postac.Ekwipunek.ElementAt(listBox1.SelectedIndex).getIlosc() == 1)
                         {
                             postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
-                            przedmioty.RemoveAt(listBox1.SelectedIndex);
                             listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                             listBox1.ClearSelected();
                         }
                         else
                         {
                             postac.Ekwipunek.ElementAt(listBox1.SelectedIndex).zmniejszIlosc(1);
-                            przedmioty.RemoveAt(listBox1.SelectedIndex);
                             listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                             listBox1.ClearSelected();
                         }
@@ -290,22 +394,22 @@ namespace Gra
                     {
                         if (postac.getZalozonaBron() != null)
                         {
-                            przedmioty.Add(postac.getZalozonaBron());
                             listBox1.Items.Add(postac.getZalozonaBron().getNazwa().ToString() + " - " + postac.getZalozonaBron().getIlosc().ToString());
                             postac.Ekwipunek.Add(postac.getZalozonaBron());
+                            postac.addStrenght(-1 * postac.getZalozonaBron().getItemStrength());
                             EquippedWeapon.Clear();
                             imageList2.Images.RemoveAt(0);
                         }
 
                         postac.ZalozBron(P as Bron);
-                        imageList2.Images.Add(Gra.Properties.Resources.sword_1);
+                        postac.addStrenght(postac.getZalozonaBron().getItemStrength());
+                        imageList2.Images.Add((P as Bron).getWeaponImage());
 
                         ListViewItem listViewItem = new ListViewItem();
                         listViewItem.ImageIndex = 0;
                         EquippedWeapon.Items.Add(listViewItem);
 
                         postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
-                        przedmioty.RemoveAt(listBox1.SelectedIndex);
                         listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                         listBox1.ClearSelected();
                     }
@@ -329,8 +433,7 @@ namespace Gra
 
                     if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == true)
                         EquippedWeapon.Items[0].Selected = false;
-
-                    przedmioty.Add(postac.getZalozonaZbroja());
+                    
                     listBox1.Items.Add(postac.getZalozonaZbroja().getNazwa().ToString() + " - " + postac.getZalozonaZbroja().getIlosc().ToString());
                     postac.Ekwipunek.Add(postac.getZalozonaZbroja());
                     EquippedArmor.Clear();
@@ -350,10 +453,10 @@ namespace Gra
 
                     if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
                         EquippedArmor.Items[0].Selected = false;
-
-                    przedmioty.Add(postac.getZalozonaBron());
+                    
                     listBox1.Items.Add(postac.getZalozonaBron().getNazwa().ToString() + " - " + postac.getZalozonaBron().getIlosc().ToString());
                     postac.Ekwipunek.Add(postac.getZalozonaBron());
+                    postac.addStrenght(-1 * postac.getZalozonaBron().getItemStrength());
                     EquippedWeapon.Clear();
                     imageList2.Images.RemoveAt(0);
                     postac.ZalozBron(null);
@@ -369,7 +472,7 @@ namespace Gra
         {
             if (listBox1.SelectedItem != null)
             {
-                Przedmiot P = przedmioty.ElementAt(listBox1.SelectedIndex) as Przedmiot;
+                Przedmiot P = postac.Ekwipunek.ElementAt(listBox1.SelectedIndex) as Przedmiot;
                 if (P != null)
                 {
                     if (P.getItemType() == ItemType.None)
@@ -450,6 +553,9 @@ namespace Gra
                 if (EquippedArmor.Items.Count > 0 && EquippedArmor.Items[0].Selected == true)
                     EquippedArmor.Items[0].Selected = false;
             }
+
+
+
             /*else
             {
                 if (EquippedWeapon.Items.Count > 0 && EquippedWeapon.Items[0].Selected == false)
@@ -479,6 +585,13 @@ namespace Gra
                     }
                 }
             }*/
+        }
+
+        private void listBox1_SizeChanged(object sender, EventArgs e)
+        {
+            float ratio = listBox1.Size.Height / LBHeight;
+            listBox1.Font = new Font(listBox1.Font.FontFamily, listBox1.Font.Size * ratio, listBox1.Font.Style);
+            LBHeight = listBox1.Height;
         }
     }
 }
