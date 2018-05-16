@@ -37,6 +37,7 @@ namespace Gra
             BaseMP = basemp;
             Ekwipunek = new List<Przedmiot>();
             SpecjalneAtaki = new List<Atak>();
+            DOTEffects = new List<DOTEffect>();
             StunResistance = BaseStunResistance;
             StunRecoveryChance = BaseStunRecoveryChance;
             Stunned = false;
@@ -204,8 +205,27 @@ namespace Gra
 
         //  Obsluga statusów(oszołomienie, krwawienie itd)   wyjasnienie na dole
 
+        public List<DOTEffect> DOTEffects;  // efekty zadajace obrazenia co ture przez jakis okres czasu spowodowane np. atakami trującymi
+
+        public void ApplyDOTEffect(DOTEffect atak)
+        {
+            DOTEffects.Add(atak);
+        }
+
+        public bool IsPoisoned()  // sprawdza czy jest na postaci efekt obrazen czasowych(np trucizny), moze byc uzyte do wyswietlania statusow
+        {
+            if (DOTEffects.Any())
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         private bool Stunned;
-        public bool IsStunned()
+        public bool IsStunned() // sprawdza czy jest na postaci efekt, moze byc uzyte do wyswietlania statusow, potrzebne jest tez aby poprawnie postepowac w takim wypadku
         {
             return Stunned;
         }
@@ -244,21 +264,42 @@ namespace Gra
                 StunRecoveryChance = BaseStunRecoveryChance;
             }
         }
+        public void ResolveDOT()  // obrazenia z efektow trucizny/krawienia-czasowych obrazen
+        {
+            int obrazenia = 0;
+            foreach (DOTEffect DOT in DOTEffects.Reverse<DOTEffect>())   // oblicza sume wszystkich obrazen czasowych oraz usuwa te ktorych czas dzialania sie skonczyl
+            {
+                obrazenia = obrazenia + DOT.GetDamage();
+                DOT.DecrementTurnsLeft();
+                if (DOT.GetTurnsLeft() <= 0)
+                {
+                    DOTEffects.Remove(DOT);
+                }
+            }
+            SetHP(GetHP() - obrazenia);
+        }
         public void ResolveStatuses()  // wykonywane co ture, sprawdza czy udalo sie wydostac z oszolomienia, obrazenia z krwawienia pozniej
         {
             StunEscapeCheck();
+        
+            ResolveDOT();
+
 
             if (StunResistance > BaseStunResistance)
             { StunResistance = StunResistance - 10; }      // zmniejsza odpornosc postaci na kolejne proby oszolomienia wraz z traktem walki
         }
 
-        public void ClearStatuses()
+        public void ClearStatuses() // wywolane po skończonej bitwie
         {
             StunResistance = BaseStunResistance;
             StunRecoveryChance = BaseStunRecoveryChance;
             Stunned = false;
-        }
 
+            foreach (DOTEffect DOT in DOTEffects)
+            {
+                DOTEffects.Remove(DOT);
+            }
+        }
         /*
           Wyjasnienie:
           Walka
@@ -277,6 +318,38 @@ namespace Gra
           spowrotem w domyslnych postaciach
         */
     }
+
+
+    public class PrzyjaznyNPC : Postac
+    {
+        private int id;
+        private string Nazwa;
+        private Image ObrazekPostaci;
+        private Point FriendlyLoc;
+
+        //public List<Quest> Questy;
+
+        public PrzyjaznyNPC(int _id, string _nazwa, Point Location, Image SciezkaObrazku) : base()
+        {
+            Nazwa = _nazwa;
+            id = _id;
+            FriendlyLoc = Location;
+            ObrazekPostaci = new Bitmap(SciezkaObrazku);
+            CharacterSprite = new WorldMapSprite(FriendlyLoc, ObrazekPostaci);
+            //Questy = new List<Quest>();
+        }
+
+        public int getId()
+        {
+            return id;
+        }
+        public string getNazwa()
+        {
+            return Nazwa;
+        }
+
+    }
+
 
     public class Bohater : Postac   // klasa bohatera
     {
