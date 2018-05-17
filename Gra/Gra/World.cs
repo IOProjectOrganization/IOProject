@@ -46,6 +46,7 @@ namespace Gra
 
             int x = 0;
             int y = 0;
+            int i = 0;
 
             while (!Reader.EndOfStream) //Wykonuj aż do końca pliku
             {
@@ -191,8 +192,10 @@ namespace Gra
                                 EnemiesList.Add(new Przeciwnik( Wrog.EnemyById(Wrog.enemyId_nietoperz).getNazwa(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_nietoperz).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
-                                                                Gra.Properties.Resources.Empty));
+                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.babybat,
+                                                                Gra.Properties.Resources.babybat_battleimage));
+
+                                i++;
                             }
                             else if (line[z + 2].ToString() == "1")
                             {
@@ -201,6 +204,7 @@ namespace Gra
                                                                 Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseHP(),
                                                                 Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
+                                i++;
                             }
                             else if (line[z + 2].ToString() == "2")
                             {
@@ -209,6 +213,7 @@ namespace Gra
                                                                 Wrog.EnemyById(Wrog.enemyId_wilk).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseHP(),
                                                                 Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
+                                i++;
                             }
                             else if (line[z + 2].ToString() == "3")
                             {
@@ -217,6 +222,7 @@ namespace Gra
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseHP(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
+                                i++;
                             }
                             else if (line[z + 2].ToString() == "4")
                             {
@@ -225,14 +231,21 @@ namespace Gra
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseHP(),
                                                                 Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
                                                                 Gra.Properties.Resources.Empty));
+                                i++;
                             }
                             else if (line[z + 2].ToString() == "5")
                             {
-                                EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_minotaur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_minotaur).getId(),
+                                /*EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_minotaur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_minotaur).getId(),
                                                                 Wrog.EnemyById(Wrog.enemyId_minotaur).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaExp(),
                                                                 Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseHP(),
                                                                 Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Minotaur,
-                                                                Gra.Properties.Resources.Empty));
+                                                                Gra.Properties.Resources.Minotaur_battleimage));*/
+
+                                EnemiesList.Add(Wrog.Przeciwnik.ElementAt(5));
+                                EnemiesList.ElementAt(i).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Minotaur);
+                                //EnemiesList.ElementAt(i).setObrazekPostaci(Gra.Properties.Resources.Minotaur);
+                                //EnemiesList.ElementAt(i).SetLocation(new Point(x * TileWidth, y * TileHeight));
+                                i++;
                             }
                         }
                         else if (line[z + 1].ToString() == "1") //Przyjazny
@@ -330,6 +343,8 @@ namespace Gra
     {
         private Point Location;
         private Image Image;
+
+        public WorldMapSprite() {}
 
         public WorldMapSprite(Point location, Image image)
         {

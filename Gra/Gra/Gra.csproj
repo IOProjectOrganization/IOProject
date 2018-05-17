@@ -69,11 +69,6 @@
     <Compile Include="Combat.Designer.cs">
       <DependentUpon>Combat.cs</DependentUpon>
     </Compile>
-    <Compile Include="DataClasses1.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -156,14 +151,6 @@
     <EmbeddedResource Include="ShopInfoBox.resx">
       <DependentUpon>ShopInfoBox.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="DataClasses1.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DataClasses1.dbml.layout">
-      <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -188,9 +175,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Player.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\world00.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\world-10.png" />
@@ -254,13 +238,9 @@
   <ItemGroup>
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
-    <Content Include="Database1.mdf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Database1_log.ldf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DependentUpon>Database1.mdf</DependentUpon>
-    </Content>
+    <None Include="Resources\world00.png" />
+    <None Include="Resources\babybat.png" />
+    <None Include="Resources\babybat_battleimage.png" />
     <None Include="Resources\Minotaur_battleimage.png" />
     <None Include="Resources\PlayerCombat.png" />
     <None Include="Resources\shop.png" />

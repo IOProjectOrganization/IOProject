@@ -694,7 +694,7 @@ namespace Gra
             CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
-        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Image BattleImagePath) : base(basehp, basemp)
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp,  Image BattleImagePath) : base(basehp, basemp)
         {
             id = _id;
             SetMaxHP(basehp);
@@ -705,7 +705,8 @@ namespace Gra
             Obrazenia = obrazenia;
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
-            BattleImage = BattleImagePath;
+            BattleImage = new Bitmap(BattleImagePath);
+            CharacterSprite = new WorldMapSprite();
         }
 
         public override int GetObrazenia()
@@ -736,6 +737,15 @@ namespace Gra
         {
             return BattleImage;
         }
+
+        public void SetLocation(Point loc)
+        { EnemyLoc = loc; }
+
+        public Point GetLocation()
+        { return EnemyLoc; }
+
+        public void setObrazekPostaci(Image image)
+        { ObrazekPostaci = new Bitmap(image); }
     }
     
     public static class Wrog   // baza przeciwnikow losowych
@@ -761,7 +771,7 @@ namespace Gra
         {
             Przeciwnik temp;
 
-            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0, Gra.Properties.Resources.Empty);
+            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0, Gra.Properties.Resources.babybat_battleimage);
             Przeciwnik.Add(temp);
 
             temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0, Gra.Properties.Resources.Empty);

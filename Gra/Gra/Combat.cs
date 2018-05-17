@@ -80,8 +80,8 @@ namespace Gra
             inCombat = true;
             playerTurn = true;
 
-            PlayerPB.Image = Player.getBattleImage();
-            EnemyPB.Image = Enemy.getBattleImage();
+            PlayerPB.Image = player.getBattleImage();
+            EnemyPB.Image = enemy.getBattleImage();
 
             UpdateStats();
         }
