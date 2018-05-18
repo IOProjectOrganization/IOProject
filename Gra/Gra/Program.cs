@@ -33,6 +33,7 @@ namespace Gra
 
         Bohater Player; //Tworzymy gracza
         public List<Przeciwnik> worldEnemies;
+        public List<PrzyjaznyNPC> worldFriendlies;
 
         Equipment equipment = new Equipment();
 
@@ -65,6 +66,7 @@ namespace Gra
             worldMap = new WorldMap(GameForm);
             worldMap.worldMapItems = new List<WorldMapItem>();
             worldEnemies = new List<Przeciwnik>();
+            worldFriendlies = new List<PrzyjaznyNPC>();
 
             mapX = 0;
             mapY = 0;
@@ -74,7 +76,7 @@ namespace Gra
 
             LoadNewMap(0, 0);
 
-            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat); // nowy konstruktor ze statystykami(4 do wszystkich)
+            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat, Gra.Properties.Resources.PlayerCombat); // nowy konstruktor ze statystykami(4 do wszystkich)
 
             Player.AddQuest(Task.questId_Cave);
             Player.ChangeQuestIsActive(Task.questId_Cave, true);
@@ -103,7 +105,7 @@ namespace Gra
             MTB = random.Next(15, 20);
             mapX += MoveX;
             mapY += MoveY;
-            worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true, worldEnemies);
+            worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true, worldEnemies, worldFriendlies);
 
             System.Random product = new Random(System.DateTime.Now.Millisecond);
             for(int i = 0; i < 3; i++)
@@ -113,7 +115,7 @@ namespace Gra
         }
 
         void ReloadMap()
-        { worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, false, worldEnemies); }
+        { worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, false, worldEnemies, worldFriendlies); }
 
         public void Draw()
         {
@@ -130,6 +132,15 @@ namespace Gra
             Player.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
 
             foreach (Przeciwnik P in worldEnemies)
+            {
+                if (P != null && P.getIsAlive() == true)
+                {
+                    //MessageBox.Show("Enemy: " + P.getNazwa().ToString() + "\nID: " + P.getId().ToString());
+                    P.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
+                }
+            }
+
+            foreach (PrzyjaznyNPC P in worldFriendlies)
             {
                 if (P != null && P.getIsAlive() == true)
                     P.GetCharacterSprite().Draw(Device, _Width / 32, _Height / 18);
@@ -222,6 +233,14 @@ namespace Gra
                                 ReloadMap();
                             }
                         }
+                    }
+                    else if (worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X - _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X + _Width / 32, Player.GetCharacterSprite().GetLocation().Y)) ||
+                    worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
+                    worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
+                    {
+                        //#################################################################################//
                     }
                 }
 
@@ -394,7 +413,7 @@ namespace Gra
                 if (MTB <= 0)
                 {
                     combat = new Combat();
-                    combat.StartCombat(Player, Wrog.EnemyById(Wrog.enemyId_nietoperz));
+                    combat.StartCombat(Player, NPC.EnemyById(NPC.enemyId_nietoperz));
                     combat.Show();
                     combat.Focus();
 

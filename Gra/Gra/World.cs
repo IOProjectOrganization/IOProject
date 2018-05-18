@@ -34,19 +34,21 @@ namespace Gra
             MapTiles = new List<Tile>(); //Tworzymy pusty świat
         }
 
-        public void LoadMap(string MapName, int TileWidth, int TileHeight, bool NewMap, List<Przeciwnik> EnemiesList) //Wczytywanie świata
+        public void LoadMap(string MapName, int TileWidth, int TileHeight, bool NewMap, List<Przeciwnik> EnemiesList, List<PrzyjaznyNPC> FriendlyList) //Wczytywanie świata
         {
             MapTiles.Clear(); //Czyścimy obecny świat
             if (NewMap)
                 worldMapItems.Clear();
 
             EnemiesList.Clear();
+            FriendlyList.Clear();
 
             StreamReader Reader = new StreamReader(@"MapTileData\1_maptiles" + MapName + ".txt"); //Wczytywanie danych z pliku o podanej ścieżce
 
             int x = 0;
             int y = 0;
-            int i = 0;
+            int enemycount = 0;
+            int friendlycount = 0;
 
             while (!Reader.EndOfStream) //Wykonuj aż do końca pliku
             {
@@ -175,10 +177,10 @@ namespace Gra
                             T.TileImage = new Bitmap(Gra.Properties.Resources.zloto, TileWidth * 2 / 3, TileHeight * 2 / 3);
                         }
                     }
-                    else if (line[z].ToString() == "3") //Przeciwnik
+                    else if (line[z].ToString() == "3") //NPC
                     {
                         T.TileImage = new Bitmap(Gra.Properties.Resources.Empty, TileWidth, TileHeight);
-                        T.isWalkable = true;
+                        T.isWalkable = false;
                         T.isInteractive = false;
                         T.isMapLoader = false;
                         T.SwitchState = false;
@@ -189,70 +191,49 @@ namespace Gra
                         {
                             if (line[z + 2].ToString() == "0")
                             {
-                                EnemiesList.Add(new Przeciwnik( Wrog.EnemyById(Wrog.enemyId_nietoperz).getNazwa(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_nietoperz).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.babybat,
-                                                                Gra.Properties.Resources.babybat_battleimage));
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_nietoperz - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_nietoperz - 1).getObrazekPostaci());
+                                enemycount++;
 
-                                i++;
                             }
                             else if (line[z + 2].ToString() == "1")
                             {
-                                EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_ogromnyszczur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
-                                                                Gra.Properties.Resources.Empty));
-                                i++;
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_ogromnyszczur - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_ogromnyszczur - 1).getObrazekPostaci());
+                                enemycount++;
                             }
                             else if (line[z + 2].ToString() == "2")
                             {
-                                EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_wilk).getNazwa(), Wrog.EnemyById(Wrog.enemyId_wilk).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_wilk).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_wilk).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_wilk).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_wilk).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
-                                                                Gra.Properties.Resources.Empty));
-                                i++;
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_wilk - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_wilk - 1).getObrazekPostaci());
+                                enemycount++;
                             }
                             else if (line[z + 2].ToString() == "3")
                             {
-                                EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_szkielet).getNazwa(), Wrog.EnemyById(Wrog.enemyId_szkielet).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_szkielet).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
-                                                                Gra.Properties.Resources.Empty));
-                                i++;
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_szkielet - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_szkielet - 1).getObrazekPostaci());
+                                enemycount++;
                             }
                             else if (line[z + 2].ToString() == "4")
                             {
-                                EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNazwa(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_szkielet_czarownik).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Empty,
-                                                                Gra.Properties.Resources.Empty));
-                                i++;
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_szkielet_czarownik - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_szkielet_czarownik - 1).getObrazekPostaci());
+                                enemycount++;
                             }
                             else if (line[z + 2].ToString() == "5")
                             {
-                                /*EnemiesList.Add(new Przeciwnik(Wrog.EnemyById(Wrog.enemyId_minotaur).getNazwa(), Wrog.EnemyById(Wrog.enemyId_minotaur).getId(),
-                                                                Wrog.EnemyById(Wrog.enemyId_minotaur).GetObrazenia(), Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaExp(),
-                                                                Wrog.EnemyById(Wrog.enemyId_minotaur).getNagrodaGold(), Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseHP(),
-                                                                Wrog.EnemyById(Wrog.enemyId_minotaur).GetBaseMP(), new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Minotaur,
-                                                                Gra.Properties.Resources.Minotaur_battleimage));*/
-
-                                EnemiesList.Add(Wrog.Przeciwnik.ElementAt(5));
-                                EnemiesList.ElementAt(i).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), Gra.Properties.Resources.Minotaur);
-                                //EnemiesList.ElementAt(i).setObrazekPostaci(Gra.Properties.Resources.Minotaur);
-                                //EnemiesList.ElementAt(i).SetLocation(new Point(x * TileWidth, y * TileHeight));
-                                i++;
+                                EnemiesList.Add(NPC.przeciwnik.ElementAt(NPC.enemyId_minotaur - 1));
+                                EnemiesList.ElementAt(enemycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przeciwnik.ElementAt(NPC.enemyId_minotaur - 1).getObrazekPostaci());
+                                enemycount++;
                             }
                         }
                         else if (line[z + 1].ToString() == "1") //Przyjazny
                         {
                             if (line[z + 2].ToString() == "0")
                             {
-                                //Do dodania
+                                FriendlyList.Add(NPC.przyjazny.ElementAt(NPC.friendlyId_Test1 - 1));
+                                FriendlyList.ElementAt(friendlycount).SetCharacterSprite(new Point(x * TileWidth, y * TileHeight), NPC.przyjazny.ElementAt(NPC.friendlyId_Test1 - 1).getObrazekPostaci());
+                                friendlycount++;
                             }
                         }
                     }
@@ -314,6 +295,16 @@ namespace Gra
             foreach (Tile T in MapTiles)
                 if (T.TileLoc == Loc)
                     if (T.isInteractive)
+                        return true;
+
+            return false;
+        }
+
+        public bool GetIsNPC(Point Loc)
+        {
+            foreach (Tile T in MapTiles)
+                if (T.TileLoc == Loc)
+                    if (T.isNPC)
                         return true;
 
             return false;

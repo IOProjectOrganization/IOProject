@@ -324,37 +324,75 @@ namespace Gra
     {
         private int id;
         private string Nazwa;
-        private Image ObrazekPostaci;
         private Point FriendlyLoc;
+        private Image ObrazekPostaci;
+        private Image DialogImage;
 
-        //public List<Quest> Questy;
+        public List<Quest> Questy;
 
-        public PrzyjaznyNPC(int _id, string _nazwa, Point Location, Image SciezkaObrazku) : base()
+        public PrzyjaznyNPC(int _id, string _nazwa, Point Location, Image SciezkaObrazku, Image DialogImagePath) : base()
         {
-            Nazwa = _nazwa;
             id = _id;
+            Nazwa = _nazwa;
             FriendlyLoc = Location;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
+            DialogImage = new Bitmap(DialogImagePath);
             CharacterSprite = new WorldMapSprite(FriendlyLoc, ObrazekPostaci);
-            //Questy = new List<Quest>();
+            Questy = new List<Quest>();
+        }
+
+        public PrzyjaznyNPC(int _id, string _nazwa, Image SciezkaObrazu, Image DialogImagePath) : base()
+        {
+            id = _id;
+            Nazwa = _nazwa;
+            ObrazekPostaci = new Bitmap(SciezkaObrazu);
+            DialogImage = new Bitmap(DialogImagePath);
+            CharacterSprite = new WorldMapSprite();
+            Questy = new List<Quest>();
         }
 
         public int getId()
-        {
-            return id;
-        }
+        { return id; }
+
         public string getNazwa()
-        {
-            return Nazwa;
-        }
+        { return Nazwa; }
 
+        public Image getObrazekPostaci()
+        { return ObrazekPostaci; }
+
+        public void setObrazekPostaci(Image image)
+        { ObrazekPostaci = new Bitmap(image); }
+
+        public Image getDialogImage()
+        { return DialogImage; }
+
+        public void setDialogImage(Image image)
+        { DialogImage = new Bitmap(image); }
+
+        public Point GetLocation()
+        { return FriendlyLoc; }
+
+        public void SetLocation(Point loc)
+        { FriendlyLoc = loc; }
+
+        public void AddQuest(Quest quest)
+        { Questy.Add(quest); }
+
+        public void AddQuest(int questID)
+        { Questy.Add(Task.questsById(questID)); }
+
+        public void RemoveQuest(Quest quest)
+        { Questy.Remove(quest); }
+
+        public void RemoveQuest(int questID)
+        { Questy.Remove(Task.questsById(questID)); }
     }
-
 
     public class Bohater : Postac   // klasa bohatera
     {
         private Image ObrazekPostaci;  // obrazek ktory ma przedstawiac postac
         private Image BattleImage;
+        private Image DialogImage;
         private Point PlayerLoc;
         private MoveDirection Direction = MoveDirection.None;
         private bool isMoving = false;
@@ -391,23 +429,24 @@ namespace Gra
         //public List<Przedmiot> Ekwipunek;
 
 
-        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, Point Location, Image SciezkaObrazku, Image BattleImagePath) : base(basehp, basemp)  // konstruktor
+        public Bohater(int level, int basehp, int basemp, int gold, int exp, int STR, int DEX, int INT, Point Location, Image SciezkaObrazku, Image BattleImagePath, Image DialogImagePath) : base(basehp, basemp)  // konstruktor
         {
             Level = level;
             SetGold(gold);
             EXP = exp;
-            PlayerLoc = Location;
-            ObrazekPostaci = new Bitmap(SciezkaObrazku);
-            CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
-            BattleImage = new Bitmap(BattleImagePath);
             Strength = STR;
             Dexterity = DEX;
             Intelligence = INT;
+            PlayerLoc = Location;
+            ObrazekPostaci = new Bitmap(SciezkaObrazku);
+            BattleImage = new Bitmap(BattleImagePath);
+            DialogImage = new Bitmap(DialogImagePath);
+            CharacterSprite = new WorldMapSprite(PlayerLoc, ObrazekPostaci);
+            quests = new List<Quest>();
             UpdateStats();
             SetHP(GetMaxHP());
             SetMP(GetMaxMP());
             Skillpoints = 0;
-            quests = new List<Quest>();
         }
 
         public Bohater(int basehp, int basemp) : base(basehp,basemp)
@@ -694,7 +733,7 @@ namespace Gra
             CharacterSprite = new WorldMapSprite(EnemyLoc, ObrazekPostaci);
         }
 
-        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp,  Image BattleImagePath) : base(basehp, basemp)
+        public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp, Image SciezkaObrazu,  Image BattleImagePath) : base(basehp, basemp)
         {
             id = _id;
             SetMaxHP(basehp);
@@ -705,6 +744,7 @@ namespace Gra
             Obrazenia = obrazenia;
             NagrodaExp = nagrodaexp;
             NagrodaGold = nagrodagold;
+            ObrazekPostaci = new Bitmap(SciezkaObrazu);
             BattleImage = new Bitmap(BattleImagePath);
             CharacterSprite = new WorldMapSprite();
         }
@@ -748,11 +788,12 @@ namespace Gra
         { ObrazekPostaci = new Bitmap(image); }
     }
     
-    public static class Wrog   // baza przeciwnikow losowych
+    public static class NPC   // baza przeciwnikow losowych
     {
-        public static readonly List<Przeciwnik> Przeciwnik = new List<Przeciwnik>();
+        public static readonly List<Przeciwnik> przeciwnik = new List<Przeciwnik>();
+        public static readonly List<PrzyjaznyNPC> przyjazny = new List<PrzyjaznyNPC>();
 
-        // ID
+        // Enemy ID
 
         public const int enemyId_nietoperz = 1;
         public const int enemyId_ogromnyszczur = 2;
@@ -761,47 +802,59 @@ namespace Gra
         public const int enemyId_szkielet_czarownik = 5;
         public const int enemyId_minotaur = 6;
 
-        static Wrog()
+        // Friendly ID
+
+        public const int friendlyId_Test1 = 1;
+
+        static NPC()
         {
-            zaladujWrogow();
+            zaladujNPC();
         }
 
         //public Przeciwnik(string nazwa, int _id, int obrazenia, int nagrodaexp, int nagrodagold, int basehp, int basemp) : base(basehp, basemp)
-        private static void zaladujWrogow()   // wykorzystany konstruktor bez obrazka postaci i lokacji, przeznaczony wiec dla walk losowych gdzie nie sa potrzebne
+        private static void zaladujNPC()   // wykorzystany konstruktor bez obrazka postaci i lokacji, przeznaczony wiec dla walk losowych gdzie nie sa potrzebne
         {
-            Przeciwnik temp;
+            Przeciwnik enemy;
 
-            temp = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0, Gra.Properties.Resources.babybat_battleimage);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Nietoperz", enemyId_nietoperz, 4, 10, 10, 25, 0, Gra.Properties.Resources.babybat, Gra.Properties.Resources.babybat_battleimage);
+            przeciwnik.Add(enemy);
 
-            temp = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0, Gra.Properties.Resources.Empty);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
+            przeciwnik.Add(enemy);
 
-            temp = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0, Gra.Properties.Resources.Empty);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
+            przeciwnik.Add(enemy);
 
-            temp = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0, Gra.Properties.Resources.Empty);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
+            przeciwnik.Add(enemy);
 
-            temp = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30, Gra.Properties.Resources.Empty);
-            temp.PoznajAtak(1);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Szkielet czarownik", enemyId_szkielet_czarownik, 4, 30, 20, 40, 30, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
+            enemy.PoznajAtak(1);
+            przeciwnik.Add(enemy);
 
-            temp = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30, Gra.Properties.Resources.Minotaur_battleimage);
-            temp.PoznajAtak(2);
-            temp.PoznajAtak(4);
-            Przeciwnik.Add(temp);
+            enemy = new Przeciwnik("Minotaur", enemyId_minotaur, 12, 50, 40, 80, 30, Gra.Properties.Resources.Minotaur, Gra.Properties.Resources.Minotaur_battleimage);
+            enemy.PoznajAtak(2);
+            enemy.PoznajAtak(4);
+            przeciwnik.Add(enemy);
 
+
+
+
+            PrzyjaznyNPC friendly;
+
+            friendly = new PrzyjaznyNPC(friendlyId_Test1, "test1", Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat);
+            friendly.AddQuest(Task.questId_Cave);
+            przyjazny.Add(friendly);
         }
 
 
         public static Przeciwnik EnemyById(int _id)   // zwraca obiekt bedacy kopia przeciwnika o podanym id
         {
-            foreach (Przeciwnik enemy in Przeciwnik)
+            foreach (Przeciwnik enemy in przeciwnik)
             {
                 if (enemy.getId() == _id)
                 {
-                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.getBattleImage());
+                    Przeciwnik temp = new Przeciwnik(enemy.getNazwa(), enemy.getId(), enemy.GetObrazenia(), enemy.getNagrodaExp(), enemy.getNagrodaGold(), enemy.GetBaseHP(), enemy.GetBaseMP(), enemy.getObrazekPostaci(), enemy.getBattleImage());
                     foreach(Atak atak in enemy.SpecjalneAtaki)
                     {
                         temp.PoznajAtak(atak.GetId());
@@ -813,6 +866,23 @@ namespace Gra
                     return temp;
                 }
             }
+            return null;
+        }
+
+        public static PrzyjaznyNPC FriendlyById(int _id)
+        {
+            foreach (PrzyjaznyNPC friendly in przyjazny)
+            {
+                if (friendly.getId() == _id)
+                {
+                    PrzyjaznyNPC temp = new PrzyjaznyNPC(friendly.getId(), friendly.getNazwa(), friendly.getObrazekPostaci(), friendly.getDialogImage());
+                    foreach (Quest quest in friendly.Questy)
+                        temp.AddQuest(quest.getId());
+
+                    return temp;
+                }
+            }
+
             return null;
         }
     }
