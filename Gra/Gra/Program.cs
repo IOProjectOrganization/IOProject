@@ -34,17 +34,14 @@ namespace Gra
         Bohater Player; //Tworzymy gracza
         public List<Przeciwnik> worldEnemies;
         public List<PrzyjaznyNPC> worldFriendlies;
-
-        Equipment equipment = new Equipment();
-
-        Shop shop = new Shop();
         Postac sklepikarz = new Postac();   // Bohater zmieniony na Postac
 
-        QuestsList questsList = new QuestsList();
-
+        Shop shop;
+        Equipment equipment;
+        QuestsList questsList;
         Combat combat;
-
-        Quit quit = new Quit();
+        Dialog dialog;
+        Quit quit;
 
         Timer timer = new Timer();
         Timer CombatTimer = new Timer();
@@ -171,6 +168,8 @@ namespace Gra
                             worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
                             worldMap.GetIsShop(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18))))
                         {
+                            shop = new Shop();
+                            shop.Size = new Size(_Width * 2 / 3, _Height * 2 / 3);
                             shop.UpdateEquipment(Player);
                             shop.UpdateProducts(sklepikarz);
                             shop.Show();
@@ -240,14 +239,28 @@ namespace Gra
                     worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - _Height / 18)) ||
                     worldMap.GetIsNPC(new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + _Height / 18)))
                     {
-                        //#################################################################################//
+                        foreach (PrzyjaznyNPC P in worldFriendlies)
+                        {
+                            if (isFriendlyInRange(P))
+                            {
+                                if (P != null)
+                                {
+                                    dialog = new Dialog();
+                                    dialog.Size = new Size(_Width, _Height / 3);
+                                    dialog.DesktopLocation = new Point(0, _Height - dialog.Height);
+                                    dialog.UpdateDialog(Player, P);
+                                    dialog.Show();
+                                    dialog.Focus();
+                                }
+                            }
+                        }
                     }
                 }
 
                 else if (e.KeyCode == Keys.I)
                 {
-                    equipment.Height = _Height * 2 / 3;
-                    equipment.Width = _Width * 2 / 3;
+                    equipment = new Equipment();
+                    equipment.Size = new Size(_Width * 2 / 3, _Height * 2 / 3);
                     equipment.UpdateEquipment(Player);
                     equipment.Show();
                     equipment.Focus();
@@ -255,8 +268,8 @@ namespace Gra
 
                 else if (e.KeyCode == Keys.L)
                 {
-                    questsList.Height = _Height * 2 / 3;
-                    questsList.Width = _Width * 2 / 3;
+                    questsList = new QuestsList();
+                    questsList.Size = new Size(_Width * 2 / 3, _Height * 2 / 3);
                     questsList.UpdateQuestsList(Player);
                     questsList.Show();
                     questsList.Focus();
@@ -264,8 +277,8 @@ namespace Gra
 
                 else if (e.KeyCode == Keys.Escape)
                 {
-                    quit.Height = _Height / 6;
-                    quit.Width = _Width / 4;
+                    quit = new Quit();
+                    quit.Size = new Size(_Width / 4, _Height / 6);
                     quit.Show();
                     quit.sendForm(GameForm);
                     quit.Focus();
@@ -550,6 +563,25 @@ namespace Gra
                   (Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
                   (Player.GetCharacterSprite().GetLocation().X == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y) ||
                   (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == Enemy.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == Enemy.GetCharacterSprite().GetLocation().Y))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        bool isFriendlyInRange(PrzyjaznyNPC przyjazny)
+        {
+            if (przyjazny != null)
+            {
+                if ((Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X - (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y) ||
+                  (Player.GetCharacterSprite().GetLocation().X + (_Width / 32) == przyjazny.GetCharacterSprite().GetLocation().X && Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) == przyjazny.GetCharacterSprite().GetLocation().Y))
                 {
                     return true;
                 }

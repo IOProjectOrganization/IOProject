@@ -15,6 +15,7 @@ namespace Gra
         private string Description;
         private bool isActive;
         private QuestStatus Status;
+        private bool DialogOccured;
 
         public Quest(int _id, string _name, string _description, bool _isactive, QuestStatus _status)
         {
@@ -23,6 +24,7 @@ namespace Gra
             Description = _description;
             isActive = _isactive;
             Status = _status;
+            DialogOccured = false;
         }
 
         public virtual Quest Kopia()
@@ -60,6 +62,12 @@ namespace Gra
 
         public void setStatus(QuestStatus _status)
         { Status = _status; }
+
+        public bool getDialogOccured()
+        { return DialogOccured; }
+
+        public void setDialogOccured(bool b)
+        { DialogOccured = b; }
 
     }
 

@@ -15,7 +15,7 @@ namespace Gra
         Bohater postac;
         Postac seller;
 
-        ShopInfoBox infoBox = new ShopInfoBox();
+        ShopInfoBox infoBox;
         bool selling;
 
         float LB1Height;
@@ -72,7 +72,7 @@ namespace Gra
 
         private void button_powrot_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void button_sprzedaz_Click(object sender, EventArgs e)
@@ -97,8 +97,8 @@ namespace Gra
 
                         seller.DodajPrzedmiot(P.getId());
 
-                        infoBox.Height = this.Height / 3;
-                        infoBox.Width = this.Width / 2;
+                        infoBox = new ShopInfoBox();
+                        infoBox.Size = new Size(this.Width / 2, this.Height / 3);
                         infoBox.PointToScreen(new Point(this.Width / 2, this.Height / 2));
 
                         infoBox.checkTradeState(selling, P.getNazwa().ToString());
@@ -200,8 +200,9 @@ namespace Gra
 
                         postac.DodajPrzedmiot(P.getId());
 
-                        infoBox.Height = this.Height / 3;
-                        infoBox.Width = this.Width / 2;
+                        infoBox = new ShopInfoBox();
+                        infoBox.Size = new Size(this.Width / 2, this.Height / 3);
+
                         infoBox.PointToScreen(new Point(this.Width / 2, this.Height / 2));
 
                         infoBox.checkTradeState(selling, P.getNazwa().ToString());
@@ -421,6 +422,12 @@ namespace Gra
             float newSize = button_kupno.Font.Size * ratio;
 
             button_kupno.Font = new Font(button_kupno.Font.FontFamily, newSize, button_kupno.Font.Style);
+        }
+
+        private void Shop_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close();
         }
     }
 }

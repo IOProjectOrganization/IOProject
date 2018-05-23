@@ -37,7 +37,7 @@ namespace Gra
         private void button1_Click(object sender, EventArgs e)
         {
             listBox1.ClearSelected();
-            this.Hide();
+            this.Close();
         }
 
         public void UpdateQuestsList(Bohater Player)
@@ -134,6 +134,15 @@ namespace Gra
                 textBox1.Text = "";
             else
                 textBox1.Text = quests.ElementAt(listBox1.SelectedIndex).getDescription().ToString();
+        }
+
+        private void QuestsList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+            {
+                listBox1.ClearSelected();
+                this.Close();
+            }
         }
     }
 }

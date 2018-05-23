@@ -327,26 +327,29 @@ namespace Gra
         private Point FriendlyLoc;
         private Image ObrazekPostaci;
         private Image DialogImage;
+        private string EndingLine;
 
         public List<Quest> Questy;
 
-        public PrzyjaznyNPC(int _id, string _nazwa, Point Location, Image SciezkaObrazku, Image DialogImagePath) : base()
+        public PrzyjaznyNPC(int _id, string _nazwa, Point Location, Image SciezkaObrazku, Image DialogImagePath, string _EndingLine) : base()
         {
             id = _id;
             Nazwa = _nazwa;
             FriendlyLoc = Location;
             ObrazekPostaci = new Bitmap(SciezkaObrazku);
             DialogImage = new Bitmap(DialogImagePath);
+            EndingLine = _EndingLine;
             CharacterSprite = new WorldMapSprite(FriendlyLoc, ObrazekPostaci);
             Questy = new List<Quest>();
         }
 
-        public PrzyjaznyNPC(int _id, string _nazwa, Image SciezkaObrazu, Image DialogImagePath) : base()
+        public PrzyjaznyNPC(int _id, string _nazwa, Image SciezkaObrazu, Image DialogImagePath, string _EndingLine) : base()
         {
             id = _id;
             Nazwa = _nazwa;
             ObrazekPostaci = new Bitmap(SciezkaObrazu);
             DialogImage = new Bitmap(DialogImagePath);
+            EndingLine = _EndingLine;
             CharacterSprite = new WorldMapSprite();
             Questy = new List<Quest>();
         }
@@ -375,6 +378,9 @@ namespace Gra
         public void SetLocation(Point loc)
         { FriendlyLoc = loc; }
 
+        public string getEndingLine()
+        { return EndingLine; }
+
         public void AddQuest(Quest quest)
         { Questy.Add(quest); }
 
@@ -386,6 +392,20 @@ namespace Gra
 
         public void RemoveQuest(int questID)
         { Questy.Remove(Task.questsById(questID)); }
+
+        public int getActiveQuestID()
+        {
+            if (Questy.Count > 0)
+            {
+                foreach(Quest q in Questy)
+                {
+                    if (q.getIsActive())
+                        return q.getId();
+                }
+            }
+
+            return 0;
+        }
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -700,9 +720,10 @@ namespace Gra
         }
 
         public Image getBattleImage()
-        {
-            return BattleImage;
-        }
+        { return BattleImage; }
+
+        public Image getDialogImage()
+        { return DialogImage; }
     }
 
     public class Przeciwnik : Postac
@@ -842,7 +863,7 @@ namespace Gra
 
             PrzyjaznyNPC friendly;
 
-            friendly = new PrzyjaznyNPC(friendlyId_Test1, "test1", Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat);
+            friendly = new PrzyjaznyNPC(friendlyId_Test1, "Vincent", Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat, "Powodzenia!");
             friendly.AddQuest(Task.questId_Cave);
             przyjazny.Add(friendly);
         }
@@ -875,7 +896,7 @@ namespace Gra
             {
                 if (friendly.getId() == _id)
                 {
-                    PrzyjaznyNPC temp = new PrzyjaznyNPC(friendly.getId(), friendly.getNazwa(), friendly.getObrazekPostaci(), friendly.getDialogImage());
+                    PrzyjaznyNPC temp = new PrzyjaznyNPC(friendly.getId(), friendly.getNazwa(), friendly.getObrazekPostaci(), friendly.getDialogImage(), friendly.getEndingLine());
                     foreach (Quest quest in friendly.Questy)
                         temp.AddQuest(quest.getId());
 

@@ -37,7 +37,7 @@ namespace Gra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void tradeInfo_SizeChanged(object sender, EventArgs e)
@@ -76,5 +76,10 @@ namespace Gra
             button1.Font = new Font(button1.Font.FontFamily, newSize, button1.Font.Style);
         }
 
+        private void ShopInfoBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close();
+        }
     }
 }

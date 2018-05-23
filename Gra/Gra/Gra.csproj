@@ -69,6 +69,12 @@
     <Compile Include="Combat.Designer.cs">
       <DependentUpon>Combat.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Dialog.Designer.cs">
+      <DependentUpon>Dialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +130,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Combat.resx">
       <DependentUpon>Combat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Dialog.resx">
+      <DependentUpon>Dialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Equipment.resx">
       <DependentUpon>Equipment.cs</DependentUpon>
@@ -236,6 +245,7 @@
     <None Include="Resources\Minotaur.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
     <None Include="Resources\world00.png" />

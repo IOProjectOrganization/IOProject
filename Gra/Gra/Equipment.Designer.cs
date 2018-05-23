@@ -65,15 +65,15 @@
             this.imageList2 = new System.Windows.Forms.ImageList(this.components);
             this.zdjecie = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)(this.PlayerPB)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -452,8 +452,10 @@
             // 
             // obramowanie_panel
             // 
+            this.obramowanie_panel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.obramowanie_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
             this.tableLayoutPanel1.SetColumnSpan(this.obramowanie_panel, 13);
+            this.obramowanie_panel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.obramowanie_panel.Location = new System.Drawing.Point(0, 0);
             this.obramowanie_panel.Margin = new System.Windows.Forms.Padding(0);
             this.obramowanie_panel.Name = "obramowanie_panel";
@@ -624,18 +626,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1200, 731);
             this.tableLayoutPanel1.TabIndex = 37;
             // 
-            // panel1
-            // 
-            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
-            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 4);
-            this.panel1.Controls.Add(this.tableLayoutPanel3);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(813, 221);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(384, 359);
-            this.panel1.TabIndex = 38;
-            // 
             // panel2
             // 
             this.tableLayoutPanel1.SetColumnSpan(this.panel2, 3);
@@ -670,6 +660,18 @@
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 35F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(294, 359);
             this.tableLayoutPanel2.TabIndex = 36;
+            // 
+            // panel1
+            // 
+            this.panel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.tableLayoutPanel1.SetColumnSpan(this.panel1, 4);
+            this.panel1.Controls.Add(this.tableLayoutPanel3);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(813, 221);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(384, 359);
+            this.panel1.TabIndex = 38;
             // 
             // tableLayoutPanel3
             // 
@@ -728,28 +730,27 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(53)))), ((int)(((byte)(39)))), ((int)(((byte)(28)))));
             this.ClientSize = new System.Drawing.Size(1200, 731);
             this.ControlBox = false;
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(1200, 731);
             this.MinimizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(1200, 731);
             this.Name = "Equipment";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Ekwipunek";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Equipment_KeyDown);
             ((System.ComponentModel.ISupportInitialize)(this.PlayerPB)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.ResumeLayout(false);

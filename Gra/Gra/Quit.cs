@@ -21,7 +21,7 @@ namespace Gra
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void Quit_Load(object sender, EventArgs e)
@@ -33,7 +33,6 @@ namespace Gra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //this.Close();
             form.Close();
         }
         public void sendForm(Form _form)
@@ -93,6 +92,12 @@ namespace Gra
             float newSize = button2.Font.Size * ratio;
 
             button2.Font = new Font(button2.Font.FontFamily, newSize, button2.Font.Style);
+        }
+
+        private void Quit_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close();
         }
     }
 }

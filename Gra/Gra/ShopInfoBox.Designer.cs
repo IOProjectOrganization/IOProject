@@ -126,11 +126,13 @@
             this.ClientSize = new System.Drawing.Size(1003, 206);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "ShopInfoBox";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ShopInfoBox";
             this.Load += new System.EventHandler(this.ShopInfoBox_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.ShopInfoBox_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

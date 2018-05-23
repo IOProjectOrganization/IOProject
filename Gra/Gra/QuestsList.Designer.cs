@@ -150,10 +150,12 @@
             this.ClientSize = new System.Drawing.Size(1200, 731);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Name = "QuestsList";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "QuestsList";
             this.Load += new System.EventHandler(this.QuestsList_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.QuestsList_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

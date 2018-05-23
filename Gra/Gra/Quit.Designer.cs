@@ -152,11 +152,13 @@
             this.ClientSize = new System.Drawing.Size(428, 206);
             this.Controls.Add(this.tableLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Quit";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Quit";
             this.Load += new System.EventHandler(this.Quit_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Quit_KeyDown);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

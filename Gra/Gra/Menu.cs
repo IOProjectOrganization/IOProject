@@ -58,8 +58,9 @@ namespace Gra
             //{
             //    this.Close();
             //}
-            quit2.Height = this.Height / 5;
-            quit2.Width = this.Width / 4;
+            //quit2.Height = this.Height / 5;
+            //quit2.Width = this.Width / 4;
+            quit2.Size = new Size(this.Width / 3, this.Height  / 4);
             quit2.PointToScreen(new Point(this.Width / 2, this.Height / 2));
 
             quit2.Show();
@@ -82,8 +83,9 @@ namespace Gra
         {
             //MessageBox.Show("Controls"); // okienko Help, na razie z miejscem na sterowanie
 
-            help.Height = this.Height / 5;
-            help.Width = this.Width / 4;
+            //help.Height = this.Height / 5;
+            //help.Width = this.Width / 4;
+            help.Size = new Size(this.Width / 3, this.Height / 4);
             help.PointToScreen(new Point(this.Width / 2, this.Height / 2));
 
             help.Show();

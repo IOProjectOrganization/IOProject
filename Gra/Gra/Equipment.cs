@@ -184,7 +184,7 @@ namespace Gra
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            this.Close();
         }
 
         private void setTextColor()
@@ -592,6 +592,12 @@ namespace Gra
             float ratio = listBox1.Size.Height / LBHeight;
             listBox1.Font = new Font(listBox1.Font.FontFamily, listBox1.Font.Size * ratio, listBox1.Font.Style);
             LBHeight = listBox1.Height;
+        }
+
+        private void Equipment_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Escape)
+                this.Close();
         }
     }
 }
