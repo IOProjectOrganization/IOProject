@@ -60,6 +60,86 @@ namespace Gra
 
         public void setStatus(QuestStatus _status)
         { Status = _status; }
+
+    }
+
+    public class QuestItem : Quest  // quest dostarczenia pewnego przedmiotu(przedmiotów)
+    {
+        private int QuestItemId;  // przedmiot który ma być dostarczony
+        private int wymaganaIlosc;  // ilość tych przedmiotów
+
+        public QuestItem(int _id, string _name, string _description, bool _isactive, QuestStatus _status, int _questitemid, int _wymaganaIlosc) : base(_id, _name, _description, _isactive, _status)
+        {
+            QuestItemId = _questitemid;
+            wymaganaIlosc = _wymaganaIlosc;
+        }
+
+        public bool CheckCompletion(Bohater gracz)  // sprawdza czy quest został wykonany, jesli w ekwipunku jest odpowiednia ilosc wymaganego przedmiotu, zabiera je i ustawia quest na skonczony
+        {
+            if(getStatus()==QuestStatus.Complited)
+            { return true; }
+            int iloscWEkwipunku=0; 
+            foreach(Przedmiot przedmiot in gracz.Ekwipunek)
+            {
+                if(przedmiot.getId()==QuestItemId)
+                {
+                    iloscWEkwipunku += przedmiot.getIlosc();
+                }
+            }
+
+            if (iloscWEkwipunku >= wymaganaIlosc)
+            {
+                for(int i=0; i<wymaganaIlosc; i++)  // usuniecie przedmiotu(przedmiotów) questowych z ekwipunku gracza. UsunPrzedmiot powinien zapewnic poprawne usuniecie i w przypadku stackowalnych i niestackowalnych przedmiotow
+                {
+                    gracz.UsunPrzedmiot(QuestItemId);
+                }
+                setStatus(QuestStatus.Complited);
+
+                // nadanie nagrody tutaj?
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+
+    public class QuestKillEnemy : Quest  // quest zabicia pewnej ilosci pewnego przeciwnika
+    {
+        private int QuestEnemyId;
+        private int wymaganaIlosc;
+        private int licznikZabitych;
+
+        public QuestKillEnemy(int _id, string _name, string _description, bool _isactive, QuestStatus _status, int _questenemyid, int _wymaganailosc) : base(_id, _name, _description, _isactive, _status)
+        {
+            QuestEnemyId = _questenemyid;
+            wymaganaIlosc = _wymaganailosc;
+            licznikZabitych = 0;
+        }
+
+        public void IncrementCounter()  // przy wygranej bitwie petla przechodzaca po questach i dla questow typu QuestKillEnemy i QuestEnemyId rownymi pokonanemu potworowi wywolujaca ta funkcje?
+        { licznikZabitych++; }
+
+        public bool CheckCompletion(Bohater gracz)
+        {
+            if(getStatus()==QuestStatus.Complited)
+            { return true; }
+
+            if (licznikZabitych >= wymaganaIlosc)
+            {
+                setStatus(QuestStatus.Complited);
+
+                // nadanie nagrody?
+
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 
     public static class Task

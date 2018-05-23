@@ -54,6 +54,7 @@ namespace Gra
         private int ManaCost;
 
         public virtual int GetValue() { return 0; }     // zwraca wartosc obrazen/leczenia
+        public virtual DOTEffect GetDOT() { return null; }
 
         public Atak(int _id, string _nazwa, string _opis, int _manacost, bool _appliesstun)
         {
@@ -63,6 +64,12 @@ namespace Gra
             ManaCost = _manacost;
             AppliesStun = _appliesstun;
         }
+
+        public Atak()  // pusty konstruktor
+        { }
+
+        public TypAtaku GetTyp()
+        { return Typ; }
 
         public void AssignParent(Postac _parent)  // parent przypisywany atakowi podczas jego dodawania w klasie postaci
         {
@@ -169,7 +176,7 @@ namespace Gra
         public int GetIloscTur()
         { return iloscTur; }
 
-        public DOTEffect GetDOT()
+        public override DOTEffect GetDOT()
         {
             DOTEffect AtakDOT = new DOTEffect(obrazeniaNaTure, iloscTur);
             return AtakDOT;

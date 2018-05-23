@@ -219,7 +219,37 @@ namespace Gra
 
         private void SpecialSkillBtn_Click(object sender, EventArgs e)
         {
+            /*  if(playerTurn)
+              {
+                  Atak wybranyAtak = new Atak();
 
+                  //    <     --------     >
+
+                  // okno z listą ataków z Player.SpecjalneAtaki pozwalajace wybrac atak ktory bedzie przypisany do "wybranyAtak"
+
+                  //    <     --------     >
+
+                  if(wybranyAtak.GetTyp()==TypAtaku.Obrazenia)
+                  {
+                      Enemy.SetHP(Enemy.GetHP() - (wybranyAtak.GetValue() * PlayerDmgMultiplier) / EnemyDefMultiplier);
+                  }
+                  else if(wybranyAtak.GetTyp()==TypAtaku.Leczenie)
+                  {
+                      Player.SetHP(Player.GetHP() + wybranyAtak.GetValue());
+                      if (Player.GetHP() > Player.GetMaxHP())
+                          Player.SetHP(Player.GetMaxHP());
+                  }
+                  else if(wybranyAtak.GetTyp()==TypAtaku.Trucizna)
+                  {
+                     Enemy.ApplyDOTEffect(wybranyAtak.GetDOT());
+                  }
+                  if(wybranyAtak.IsStun()==true)
+                  {
+                      Enemy.ApplyStun();
+                  }
+
+                  Player.SetMP(Player.GetMP() - wybranyAtak.GetManaCost());
+              }  */
 
             PlayerDmgMultiplier = 1;
             PlayerDefMultiplier = 1;
