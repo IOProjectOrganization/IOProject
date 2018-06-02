@@ -248,6 +248,9 @@
     <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+    <Content Include="SaveFile.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Resources\world00.png" />
     <None Include="Resources\babybat.png" />
     <None Include="Resources\babybat_battleimage.png" />

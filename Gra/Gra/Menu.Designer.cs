@@ -37,6 +37,7 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.LoadBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -50,7 +51,7 @@
             this.Start.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Start.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold);
-            this.Start.Location = new System.Drawing.Point(552, 379);
+            this.Start.Location = new System.Drawing.Point(552, 303);
             this.Start.Margin = new System.Windows.Forms.Padding(2);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(190, 71);
@@ -67,7 +68,7 @@
             this.Quit.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Quit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Quit.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold);
-            this.Quit.Location = new System.Drawing.Point(552, 603);
+            this.Quit.Location = new System.Drawing.Point(552, 639);
             this.Quit.Margin = new System.Windows.Forms.Padding(2);
             this.Quit.Name = "Quit";
             this.Quit.Size = new System.Drawing.Size(190, 71);
@@ -84,7 +85,7 @@
             this.Help.Dock = System.Windows.Forms.DockStyle.Fill;
             this.Help.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.Help.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold);
-            this.Help.Location = new System.Drawing.Point(552, 491);
+            this.Help.Location = new System.Drawing.Point(552, 527);
             this.Help.Margin = new System.Windows.Forms.Padding(2);
             this.Help.Name = "Help";
             this.Help.Size = new System.Drawing.Size(190, 71);
@@ -159,25 +160,45 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.5F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 15F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 42.5F));
-            this.tableLayoutPanel1.Controls.Add(this.Quit, 1, 7);
+            this.tableLayoutPanel1.Controls.Add(this.Quit, 1, 9);
             this.tableLayoutPanel1.Controls.Add(this.panel1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.Help, 1, 5);
+            this.tableLayoutPanel1.Controls.Add(this.Help, 1, 7);
             this.tableLayoutPanel1.Controls.Add(this.Start, 1, 3);
+            this.tableLayoutPanel1.Controls.Add(this.LoadBtn, 1, 5);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 9;
+            this.tableLayoutPanel1.RowCount = 11;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 30F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 15F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1296, 757);
             this.tableLayoutPanel1.TabIndex = 5;
+            // 
+            // LoadBtn
+            // 
+            this.LoadBtn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.LoadBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(190)))), ((int)(((byte)(143)))), ((int)(((byte)(65)))));
+            this.LoadBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.LoadBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.LoadBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold);
+            this.LoadBtn.Location = new System.Drawing.Point(552, 415);
+            this.LoadBtn.Margin = new System.Windows.Forms.Padding(2);
+            this.LoadBtn.Name = "LoadBtn";
+            this.LoadBtn.Size = new System.Drawing.Size(190, 71);
+            this.LoadBtn.TabIndex = 5;
+            this.LoadBtn.Text = "Wczytaj";
+            this.LoadBtn.UseVisualStyleBackColor = false;
+            this.LoadBtn.SizeChanged += new System.EventHandler(this.LoadBtn_SizeChanged);
+            this.LoadBtn.Click += new System.EventHandler(this.Load_Click);
             // 
             // Menu
             // 
@@ -216,5 +237,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
+        private System.Windows.Forms.Button LoadBtn;
     }
 }

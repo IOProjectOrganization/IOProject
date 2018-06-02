@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<postac>
+  <save save="6" />
+  <postac level="1" />
+  <postac exp="0" />
+  <postac str="4" />
+  <postac dex="4" />
+  <postac int="4" />
+  <postac gold="0" />
+  <postac maxhp="184" hp="184" />
+  <postac maxmp="110" mp="110" />
+  <postac XTile="24" YTile="9" />
+  <world mapx="0" mapy="0" />
+  <item id="3" amount="2" />
+  <item id="1" amount="1" />
+  <equippedWeapon id="7" />
+  <quest id="1" isActive="True" Status="Active" DialogOccured="False" />
+</postac>
+<!--
+<postac>
+  <save save="0" />
+  <postac level="0" />
+  <postac exp="0" />
+  <postac str="0" />
+  <postac dex="0" />
+  <postac int="0" />
+  <postac gold="0" />
+  <postac maxhp="0" hp="0" />
+  <postac maxmp="0" mp="0" />
+  <postac XTile="0" YTile="0" />
+  <items />-->
+<!--items-->
+<!--<quests />-->
+<!--quests-->
+<!--<world mapx="0" mapy="0" />
+</postac>
+-->

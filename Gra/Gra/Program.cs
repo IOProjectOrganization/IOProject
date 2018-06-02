@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Drawing;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace Gra
 {
@@ -43,6 +45,8 @@ namespace Gra
         Dialog dialog;
         Quit quit;
 
+        public XmlDocument xml = new XmlDocument();
+
         Timer timer = new Timer();
         Timer CombatTimer = new Timer();
 
@@ -65,6 +69,9 @@ namespace Gra
             worldEnemies = new List<Przeciwnik>();
             worldFriendlies = new List<PrzyjaznyNPC>();
 
+            xml.Load(@"../../SaveFile.xml");
+            XmlNodeList xmlNodeList;
+
             mapX = 0;
             mapY = 0;
 
@@ -73,12 +80,79 @@ namespace Gra
 
             LoadNewMap(0, 0);
 
-            Player = new Bohater(1, 100, 50, 0, 0, 4, 4, 4, new Point(23 * (_Width / 32), 10 * (_Height / 18)), Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat, Gra.Properties.Resources.PlayerCombat); // nowy konstruktor ze statystykami(4 do wszystkich)
+            if (int.Parse(xml.SelectSingleNode("/postac/save").Attributes["save"].Value) > 0)
+            {
+                Player = new Bohater(int.Parse(xml.SelectNodes("/postac/postac").Item(0).Attributes["level"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(6).Attributes["maxhp"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(7).Attributes["maxmp"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(5).Attributes["gold"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(1).Attributes["exp"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(2).Attributes["str"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(3).Attributes["dex"].Value),
+                                     int.Parse(xml.SelectNodes("/postac/postac").Item(4).Attributes["int"].Value),
+                                     new Point(int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["XTile"].Value) * (_Width / 32),
+                                               int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value) * (_Height / 18)),
+                                     Gra.Properties.Resources.Player,
+                                     Gra.Properties.Resources.PlayerCombat,
+                                     Gra.Properties.Resources.PlayerCombat);
+
+                Player.SetXTileIndex(int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["XTile"].Value));
+                Player.SetYTileIndex(int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value));
+
+                mapX = int.Parse(xml.SelectNodes("/postac/world").Item(0).Attributes["mapx"].Value);
+                mapY = int.Parse(xml.SelectNodes("/postac/world").Item(0).Attributes["mapy"].Value);
+
+                xmlNodeList = xml.GetElementsByTagName("item");
+                for (int i = 0; i < xmlNodeList.Count; i++)
+                {
+                    for (int j = 0; j < int.Parse(xmlNodeList[i].Attributes.Item(1).Value); j++)
+                    {
+                        Player.DodajPrzedmiot(int.Parse(xmlNodeList[i].Attributes.Item(0).Value));
+                    }
+                }
+
+
+                xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
+                if (xmlNodeList.Count > 0)
+                {
+                    Player.DodajPrzedmiot(int.Parse(xmlNodeList[0].Attributes.Item(0).Value));
+                    Player.ZalozBron(Player.Ekwipunek.ElementAt(Player.Ekwipunek.Count - 1) as Bron);
+                    Player.Ekwipunek.RemoveAt(Player.Ekwipunek.Count - 1);
+                }
+
+                xmlNodeList = xml.GetElementsByTagName("equippedArmor");
+                if (xmlNodeList.Count > 0)
+                {
+                    Player.DodajPrzedmiot(int.Parse(xmlNodeList[0].Attributes.Item(0).Value));
+                    Player.ZalozZbroje(Player.Ekwipunek.ElementAt(Player.Ekwipunek.Count - 1) as Zbroja);
+                    Player.Ekwipunek.RemoveAt(Player.Ekwipunek.Count - 1);
+                }
+
+                ReloadMap();
+            }
+            else
+            {
+                Player = new Bohater(1,
+                                     100,
+                                     50,
+                                     0,
+                                     0,
+                                     4,
+                                     4,
+                                     4,
+                                     new Point(23 * (_Width / 32), 10 * (_Height / 18)),
+                                     Gra.Properties.Resources.Player,
+                                     Gra.Properties.Resources.PlayerCombat,
+                                     Gra.Properties.Resources.PlayerCombat);
+
+                Player.SetXTileIndex(23);
+                Player.SetYTileIndex(10);
+            }
 
             Player.AddQuest(Task.questId_Cave);
             Player.ChangeQuestIsActive(Task.questId_Cave, true);
             Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
-            
+
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -93,6 +167,117 @@ namespace Gra
             CombatTimer.Interval = 100;
 
             Draw();
+
+            int g = int.Parse(xml.SelectSingleNode("/postac/save").Attributes["save"].Value);
+            xml.SelectSingleNode("postac/save").Attributes["save"].Value = (++g).ToString();
+
+            xml.SelectNodes("/postac/postac").Item(0).Attributes["level"].Value = Player.GetLevel().ToString();
+            xml.SelectNodes("/postac/postac").Item(1).Attributes["exp"].Value = Player.GetEXP().ToString();
+            xml.SelectNodes("/postac/postac").Item(2).Attributes["str"].Value = Player.GetStrength().ToString();
+            xml.SelectNodes("/postac/postac").Item(3).Attributes["dex"].Value = Player.GetDexterity().ToString();
+            xml.SelectNodes("/postac/postac").Item(4).Attributes["int"].Value = Player.GetIntelligence().ToString();
+            xml.SelectNodes("/postac/postac").Item(5).Attributes["gold"].Value = Player.GetGold().ToString();
+            xml.SelectNodes("/postac/postac").Item(6).Attributes["maxhp"].Value = Player.GetMaxHP().ToString();
+            xml.SelectNodes("/postac/postac").Item(6).Attributes["hp"].Value = Player.GetHP().ToString();
+            xml.SelectNodes("/postac/postac").Item(7).Attributes["maxmp"].Value = Player.GetMaxMP().ToString();
+            xml.SelectNodes("/postac/postac").Item(7).Attributes["mp"].Value = Player.GetMP().ToString();
+            xml.SelectNodes("/postac/postac").Item(8).Attributes["XTile"].Value = Player.GetXTileIndex().ToString();
+            xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value = Player.GetYTileIndex().ToString();
+
+            xml.SelectNodes("postac/world").Item(0).Attributes["mapx"].Value = mapX.ToString();
+            xml.SelectNodes("postac/world").Item(0).Attributes["mapy"].Value = mapY.ToString();
+
+            xmlNodeList = xml.GetElementsByTagName("item");
+            for (int i = 0; i < xmlNodeList.Count; ++i)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            xmlNodeList = xml.GetElementsByTagName("item");
+            for (int i = 0; i < xmlNodeList.Count; ++i)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            foreach (Przedmiot item in Player.Ekwipunek)
+            {
+                XmlElement items = xml.CreateElement("item");
+                XmlAttribute attribute1 = xml.CreateAttribute("id");
+                XmlAttribute attribute2 = xml.CreateAttribute("amount");
+
+                attribute1.Value = item.getId().ToString();
+                attribute2.Value = item.getIlosc().ToString();
+
+                items.Attributes.Append(attribute1);
+                items.Attributes.Append(attribute2);
+
+                xml.DocumentElement.AppendChild(items);
+            }
+
+            xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            if (Player.getZalozonaBron() != null)
+            {
+                XmlElement equippedWeapon = xml.CreateElement("equippedWeapon");
+
+                XmlAttribute attribute1 = xml.CreateAttribute("id");
+                attribute1.Value = Player.getZalozonaBron().getId().ToString();
+
+                equippedWeapon.Attributes.Append(attribute1);
+                xml.DocumentElement.AppendChild(equippedWeapon);
+            }
+
+            xmlNodeList = xml.GetElementsByTagName("equippedArmor");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            xmlNodeList = xml.GetElementsByTagName("equippedArmor");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            if (Player.getZalozonaZbroja() != null)
+            {
+                XmlElement equippedArmor = xml.CreateElement("equippedArmor");
+
+                XmlAttribute attribute1 = xml.CreateAttribute("id");
+                attribute1.Value = Player.getZalozonaZbroja().getId().ToString();
+
+                equippedArmor.Attributes.Append(attribute1);
+                xml.DocumentElement.AppendChild(equippedArmor);
+            }
+
+            xmlNodeList = xml.GetElementsByTagName("quest");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            xmlNodeList = xml.GetElementsByTagName("quest");
+            for (int i = 0; i < xmlNodeList.Count; i++)
+                xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+            foreach (Quest quest in Player.quests)
+            {
+                XmlElement quests = xml.CreateElement("quest");
+                XmlAttribute attribute1 = xml.CreateAttribute("id");
+                XmlAttribute attribute2 = xml.CreateAttribute("isActive");
+                XmlAttribute attribute3 = xml.CreateAttribute("Status");
+                XmlAttribute attribute4 = xml.CreateAttribute("DialogOccured");
+
+                attribute1.Value = quest.getId().ToString();
+                attribute2.Value = quest.getIsActive().ToString();
+                attribute3.Value = quest.getStatus().ToString();
+                attribute4.Value = quest.getDialogOccured().ToString();
+
+                quests.Attributes.Append(attribute1);
+                quests.Attributes.Append(attribute2);
+                quests.Attributes.Append(attribute3);
+                quests.Attributes.Append(attribute4);
+
+                xml.DocumentElement.AppendChild(quests);
+            }
+
+            xml.Save(@"../../SaveFile.xml");
         }
 
         void LoadNewMap(int MoveX, int MoveY)
@@ -277,6 +462,119 @@ namespace Gra
 
                 else if (e.KeyCode == Keys.Escape)
                 {
+                    xml.Load(@"../../SaveFile.xml");
+
+                    XmlNodeList xmlNodeList = xml.GetElementsByTagName("item");
+                    for (int i = 0; i < xmlNodeList.Count; ++i)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    xmlNodeList = xml.GetElementsByTagName("item");
+                    for (int i = 0; i < xmlNodeList.Count; ++i)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    int g = int.Parse(xml.SelectSingleNode("/postac/save").Attributes["save"].Value);
+                    xml.SelectSingleNode("postac/save").Attributes["save"].Value = (++g).ToString();
+
+                    xml.SelectNodes("/postac/postac").Item(0).Attributes["level"].Value = Player.GetLevel().ToString();
+                    xml.SelectNodes("/postac/postac").Item(1).Attributes["exp"].Value = Player.GetEXP().ToString();
+                    xml.SelectNodes("/postac/postac").Item(2).Attributes["str"].Value = Player.GetStrength().ToString();
+                    xml.SelectNodes("/postac/postac").Item(3).Attributes["dex"].Value = Player.GetDexterity().ToString();
+                    xml.SelectNodes("/postac/postac").Item(4).Attributes["int"].Value = Player.GetIntelligence().ToString();
+                    xml.SelectNodes("/postac/postac").Item(5).Attributes["gold"].Value = Player.GetGold().ToString();
+                    xml.SelectNodes("/postac/postac").Item(6).Attributes["maxhp"].Value = Player.GetMaxHP().ToString();
+                    xml.SelectNodes("/postac/postac").Item(6).Attributes["hp"].Value = Player.GetHP().ToString();
+                    xml.SelectNodes("/postac/postac").Item(7).Attributes["maxmp"].Value = Player.GetMaxMP().ToString();
+                    xml.SelectNodes("/postac/postac").Item(7).Attributes["mp"].Value = Player.GetMP().ToString();
+                    xml.SelectNodes("/postac/postac").Item(8).Attributes["XTile"].Value = Player.GetXTileIndex().ToString();
+                    xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value = Player.GetYTileIndex().ToString();
+
+                    xml.SelectNodes("postac/world").Item(0).Attributes["mapx"].Value = mapX.ToString();
+                    xml.SelectNodes("postac/world").Item(0).Attributes["mapy"].Value = mapY.ToString();
+
+                    foreach (Przedmiot item in Player.Ekwipunek)
+                    {
+                        XmlElement items = xml.CreateElement("item");
+                        XmlAttribute attribute1 = xml.CreateAttribute("id");
+                        XmlAttribute attribute2 = xml.CreateAttribute("amount");
+
+                        attribute1.Value = item.getId().ToString();
+                        attribute2.Value = item.getIlosc().ToString();
+
+                        items.Attributes.Append(attribute1);
+                        items.Attributes.Append(attribute2);
+
+                        xml.DocumentElement.AppendChild(items);
+                    }
+
+                    xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    if (Player.getZalozonaBron() != null)
+                    {
+                        XmlElement equippedWeapon = xml.CreateElement("equippedWeapon");
+
+                        XmlAttribute attribute1 = xml.CreateAttribute("id");
+                        attribute1.Value = Player.getZalozonaBron().getId().ToString();
+
+                        equippedWeapon.Attributes.Append(attribute1);
+                        xml.DocumentElement.AppendChild(equippedWeapon);
+                    }
+
+                    xmlNodeList = xml.GetElementsByTagName("equippedArmor");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    xmlNodeList = xml.GetElementsByTagName("equippedArmor");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    if (Player.getZalozonaZbroja() != null)
+                    {
+                        XmlElement equippedArmor = xml.CreateElement("equippedArmor");
+
+                        XmlAttribute attribute1 = xml.CreateAttribute("id");
+                        attribute1.Value = Player.getZalozonaZbroja().getId().ToString();
+
+                        equippedArmor.Attributes.Append(attribute1);
+                        xml.DocumentElement.AppendChild(equippedArmor);
+                    }
+
+                    xmlNodeList = xml.GetElementsByTagName("quest");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    xmlNodeList = xml.GetElementsByTagName("quest");
+                    for (int i = 0; i < xmlNodeList.Count; i++)
+                        xmlNodeList[i].ParentNode.RemoveChild(xmlNodeList[i]);
+
+                    foreach (Quest quest in Player.quests)
+                    {
+                        XmlElement quests = xml.CreateElement("quest");
+                        XmlAttribute attribute1 = xml.CreateAttribute("id");
+                        XmlAttribute attribute2 = xml.CreateAttribute("isActive");
+                        XmlAttribute attribute3 = xml.CreateAttribute("Status");
+                        XmlAttribute attribute4 = xml.CreateAttribute("DialogOccured");
+
+                        attribute1.Value = quest.getId().ToString();
+                        attribute2.Value = quest.getIsActive().ToString();
+                        attribute3.Value = quest.getStatus().ToString();
+                        attribute4.Value = quest.getDialogOccured().ToString();
+
+                        quests.Attributes.Append(attribute1);
+                        quests.Attributes.Append(attribute2);
+                        quests.Attributes.Append(attribute3);
+                        quests.Attributes.Append(attribute4);
+
+                        xml.DocumentElement.AppendChild(quests);
+                    }
+
+                    xml.Save(@"../../SaveFile.xml");
+
                     quit = new Quit();
                     quit.Size = new Size(_Width / 4, _Height / 6);
                     quit.Show();
@@ -296,6 +594,8 @@ namespace Gra
 
                     if (CanMove(p))
                     {
+                        Player.SetXTileIndex(Player.GetXTileIndex() - 1);
+
                         Player.SetMoveDirection(Postac.MoveDirection.Left);
                         Player.SetIsMoving(true);
                         timer.Start();
@@ -309,6 +609,8 @@ namespace Gra
 
                     if (CanMove(p))
                     {
+                        Player.SetXTileIndex(Player.GetXTileIndex() + 1);
+
                         Player.SetMoveDirection(Postac.MoveDirection.Right);
                         Player.SetIsMoving(true);
                         timer.Start();
@@ -322,6 +624,8 @@ namespace Gra
 
                     if (CanMove(p))
                     {
+                        Player.SetYTileIndex(Player.GetYTileIndex() - 1);
+
                         Player.SetMoveDirection(Postac.MoveDirection.Up);
                         Player.SetIsMoving(true);
                         timer.Start();
@@ -336,6 +640,8 @@ namespace Gra
 
                     if (CanMove(p))
                     {
+                        Player.SetYTileIndex(Player.GetYTileIndex() + 1);
+
                         Player.SetMoveDirection(Postac.MoveDirection.Down);
                         Player.SetIsMoving(true);
                         timer.Start();
@@ -363,6 +669,7 @@ namespace Gra
                         while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
                         {
                             z.X -= (_Width / 32);
+                            Player.SetXTileIndex(Player.GetXTileIndex() - 1);
                         }
 
                         Player.GetCharacterSprite().SetLocation(z);
@@ -443,28 +750,28 @@ namespace Gra
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X - (_Width / 32) / 4, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
-                    Player.SetXTileIndex(Player.GetXTileIndex() - 1);
+                    //Player.SetXTileIndex(Player.GetXTileIndex() - 1);
                 }
 
                 else if (Player.GetMoveDirection() == Postac.MoveDirection.Right)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X + (_Width / 32) / 4, Player.GetCharacterSprite().GetLocation().Y);
                     Player.GetCharacterSprite().SetLocation(p);
-                    Player.SetXTileIndex(Player.GetXTileIndex() + 1);
+                    //Player.SetXTileIndex(Player.GetXTileIndex() + 1);
                 }
 
                 else if (Player.GetMoveDirection() == Postac.MoveDirection.Up)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y - (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);
-                    Player.SetYTileIndex(Player.GetYTileIndex() - 1);
+                    //Player.SetYTileIndex(Player.GetYTileIndex() - 1);
                 }
 
                 else if (Player.GetMoveDirection() == Postac.MoveDirection.Down)
                 {
                     Point p = new Point(Player.GetCharacterSprite().GetLocation().X, Player.GetCharacterSprite().GetLocation().Y + (_Height / 18) / 3);
                     Player.GetCharacterSprite().SetLocation(p);
-                    Player.SetYTileIndex(Player.GetYTileIndex() + 1);
+                    //Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                 }
 
                 foreach (Przeciwnik P in worldEnemies)

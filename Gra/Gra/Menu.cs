@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using Microsoft.DirectX.AudioVideoPlayback;
 using System.Windows.Forms;
+using System.Xml;
 
 
 // Plik w przyszłości do rozszerzenia, prototyp
@@ -20,10 +21,23 @@ namespace Gra
         Game game;
         Quit quit2 = new Quit();
         Help help = new Help();
+        XmlDocument xml = new XmlDocument();
+        
 
         public Menu()
         {
             InitializeComponent();
+        }
+
+        private void Menu_Load(object sender, EventArgs e)
+        {
+            //this.TopMost = true;
+
+            this.FormBorderStyle = FormBorderStyle.None;
+
+            this.WindowState = FormWindowState.Maximized;
+
+            axWindowsMediaPlayer1.Visible = false;
         }
 
         private void Start_Click(object sender, EventArgs e)
@@ -40,6 +54,10 @@ namespace Gra
             tableLayoutPanel2.Hide();
             tableLayoutPanel1.Hide();
 
+            xml.Load(@"../../SaveFile.xml");
+            xml.SelectSingleNode("/postac/save").Attributes["save"].Value = "0";
+            xml.Save(@"../../SaveFile.xml");
+
             //File.Copy(@"MapTileData\maptiles" + MapName + ".txt", @"MapTileData\maptiles" + MapName + "_1.txt", true)
             foreach (var file in System.IO.Directory.GetFiles(@"MapTileData"))
             {
@@ -50,6 +68,36 @@ namespace Gra
             axWindowsMediaPlayer1.Visible = true;
             axWindowsMediaPlayer1.URL = @"intro.mp4";
             axWindowsMediaPlayer1.Dock = DockStyle.Fill;
+        }
+
+        private void Load_Click(object sender, EventArgs e)
+        {
+            xml.Load(@"../../SaveFile.xml");
+
+            int g = int.Parse(xml.SelectSingleNode("/postac/save").Attributes["save"].Value);
+
+            if (g > 0)
+            {
+                Start.Visible = false;
+                Start.Enabled = false;
+                Quit.Visible = false;
+                Quit.Enabled = false;
+                Help.Visible = false;
+                Help.Enabled = false;
+                panel1.Hide();
+                label1.Hide();
+                tableLayoutPanel2.Hide();
+                tableLayoutPanel1.Hide();
+                axWindowsMediaPlayer1.close();
+                axWindowsMediaPlayer1.Visible = false;
+
+                game = new Game(this); // zaczyna grę
+                this.Focus();
+            }
+            else
+            {
+                MessageBox.Show("Nie znaleziono zapisu");
+            }
         }
 
         private void Quit_Click(object sender, EventArgs e)
@@ -66,17 +114,6 @@ namespace Gra
             quit2.Show();
             quit2.sendForm(this);
             quit2.Focus();
-        }
-
-        private void Menu_Load(object sender, EventArgs e)
-        {
-            //this.TopMost = true;
-
-            this.FormBorderStyle = FormBorderStyle.None;
-
-            this.WindowState = FormWindowState.Maximized;
-
-            axWindowsMediaPlayer1.Visible = false;
         }
 
         private void Help_Click(object sender, EventArgs e)
@@ -154,6 +191,24 @@ namespace Gra
             float newSize = Start.Font.Size * ratio;
 
             Start.Font = new Font(Start.Font.FontFamily, newSize, Start.Font.Style);
+        }
+
+        private void LoadBtn_SizeChanged(object sender, EventArgs e)
+        {
+            Image fakeImage = new Bitmap(1, 1);
+            Graphics graphics = Graphics.FromImage(fakeImage);
+
+
+            SizeF extent = graphics.MeasureString(LoadBtn.Text, LoadBtn.Font);
+
+
+            float hRatio = LoadBtn.Height / extent.Height / 2;
+            float wRatio = LoadBtn.Width / extent.Width / 2;
+            float ratio = (hRatio < wRatio) ? hRatio : wRatio;
+
+            float newSize = LoadBtn.Font.Size * ratio;
+
+            LoadBtn.Font = new Font(LoadBtn.Font.FontFamily, newSize, LoadBtn.Font.Style);
         }
 
         private void Help_SizeChanged(object sender, EventArgs e)

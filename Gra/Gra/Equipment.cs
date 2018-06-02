@@ -81,7 +81,7 @@ namespace Gra
 
             foreach (Przedmiot item in Player.Ekwipunek)
             {
-                listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " + 
+                listBox1.Items.Add(Player.Ekwipunek.ElementAt(i).getNazwa().ToString() + " - " +
                                    Player.Ekwipunek.ElementAt(i).getIlosc().ToString());
                 i++;
             }
@@ -108,6 +108,24 @@ namespace Gra
 
             zdjecie.Enabled = false;
             zdjecie.Visible = false;
+
+            if (postac.getZalozonaZbroja() != null)
+            {
+                imageList1.Images.Add(postac.getZalozonaZbroja().getArmorImage());
+
+                ListViewItem listViewItem = new ListViewItem();
+                listViewItem.ImageIndex = 0;
+                EquippedArmor.Items.Add(listViewItem);
+            }
+
+            if (postac.getZalozonaBron() != null)
+            {
+                imageList2.Images.Add(postac.getZalozonaBron().getWeaponImage());
+
+                ListViewItem listViewItem = new ListViewItem();
+                listViewItem.ImageIndex = 0;
+                EquippedWeapon.Items.Add(listViewItem);
+            }
         }
 
         private void scaleFont(Button Btn)

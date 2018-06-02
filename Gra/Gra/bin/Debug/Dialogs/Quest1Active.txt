@@ -1,5 +1,4 @@
-﻿Powodzenia!
-PLAYER
+﻿PLAYER
 Jakieś wieści?
 NPC
 Wydaje mi się, że głębiej w tej jaskini jest więcej tych plugawych bestii.
