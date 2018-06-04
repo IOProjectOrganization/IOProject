@@ -385,6 +385,7 @@ namespace Gra
 
                                     Player.DodajGold(gold);
                                 }
+                                Sound.PlaySound(Sound.Sound_itempickup);
 
 
                                 ReloadMap();

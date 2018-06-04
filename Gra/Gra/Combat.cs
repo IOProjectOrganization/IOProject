@@ -183,6 +183,7 @@ namespace Gra
             if (playerTurn)
             {
                 Enemy.SetHP(Enemy.GetHP() - (Player.GetObrazenia() * PlayerDmgMultiplier) / EnemyDefMultiplier);
+                Sound.PlaySound(Sound.Sound_playerbasicattack);
 
                 if (Enemy.GetHP() <= 0)
                 {
@@ -312,6 +313,7 @@ namespace Gra
         private void EnemyAttack()
         {
             Player.SetHP(Player.GetHP() - (Enemy.GetObrazenia() * EnemyDmgMultiplier) / PlayerDefMultiplier);
+            Sound.PlaySound(Sound.Sound_enemybasicattack);
 
             if (Player.GetHP() <= 0)
             {
@@ -347,13 +349,16 @@ namespace Gra
                 if (Enemy.SpecjalneAtaki.ElementAt(randomValue).GetType() == typeof(AtkLeczenie))
                 {
                     Enemy.SetHP(Enemy.GetHP() + Enemy.SpecjalneAtaki.ElementAt(randomValue).GetValue());
+                    Sound.PlaySound(Sound.Sound_enemyhealingspell);
 
                     if (Enemy.GetHP() > Enemy.GetMaxHP())
                         Enemy.SetHP(Enemy.GetMaxHP());
                 }
                 else
+                {
                     Player.SetHP(Player.GetHP() - (Enemy.SpecjalneAtaki.ElementAt(randomValue).GetValue() * EnemyDmgMultiplier) / PlayerDefMultiplier);
-
+                    Sound.PlaySound(Sound.Sound_enemyattackspell);
+                }
                 Enemy.SetMP(Enemy.GetMP() - Enemy.SpecjalneAtaki.ElementAt(randomValue).GetManaCost());
 
                 if (Enemy.GetMP() <= 0)

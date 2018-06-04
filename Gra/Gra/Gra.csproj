@@ -119,6 +119,7 @@
     <Compile Include="ShopInfoBox.Designer.cs">
       <DependentUpon>ShopInfoBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Sound.cs" />
     <Compile Include="World.cs" />
     <Compile Include="Equipment.cs">
       <SubType>Form</SubType>
@@ -248,6 +249,11 @@
     <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+    <Content Include="bin\Debug\Sounds\enemyattackspell.wav" />
+    <Content Include="bin\Debug\Sounds\enemybasicattack.wav" />
+    <Content Include="bin\Debug\Sounds\enemyhealingspell.wav" />
+    <Content Include="bin\Debug\Sounds\itempickup.wav" />
+    <Content Include="bin\Debug\Sounds\playerbasicattack.wav" />
     <Content Include="SaveFile.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -264,5 +270,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
