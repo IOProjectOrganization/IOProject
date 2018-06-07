@@ -1,4 +1,5 @@
-﻿PLAYER
+﻿1
+PLAYER
 C-co się stało? Gdzie są pozostali?
 NPC
 Oni wiedzieli.
@@ -19,3 +20,4 @@ Miałem pilnować tyłów, ake zaatakowała mnie wataha wilków. Nie miałem poj
 NPC
 Pff. Jeśli tak mówisz. Lepiej zrób z siebie użytek i dobij tych, którzy pozostali. Ja się w tym czasie muszę podleczyć.
 UPDATEQUEST
+STARTNEWDIALOG

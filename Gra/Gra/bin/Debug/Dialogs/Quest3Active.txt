@@ -1,4 +1,5 @@
-﻿NPC
+﻿3
+NPC
 Pan ze stalą królewską mie chwilę?
 PLAYER
 ...?

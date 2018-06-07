@@ -12,6 +12,8 @@ namespace Gra
 {
     public partial class Ending : Form
     {
+        Form form;
+
         public Ending()
         {
             InitializeComponent();
@@ -29,9 +31,19 @@ namespace Gra
             }
             else
             {
-                pictureBox1.Image = Gra.Properties.Resources.Empty;
+                pictureBox1.Image = Gra.Properties.Resources.gameover;
                 Sound.PlaySong(Sound.Song_lost);
             }
+        }
+
+        public void sendForm(Form _form)
+        {
+            form = _form;
+        }
+
+        private void Ending_KeyDown(object sender, KeyEventArgs e)
+        {
+            form.Close();
         }
     }
 }

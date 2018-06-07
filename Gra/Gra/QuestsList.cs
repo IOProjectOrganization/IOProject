@@ -50,7 +50,7 @@ namespace Gra
             int i = 0;
             foreach (Quest quest in Player.quests)
             {
-                if (quest.getIsActive() == true && (quest.getStatus() == QuestStatus.Active || quest.getStatus() == QuestStatus.Success))
+                if ((quest.getIsActive() == true && (quest.getStatus() == QuestStatus.Active || quest.getStatus() == QuestStatus.Success)) || (quest.getIsActive() == false && quest.getStatus() == QuestStatus.Complited))
                 {
                     quests.Add(quest);
                     listBox1.Items.Add(Player.quests.ElementAt(i).getName().ToString() + "\t\t\t\t" + Player.quests.ElementAt(i).getStatus().ToString());

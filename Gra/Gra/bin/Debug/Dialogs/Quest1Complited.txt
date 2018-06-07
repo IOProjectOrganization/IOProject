@@ -1,8 +1,5 @@
-﻿NPC
-I co, dałeś sobie radę?
+﻿2
 PLAYER
-Nie było ich wielu. Musieli uciec.
-NPC
-Którędy?! Przecież tam nie ma wyjścia!
-PLAYER
-Na końcu jaskini jest ujście do jeziorka, widać ślady łodzi koło brzegu. Miałeś rację, wiedzieli, że po nich przyjdziemy.
+Wasza wysokość!
+NEWQUEST
+STARTNEWDIALOG

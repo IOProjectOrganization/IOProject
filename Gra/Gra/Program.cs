@@ -153,10 +153,6 @@ namespace Gra
             Player.ChangeQuestIsActive(Task.questId_Cave, true);
             Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
 
-            //Player.AddQuest(Task.questId_Peasant);
-            //Player.ChangeQuestIsActive(Task.questId_Peasant, true);
-            //Player.ChangeQuestStatus(Task.questId_Peasant, QuestStatus.Active);
-
 
             WorldMapPB = new PictureBox();
             WorldMapPB.Width = GameForm.Width;
@@ -866,6 +862,7 @@ namespace Gra
                     CombatTimer.Stop();
                     Draw();
 
+                    gameEnd(false);
                 }
 
                 if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
@@ -884,6 +881,15 @@ namespace Gra
             }
         }
 
+        public void gameEnd(bool state)
+        {
+            Ending ending = new Ending();
+            ending.Size = new Size(_Width, _Height);
+            ending.sendForm(GameForm);
+            ending.UpdateEnding(state);
+            ending.Show();
+            ending.Focus();
+        }
 
         bool CanMove(Point p)
         {

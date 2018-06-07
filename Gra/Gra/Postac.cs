@@ -445,6 +445,26 @@ namespace Gra
                 _quest.setStatus(QuestStatus.Complited);
                 _quest.setIsActive(false);
             }
+
+            StreamReader Reader = new StreamReader(@"Dialogs\Quest" + questID.ToString() + ".txt");
+
+            string line = Reader.ReadLine();
+
+            if (line == "ACTIVE" && _quest.getStatus() == QuestStatus.Active)
+            {
+                line = Reader.ReadLine();
+                _quest.setDescription(line);
+            }
+            else if (line == "SUCCESS" && _quest.getStatus() == QuestStatus.Success)
+            {
+                line = Reader.ReadLine();
+                _quest.setDescription(line);
+            }
+            else if (line == "COMPLETED" && _quest.getStatus() == QuestStatus.Complited)
+            {
+                line = Reader.ReadLine();
+                _quest.setDescription(line);
+            }
         }
     }
 
@@ -951,10 +971,10 @@ namespace Gra
             friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);
 
-            friendly = new PrzyjaznyNPC(friendlyId_King, "Król", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "");
-            //friendly.AddQuest(Task);
-            //friendly.Questy.ElementAt(0).setIsActive(true);
-            //friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
+            friendly = new PrzyjaznyNPC(friendlyId_King, "Król", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "Co tutaj nadal robisz?");
+            friendly.AddQuest(Task.questId_Danger);
+            friendly.Questy.ElementAt(0).setIsActive(false);
+            friendly.Questy.ElementAt(0).setStatus(QuestStatus.NotActive);
             przyjazny.Add(friendly);
 
             friendly = new PrzyjaznyNPC(friendlyId_Peasant, "Chłop", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "");

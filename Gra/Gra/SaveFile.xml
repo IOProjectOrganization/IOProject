@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <postac>
-  <save save="3" />
+  <save save="1" />
   <postac level="1" />
   <postac exp="0" />
   <postac str="4" />
@@ -9,9 +9,9 @@
   <postac gold="0" />
   <postac maxhp="128" hp="128" />
   <postac maxmp="70" mp="70" />
-  <postac XTile="21" YTile="11" />
+  <postac XTile="23" YTile="10" />
   <world mapx="0" mapy="0" />
-  <quest id="1" isActive="True" Status="Success" DialogOccured="True" />
+  <quest id="1" isActive="True" Status="Active" DialogOccured="False" />
 </postac>
 <!--
 <postac>

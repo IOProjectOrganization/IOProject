@@ -55,100 +55,105 @@ namespace Gra
                     {
                         line = Reader.ReadLine();
 
-                        while (line != "PLAYER" && line != "NPC")
+                        if (line == npc.getId().ToString())
+                        {
+                            while (line != "PLAYER" && line != "NPC")
+                                line = Reader.ReadLine();
+
+                            if (line == "PLAYER")
+                            {
+                                textBox1.Text = "Godric" + Environment.NewLine;
+                                PlayerIsTalking = true;
+                            }
+                            else if (line == "NPC")
+                            {
+                                textBox1.Text = npc.getNazwa() + Environment.NewLine;
+                                PlayerIsTalking = false;
+                            }
+
                             line = Reader.ReadLine();
 
-                        if (line == "PLAYER")
-                        {
-                            textBox1.Text = "Godric" + Environment.NewLine;
-                            PlayerIsTalking = true;
-                        }
-                        else if (line == "NPC")
-                        {
-                            textBox1.Text = npc.getNazwa() + Environment.NewLine;
-                            PlayerIsTalking = false;
-                        }
-
-                        line = Reader.ReadLine();
-
-                        while (line != "PLAYER" && line != "NPC")
-                        {
-                            if (!Reader.EndOfStream)
+                            while (line != "PLAYER" && line != "NPC")
                             {
-                                if (line == "\n")
-                                    textBox1.Text += Environment.NewLine;
-                                else if (line == "NEWQUEST")
+                                if (!Reader.EndOfStream)
                                 {
-                                    bool found = false;
-
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
-
-                                    if (!found)
+                                    if (line == "\n")
+                                        textBox1.Text += Environment.NewLine;
+                                    else if (line == "NEWQUEST")
                                     {
-                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
-                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
-                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                        bool found = false;
+
+                                        foreach (Quest quest in Player.quests)
+                                            if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                                found = true;
+
+                                        if (!found)
+                                        {
+                                            Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                            Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                            Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                        }
                                     }
-                                }
-                                else if (line == "UPDATEQUEST")
-                                {
-                                    bool found = false;
-
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
-
-                                    if (found)
+                                    else if (line == "UPDATEQUEST")
                                     {
-                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
-                                        npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        bool found = false;
+
+                                        foreach (Quest quest in Player.quests)
+                                            if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                                found = true;
+
+                                        if (found)
+                                        {
+                                            Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                            npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        }
                                     }
+                                    else
+                                        textBox1.Text = textBox1.Text + line;
+
+                                    line = Reader.ReadLine();
                                 }
                                 else
-                                    textBox1.Text = textBox1.Text + line;
-
-                                line = Reader.ReadLine();
-                            }
-                            else
-                            {
-                                npc.Questy.ElementAt(i).setDialogOccured(true);
-
-                                if (line == "NEWQUEST")
                                 {
-                                    bool found = false;
+                                    npc.Questy.ElementAt(i).setDialogOccured(true);
 
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
-
-                                    if (!found)
+                                    if (line == "NEWQUEST")
                                     {
-                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
-                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
-                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                        bool found = false;
+
+                                        foreach (Quest quest in Player.quests)
+                                            if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                                found = true;
+
+                                        if (!found)
+                                        {
+                                            Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                            Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                            Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                        }
                                     }
-                                }
-                                else if (line == "UPDATEQUEST")
-                                {
-                                    bool found = false;
-
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
-
-                                    if (found)
+                                    else if (line == "UPDATEQUEST")
                                     {
-                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
-                                        npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        bool found = false;
+
+                                        foreach (Quest quest in Player.quests)
+                                            if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                                found = true;
+
+                                        if (found)
+                                        {
+                                            Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                            npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        }
                                     }
+                                    else
+                                        textBox1.Text = textBox1.Text + line;
+                                    break;
                                 }
-                                else
-                                    textBox1.Text = textBox1.Text + line;
-                                break;
                             }
                         }
+                        else
+                            textBox1.Text = npc.getEndingLine();
                     }
                 }
                 else
@@ -271,6 +276,17 @@ namespace Gra
                                 npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
                             }
                         }
+                        else if (line == "STARTNEWDIALOG")
+                        {
+                            Dialog dialog = new Dialog();
+                            dialog.Size = new Size(this.Width, this.Height);
+                            dialog.DesktopLocation = new Point(0, this.Location.Y);
+                            dialog.UpdateDialog(Player, npc);
+                            dialog.Show();
+                            dialog.Focus();
+
+                            this.Close();
+                        }
                         else
                             textBox1.Text = textBox1.Text + line;
 
@@ -281,37 +297,45 @@ namespace Gra
                         npc.Questy.ElementAt(i).setDialogOccured(true);
 
                         if (line == "NEWQUEST")
-                                {
-                                    bool found = false;
+                        {
+                            bool found = false;
 
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
+                            foreach (Quest quest in Player.quests)
+                                if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                    found = true;
 
-                                    if (!found)
-                                    {
-                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
-                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
-                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
-                                    }
-                                }
-                                else if (line == "UPDATEQUEST")
-                                {
-                                    bool found = false;
+                            if (!found)
+                            {
+                                Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                            }
+                        }
+                        else if (line == "UPDATEQUEST")
+                        {
+                            bool found = false;
 
-                                    foreach (Quest quest in Player.quests)
-                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
-                                            found = true;
+                            foreach (Quest quest in Player.quests)
+                                if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                    found = true;
 
-                                    if (found)
-                                    {
-                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
-                                        //npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
-                                    }
-                                }
+                            if (found)
+                            {
+                                Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                //npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                            }
+                        }
+                        else if (line == "STARTNEWDIALOG")
+                        {
+                            Dialog dialog = new Dialog();
+                            dialog.Size = new Size(this.Width, this.Height);
+                            dialog.DesktopLocation = new Point(0, this.Location.Y);
+                            dialog.UpdateDialog(Player, npc);
+                            dialog.Show();
+                        }
                         else
                             textBox1.Text = textBox1.Text + line;
-                        
+
                         break;
                     }
                 }

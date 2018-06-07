@@ -255,10 +255,15 @@
     <None Include="Resources\Minotaur.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="bin\Debug\Dialogs\Quest1.txt" />
     <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
     <Content Include="bin\Debug\Dialogs\Quest1Complited.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest1Success.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest2.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest3.txt" />
     <Content Include="bin\Debug\Dialogs\Quest3Active.txt" />
     <Content Include="bin\Debug\Dialogs\Quest3Complited.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest3Success.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
     <Content Include="bin\Debug\Sounds\cave.wav" />
@@ -289,6 +294,7 @@
     <None Include="Resources\Wolf.png" />
     <None Include="Resources\Wolf_battleimage.png" />
     <None Include="Resources\victory.png" />
+    <None Include="Resources\gameover.png" />
     <Content Include="SaveFile.xml">
       <SubType>Designer</SubType>
     </Content>

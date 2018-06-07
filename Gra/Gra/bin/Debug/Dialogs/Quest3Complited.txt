@@ -1,5 +1,5 @@
-﻿PLAYER
-test
+﻿3
+PLAYER
+Zabiłem te bestie, które niszczyły wasze zbiory.
 NPC
-test
-UPDATEQUEST
+?

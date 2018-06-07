@@ -68,7 +68,6 @@ namespace Gra
 
         public void setDialogOccured(bool b)
         { DialogOccured = b; }
-
     }
 
     public class QuestItem : Quest  // quest dostarczenia pewnego przedmiotu(przedmiotów)
