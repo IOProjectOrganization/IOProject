@@ -142,17 +142,11 @@
   <data name="WaterTile" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\WaterTile.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="world00" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world00.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="world10" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\world10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="world20" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\world20.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="world_10" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\world-10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Minotaur" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Minotaur.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -174,5 +168,35 @@
   </data>
   <data name="babybat_battleimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\babybat_battleimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="title" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\title.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="armor_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\armor_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_1_talk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_1_talk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="player_talk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\player_talk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="victory" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\victory.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Wolf" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Wolf.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Wolf_battleimage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Wolf_battleimage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world00" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world00.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world_10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world_10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

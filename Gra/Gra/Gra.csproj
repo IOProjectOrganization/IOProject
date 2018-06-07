@@ -75,6 +75,12 @@
     <Compile Include="Dialog.Designer.cs">
       <DependentUpon>Dialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ending.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ending.Designer.cs">
+      <DependentUpon>Ending.cs</DependentUpon>
+    </Compile>
     <Compile Include="Help.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,6 +140,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Dialog.resx">
       <DependentUpon>Dialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ending.resx">
+      <DependentUpon>Ending.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Equipment.resx">
       <DependentUpon>Equipment.cs</DependentUpon>
@@ -247,17 +256,42 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest1Complited.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest3Active.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest3Complited.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+    <Content Include="bin\Debug\Sounds\cave.wav" />
     <Content Include="bin\Debug\Sounds\enemyattackspell.wav" />
     <Content Include="bin\Debug\Sounds\enemybasicattack.wav" />
     <Content Include="bin\Debug\Sounds\enemyhealingspell.wav" />
+    <Content Include="bin\Debug\Sounds\epicbattle.wav" />
+    <Content Include="bin\Debug\Sounds\gameover_lost.wav" />
+    <Content Include="bin\Debug\Sounds\gameover_victory.wav" />
+    <Content Include="bin\Debug\Sounds\goldpickup.wav" />
+    <Content Include="bin\Debug\Sounds\grasslands.wav" />
+    <Content Include="bin\Debug\Sounds\healing.wav" />
     <Content Include="bin\Debug\Sounds\itempickup.wav" />
+    <Content Include="bin\Debug\Sounds\marketplace.wav" />
+    <Content Include="bin\Debug\Sounds\menu.wav" />
     <Content Include="bin\Debug\Sounds\playerbasicattack.wav" />
+    <None Include="Resources\title.png" />
+    <Content Include="bin\Debug\Sounds\weararmor.wav" />
+    <Content Include="bin\Debug\Sounds\wearweap.wav" />
+    <None Include="Resources\armor.png" />
+    <None Include="Resources\armor_1.png" />
+    <None Include="Resources\npc_knight_1.png" />
+    <None Include="Resources\npc_knight_1_talk.png" />
+    <None Include="Resources\player_talk.png" />
+    <None Include="Resources\world00.png" />
+    <None Include="Resources\world_10.png" />
+    <None Include="Resources\potwór_3_wolf.png" />
+    <None Include="Resources\Wolf.png" />
+    <None Include="Resources\Wolf_battleimage.png" />
+    <None Include="Resources\victory.png" />
     <Content Include="SaveFile.xml">
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Resources\world00.png" />
     <None Include="Resources\babybat.png" />
     <None Include="Resources\babybat_battleimage.png" />
     <None Include="Resources\Minotaur_battleimage.png" />

@@ -1,0 +1,6 @@
+﻿3
+PLAYER
+Zabiłem te bestie, które niszczyły wasze zbiory.
+NPC
+?
+UPDATEQUEST

@@ -133,7 +133,19 @@ namespace Gra
             if (listBox1.SelectedItem == null)
                 textBox1.Text = "";
             else
+            {
                 textBox1.Text = quests.ElementAt(listBox1.SelectedIndex).getDescription().ToString();
+
+                if (quests.ElementAt(listBox1.SelectedIndex).GetType() == typeof(QuestKillEnemy))
+                {
+                    QuestKillEnemy _quest = quests.ElementAt(listBox1.SelectedIndex) as QuestKillEnemy;
+
+                    textBox1.Text += Environment.NewLine;
+                    textBox1.Text += Environment.NewLine;
+
+                    textBox1.Text += _quest.GetEnemiesKilled().ToString() + " / " + _quest.GetEnemiesToKill().ToString();
+                }
+            }
         }
 
         private void QuestsList_KeyDown(object sender, KeyEventArgs e)

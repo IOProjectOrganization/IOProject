@@ -1,6 +1,21 @@
 ﻿PLAYER
-Jakieś wieści?
+C-co się stało? Gdzie są pozostali?
 NPC
-Wydaje mi się, że głębiej w tej jaskini jest więcej tych plugawych bestii.
-\n
-Uważaj na siebie!
+Oni wiedzieli.
+PLAYER
+Wiedzieli?
+NPC
+Byli przygotowani. Czekali na nas z pułapką. Ci, którzy szli przodem, już nie wrócą.
+PLAYER
+Ale przecież byyła wysłana spora grupa…
+NPC
+Spora grupa bezmózgich brawurników, dla których liczy się ilość zabitych potworów a nie powodzenie misji.
+PLAYER
+Potwory same nie są mądrzejsze!
+NPC
+Musieliśmy ich nie doceniać. Albo mają kogoś, kto nimi kieruje. Swoją drogą… Czemu TY zostałeś z tyłu?
+PLAYER
+Miałem pilnować tyłów, ake zaatakowała mnie wataha wilków. Nie miałem pojęcia…
+NPC
+Pff. Jeśli tak mówisz. Lepiej zrób z siebie użytek i dobij tych, którzy pozostali. Ja się w tym czasie muszę podleczyć.
+UPDATEQUEST

@@ -406,6 +406,46 @@ namespace Gra
 
             return 0;
         }
+
+        public void UpdateQuestStatus(Quest quest)
+        {
+            Quest _quest = Questy.Find(q => q.getId() == quest.getId());
+
+            if (_quest.getStatus() == QuestStatus.NotActive)
+            {
+                _quest.setStatus(QuestStatus.Active);
+                _quest.setIsActive(true);
+            }
+            else if (_quest.getStatus() == QuestStatus.Success)
+            {
+                _quest.setStatus(QuestStatus.Active);
+            }
+            else if (_quest.getStatus() == QuestStatus.Success)
+            {
+                _quest.setStatus(QuestStatus.Complited);
+                _quest.setIsActive(false);
+            }
+        }
+
+        public void UpdateQuestStatus(int questID)
+        {
+            Quest _quest = Questy.Find(q => q.getId() == questID);
+
+            if (_quest.getStatus() == QuestStatus.NotActive)
+            {
+                _quest.setStatus(QuestStatus.Active);
+                _quest.setIsActive(true);
+            }
+            else if (_quest.getStatus() == QuestStatus.Active)
+            {
+                _quest.setStatus(QuestStatus.Success);
+            }
+            else if (_quest.getStatus() == QuestStatus.Success)
+            {
+                _quest.setStatus(QuestStatus.Complited);
+                _quest.setIsActive(false);
+            }
+        }
     }
 
     public class Bohater : Postac   // klasa bohatera
@@ -493,10 +533,10 @@ namespace Gra
         {
             if (UzywanaBron != null)
             {
-                return UzywanaBron.getObrazenia() + Strength * 3;
+                return UzywanaBron.getObrazenia() + Strength * 2;
             }
             else
-                return Strength * 3;
+                return Strength * 2;
             //return Obrazenia;
         }
 
@@ -719,6 +759,46 @@ namespace Gra
             _quest.setStatus(status);
         }
 
+        public void UpdateQuestStatus(Quest quest)
+        {
+            Quest _quest = quests.Find(q => q.getId() == quest.getId());
+
+            if (_quest.getStatus() == QuestStatus.NotActive)
+            {
+                _quest.setStatus(QuestStatus.Active);
+                _quest.setIsActive(true);
+            }
+            else if (_quest.getStatus() == QuestStatus.Active)
+            {
+                _quest.setStatus(QuestStatus.Success);
+            }
+            else if (_quest.getStatus() == QuestStatus.Success)
+            {
+                _quest.setStatus(QuestStatus.Complited);
+                _quest.setIsActive(false);
+            }
+        }
+
+        public void UpdateQuestStatus(int questID)
+        {
+            Quest _quest = quests.Find(q => q.getId() == questID);
+
+            if (_quest.getStatus() == QuestStatus.NotActive)
+            {
+                _quest.setStatus(QuestStatus.Active);
+                _quest.setIsActive(true);
+            }
+            else if (_quest.getStatus() == QuestStatus.Active)
+            {
+                _quest.setStatus(QuestStatus.Success);
+            }
+            else if (_quest.getStatus() == QuestStatus.Success)
+            {
+                _quest.setStatus(QuestStatus.Complited);
+                _quest.setIsActive(false);
+            }
+        }
+
         public Image getBattleImage()
         { return BattleImage; }
 
@@ -825,7 +905,9 @@ namespace Gra
 
         // Friendly ID
 
-        public const int friendlyId_Test1 = 1;
+        public const int friendlyId_Vincent = 1;
+        public const int friendlyId_King = 2;
+        public const int friendlyId_Peasant = 3;
 
         static NPC()
         {
@@ -843,7 +925,7 @@ namespace Gra
             enemy = new Przeciwnik("Ogromny szczur", enemyId_ogromnyszczur, 5, 15, 15, 30, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
             przeciwnik.Add(enemy);
 
-            enemy = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
+            enemy = new Przeciwnik("Wilk", enemyId_wilk, 7, 20, 20, 40, 0, Gra.Properties.Resources.Wolf, Gra.Properties.Resources.Wolf_battleimage);
             przeciwnik.Add(enemy);
 
             enemy = new Przeciwnik("Szkielet", enemyId_szkielet, 8, 25, 25, 30, 0, Gra.Properties.Resources.Empty, Gra.Properties.Resources.Empty);
@@ -863,8 +945,22 @@ namespace Gra
 
             PrzyjaznyNPC friendly;
 
-            friendly = new PrzyjaznyNPC(friendlyId_Test1, "Vincent", Gra.Properties.Resources.Player, Gra.Properties.Resources.PlayerCombat, "Powodzenia!");
+            friendly = new PrzyjaznyNPC(friendlyId_Vincent, "Vincent", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "Powodzenia!");
             friendly.AddQuest(Task.questId_Cave);
+            friendly.Questy.ElementAt(0).setIsActive(true);
+            friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
+            przyjazny.Add(friendly);
+
+            friendly = new PrzyjaznyNPC(friendlyId_King, "Król", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "");
+            //friendly.AddQuest(Task);
+            //friendly.Questy.ElementAt(0).setIsActive(true);
+            //friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
+            przyjazny.Add(friendly);
+
+            friendly = new PrzyjaznyNPC(friendlyId_Peasant, "Chłop", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "");
+            friendly.AddQuest(Task.questId_Peasant);
+            friendly.Questy.ElementAt(0).setIsActive(true);
+            friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);
         }
 

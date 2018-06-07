@@ -380,6 +380,8 @@ namespace Gra
                         postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
                         listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                         listBox1.ClearSelected();
+
+                        Sound.PlaySound(Sound.Sound_weararmor);
                     }
                     else if (P.getItemType() == ItemType.Consumable)
                     {
@@ -407,6 +409,8 @@ namespace Gra
                             listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                             listBox1.ClearSelected();
                         }
+
+                        Sound.PlaySound(Sound.Sound_healing);
                     }
                     else if (P.getItemType() == ItemType.Weapon)
                     {
@@ -430,6 +434,8 @@ namespace Gra
                         postac.Ekwipunek.RemoveAt(listBox1.SelectedIndex);
                         listBox1.Items.RemoveAt(listBox1.SelectedIndex);
                         listBox1.ClearSelected();
+
+                        Sound.PlaySound(Sound.Sound_wearweapon);
                     }
                 }
 
@@ -458,6 +464,7 @@ namespace Gra
                     imageList1.Images.RemoveAt(0);
                     postac.ZalozZbroje(null);
 
+                    Sound.PlaySound(Sound.Sound_weararmor);
                 }
 
                 P = null;
@@ -478,6 +485,8 @@ namespace Gra
                     EquippedWeapon.Clear();
                     imageList2.Images.RemoveAt(0);
                     postac.ZalozBron(null);
+
+                    Sound.PlaySound(Sound.Sound_wearweapon);
                 }
 
                 P = null;

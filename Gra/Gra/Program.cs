@@ -94,7 +94,7 @@ namespace Gra
                                                int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value) * (_Height / 18)),
                                      Gra.Properties.Resources.Player,
                                      Gra.Properties.Resources.PlayerCombat,
-                                     Gra.Properties.Resources.PlayerCombat);
+                                     Gra.Properties.Resources.player_talk);
 
                 Player.SetXTileIndex(int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["XTile"].Value));
                 Player.SetYTileIndex(int.Parse(xml.SelectNodes("/postac/postac").Item(8).Attributes["YTile"].Value));
@@ -143,7 +143,7 @@ namespace Gra
                                      new Point(23 * (_Width / 32), 10 * (_Height / 18)),
                                      Gra.Properties.Resources.Player,
                                      Gra.Properties.Resources.PlayerCombat,
-                                     Gra.Properties.Resources.PlayerCombat);
+                                     Gra.Properties.Resources.player_talk);
 
                 Player.SetXTileIndex(23);
                 Player.SetYTileIndex(10);
@@ -152,6 +152,10 @@ namespace Gra
             Player.AddQuest(Task.questId_Cave);
             Player.ChangeQuestIsActive(Task.questId_Cave, true);
             Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
+
+            //Player.AddQuest(Task.questId_Peasant);
+            //Player.ChangeQuestIsActive(Task.questId_Peasant, true);
+            //Player.ChangeQuestStatus(Task.questId_Peasant, QuestStatus.Active);
 
 
             WorldMapPB = new PictureBox();
@@ -290,9 +294,23 @@ namespace Gra
             worldMap.LoadMap(mapX + "" + mapY, _Width / 32, _Height / 18, true, worldEnemies, worldFriendlies);
 
             System.Random product = new Random(System.DateTime.Now.Millisecond);
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 sklepikarz.DodajPrzedmiot(product.Next(1, 7));
+            }
+
+            if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
+            {
+                if (Sound.SongPlayer.currentMedia.name != "cave")
+                    Sound.PlaySong(Sound.Song_cave);
+            }
+            else
+            {
+                if (Sound.SongPlayer.currentMedia.name != "grasslands")
+                {
+                    Sound.StopSong();
+                    Sound.PlaySong(Sound.Song_grassland);
+                }
             }
         }
 
@@ -376,6 +394,7 @@ namespace Gra
                                 if (item.getID() != Item.itemId_gold)
                                 {
                                     Player.DodajPrzedmiot(item.getID());
+                                    Sound.PlaySound(Sound.Sound_itempickup);
                                 }
                                 else
                                 {
@@ -384,9 +403,8 @@ namespace Gra
                                     gold = goldToGet.Next(1, 500);
 
                                     Player.DodajGold(gold);
+                                    Sound.PlaySound(Sound.Sound_goldpickup);
                                 }
-                                Sound.PlaySound(Sound.Sound_itempickup);
-
 
                                 ReloadMap();
 
@@ -847,6 +865,21 @@ namespace Gra
                 {
                     CombatTimer.Stop();
                     Draw();
+
+                }
+
+                if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
+                {
+                    if (Sound.SongPlayer.currentMedia.name != "cave")
+                        Sound.PlaySong(Sound.Song_cave);
+                }
+                else
+                {
+                    if (Sound.SongPlayer.currentMedia.name != "grasslands")
+                    {
+                        Sound.StopSong();
+                        Sound.PlaySong(Sound.Song_grassland);
+                    }
                 }
             }
         }

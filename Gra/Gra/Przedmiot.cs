@@ -291,7 +291,7 @@ namespace Gra
             Weapon.Add(new Bron(0, weaponId_normalSword, "Zwykly rycerski miecz", 7, false, 0, 0, 2, 0, 0, 200, 350, ItemType.Weapon, Gra.Properties.Resources.sword_1));
             Weapon.Add(new Bron(0, weaponId_bigSword, "Duzy rycerski miecz", 12, false, 0, 0, 0, 0, 0, 400, 600, ItemType.Weapon, Gra.Properties.Resources.sword_2));
 
-            Armor.Add(new Zbroja(0, armorId_lightSteelArmor, "Lekka stalowa zbroja", 30, false, 0, 0, 0, 0, 0, 300, 500, ItemType.Armor, Gra.Properties.Resources.zloto));
+            Armor.Add(new Zbroja(0, armorId_lightSteelArmor, "Lekka stalowa zbroja", 30, false, 0, 0, 0, 0, 0, 300, 500, ItemType.Armor, Gra.Properties.Resources.armor_1));
         }
 
         public static Przedmiot ItemsById(int _id)

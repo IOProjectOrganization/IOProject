@@ -130,16 +130,14 @@ namespace Gra
         public void IncrementCounter()  // przy wygranej bitwie petla przechodzaca po questach i dla questow typu QuestKillEnemy i QuestEnemyId rownymi pokonanemu potworowi wywolujaca ta funkcje?
         { licznikZabitych++; }
 
-        public bool CheckCompletion(Bohater gracz)
+        public bool CheckCompletion()
         {
-            if(getStatus()==QuestStatus.Complited)
+            if(getStatus()==QuestStatus.Success)
             { return true; }
 
             if (licznikZabitych >= wymaganaIlosc)
             {
-                setStatus(QuestStatus.Complited);
-
-                // nadanie nagrody?
+                setStatus(QuestStatus.Success);
 
                 return true;
             }
@@ -147,6 +145,21 @@ namespace Gra
             {
                 return false;
             }
+        }
+
+        public int GetQuestEnemyID()
+        {
+            return QuestEnemyId;
+        }
+
+        public int GetEnemiesToKill()
+        {
+            return wymaganaIlosc;
+        }
+
+        public int GetEnemiesKilled()
+        {
+            return licznikZabitych;
         }
     }
 
@@ -157,6 +170,7 @@ namespace Gra
         // Quests IDs
         public const int questId_Cave = 1;
         public const int questId_Danger = 2;
+        public const int questId_Peasant = 3;
 
         static Task()
         {
@@ -167,6 +181,7 @@ namespace Gra
         {
             quests.Add(new Quest(questId_Cave, "Jaskinia", "Twoim zadaniem jest zabicie potworów znajdujących się w jaskini.", false, QuestStatus.NotActive));
             quests.Add(new Quest(questId_Danger, "Niebezpieczenstwo", "Wroc do krolestwa by poinformowac krola o niebezpieczenstwie, zagrazającym calej krainie.", false, QuestStatus.NotActive));
+            quests.Add(new QuestKillEnemy(questId_Peasant, "Chłopi w potrzebie", "Chłop poprosił Cię o zabicie bestii niszczących ich zbiory.", false, QuestStatus.NotActive, 3, 5));
         }
 
         public static Quest questsById(int _id)

@@ -1,0 +1,21 @@
+﻿NPC
+Pan ze stalą królewską mie chwilę?
+PLAYER
+...?
+NPC
+Myśmy z rodziną na land wyszli luńt czasu temu jak na tropie zobaczyliśmy jakie < jakis potwor > węszące wokół.
+PLAYER
+Jestem zajęty.
+NPC
+Ależ to sprawa najwysokiej wagi, bez tych żniw i pyr każdy z królestwa będzie mrzygłódem.
+PLAYER
+Czym będzie?
+NPC
+Zamiast rajzować rycerz powinien dopomóc rękę co skopowine i sznytke do waszej dostarcza.
+PLAYER
+Co dostarcza?
+NEWQUEST
+NPC
+Pan ruszy trzewiki i wybije te gnidy co nieusłuchanie od nas zbiory głabną i o fefry wszczynają, a ja pana zacnie wynagrodzę.
+PLAYER
+Zobaczę co mogę zrobić.

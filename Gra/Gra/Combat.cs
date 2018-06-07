@@ -27,6 +27,12 @@ namespace Gra
 
         Random random = new Random();
 
+        Timer timer1 = new Timer();
+        Timer timer2 = new Timer();
+        bool volume = false;
+
+        public static WMPLib.WindowsMediaPlayer CombatSoundPlayer = new WMPLib.WindowsMediaPlayer();
+
         public Combat()
         {
             InitializeComponent();
@@ -34,6 +40,20 @@ namespace Gra
             this.FormBorderStyle = FormBorderStyle.None;
             this.WindowState = FormWindowState.Maximized;
             tableLayoutPanel2.Parent = BackgroundPB;
+
+            button1.Enabled = false;
+            button1.Visible = false;
+
+            timer1.Enabled = true;
+            timer1.Tick += timer1_Tick;
+            timer1.Interval = 50;
+
+            timer2.Enabled = true;
+            timer2.Tick += timer2_Tick;
+            timer2.Interval = 50;
+
+            timer1.Stop();
+            timer2.Stop();
 
             PlayerHPCurrentLabel.Scale(2);
             PlayerHPSlashLabel.Scale(2);
@@ -57,6 +77,61 @@ namespace Gra
 
             Delay.Enabled = true;
             Delay.Stop();
+
+            if (Sound.SongPlayer.settings.volume > 0)
+                timer1.Start();
+
+            CombatPlay(Sound.Song_battle);
+        }
+
+        void timer1_Tick(object sender, System.EventArgs e)
+        {
+            if (Sound.SongPlayer.settings.volume == 0)
+                volume = false;
+            else if (Sound.SongPlayer.settings.volume == 50)
+                volume = true;
+
+            if (volume == true)
+                Sound.SongPlayer.settings.volume -= 1;
+            else if (volume == false)
+                Sound.SongPlayer.settings.volume += 1;
+
+            if (Sound.SongPlayer.settings.volume == 0)
+            {
+                Sound.SongPause();
+                timer1.Stop();
+            }
+            else if (Sound.SongPlayer.settings.volume == 50)
+            {
+                Sound.SongUnpause();
+                timer1.Stop();
+            }
+        }
+
+        void timer2_Tick(object sender, System.EventArgs e)
+        {
+            if (CombatSoundPlayer.settings.volume > 0)
+                CombatSoundPlayer.settings.volume -= 1;
+
+            if (CombatSoundPlayer.settings.volume == 0)
+            {
+                CombatStop();
+                timer2.Stop();
+            }
+        }
+
+        private static void CombatPlay(string _song)
+        {
+            if (CombatSoundPlayer.URL != _song)
+            {
+                CombatSoundPlayer.URL = _song;
+                CombatSoundPlayer.settings.setMode("loop", true);  //zapetlanie muzyki
+                CombatSoundPlayer.controls.play();
+            }
+        }
+        private static void CombatStop()  // jesli chcemy na sile zatrzymac muzyke
+        {
+            CombatSoundPlayer.controls.stop();
         }
 
         public bool GetIsInCombat()
@@ -197,9 +272,31 @@ namespace Gra
                     Player.DodajEXP(Enemy.getNagrodaExp());
                     Player.DodajGold(Enemy.getNagrodaGold());
 
+                    foreach (Quest quest in Player.quests)
+                    {
+                        if (quest.getStatus() == QuestStatus.Active)
+                        {
+                            if (quest.GetType() == typeof(QuestKillEnemy))
+                            {
+                                QuestKillEnemy _quest = quest as QuestKillEnemy;
+                                if (_quest.GetQuestEnemyID() == Enemy.getId())
+                                {
+                                    _quest.IncrementCounter();
+                                    _quest.CheckCompletion();
+                                }
+                            }
+                        }
+                    }
+
                     Enemy = null;
 
-                    this.Hide();
+                    if (CombatSoundPlayer.settings.volume > 0)
+                        timer2.Start();
+
+                    if (Sound.SongPlayer.settings.volume < 100)
+                        timer1.Start();
+
+                    this.Close();
                 }
             }
 
@@ -323,7 +420,7 @@ namespace Gra
                 playerWin = false;
                 inCombat = false;
 
-                this.Hide();
+                this.Close();
             }
 
             PlayerDmgMultiplier = 1;

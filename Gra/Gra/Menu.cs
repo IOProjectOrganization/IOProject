@@ -38,6 +38,8 @@ namespace Gra
             this.WindowState = FormWindowState.Maximized;
 
             axWindowsMediaPlayer1.Visible = false;
+
+            Sound.PlaySong(Sound.Song_menu);
         }
 
         private void Start_Click(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace Gra
             Help.Enabled = false;
 
             panel1.Hide();
-            label1.Hide();
+            pictureBox1.Hide();
             tableLayoutPanel2.Hide();
             tableLayoutPanel1.Hide();
 
@@ -65,6 +67,7 @@ namespace Gra
                     System.IO.File.Copy(file, System.IO.Path.Combine(@"MapTileData", "1_" + System.IO.Path.GetFileName(file)), true);
             }
 
+            Sound.StopSong();
             axWindowsMediaPlayer1.Visible = true;
             axWindowsMediaPlayer1.URL = @"intro.mp4";
             axWindowsMediaPlayer1.Dock = DockStyle.Fill;
@@ -85,7 +88,7 @@ namespace Gra
                 Help.Visible = false;
                 Help.Enabled = false;
                 panel1.Hide();
-                label1.Hide();
+                pictureBox1.Hide();
                 tableLayoutPanel2.Hide();
                 tableLayoutPanel1.Hide();
                 axWindowsMediaPlayer1.close();
@@ -155,24 +158,6 @@ namespace Gra
                 game = new Game(this); // zaczyna grę
                 this.Focus();
             }
-        }
-
-        private void label1_SizeChanged(object sender, EventArgs e)
-        {
-            Image fakeImage = new Bitmap(1, 1);
-            Graphics graphics = Graphics.FromImage(fakeImage);
-
-
-            SizeF extent = graphics.MeasureString(label1.Text, label1.Font);
-
-
-            float hRatio = label1.Height / extent.Height;
-            float wRatio = label1.Width / extent.Width;
-            float ratio = (hRatio < wRatio) ? hRatio : wRatio;
-
-            float newSize = label1.Font.Size * ratio;
-
-            label1.Font = new Font(label1.Font.FontFamily, newSize, label1.Font.Style);
         }
 
         private void Start_SizeChanged(object sender, EventArgs e)

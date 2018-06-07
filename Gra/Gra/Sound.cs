@@ -19,11 +19,25 @@ namespace Gra
         public const string Sound_enemyhealingspell = @"Sounds/enemyhealingspell.wav";
 
         public const string Sound_itempickup = @"Sounds/itempickup.wav";
+        public const string Sound_goldpickup = @"Sounds/goldpickup.wav";
+        public const string Sound_healing = @"Sounds/healing.wav";
+        public const string Sound_weararmor = @"Sounds/weararmor.wav";
+        public const string Sound_wearweapon = @"Sounds/wearweap.wav";
+
         //np. przy ataku Sound.PlaySound(Sound.Sound_playerbasicattack);
 
 
         // Songs - muzyka
+        public const string Song_menu = @"Sounds/menu.wav";
+        public const string Song_battle = @"Sounds/epicbattle.wav";
+        public const string Song_cave = @"Sounds/cave.wav";
+        public const string Song_grassland = @"Sounds/grasslands.wav";
+        //public const string Song_menu = @"Sounds/city.wav";
 
+        public const string Song_marketplace = @"Sounds/marketplace.wav";
+
+        public const string Song_victory = @"Sounds/gameover_victory.wav";
+        public const string Song_lost = @"Sounds/gameover_lost.wav";
 
 
         public static void PlaySound(string _sound)
@@ -48,6 +62,14 @@ namespace Gra
         public static void StopSong()  // jesli chcemy na sile zatrzymac muzyke
         {
             SongPlayer.controls.stop();
+        }
+        public static void SongPause()
+        {
+            SongPlayer.controls.pause();
+        }
+        public static void SongUnpause()
+        {
+            SongPlayer.controls.play();
         }
     }
 }

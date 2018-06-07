@@ -22,12 +22,99 @@ namespace Gra
         float LB2Height;
         float PanelHeight;
 
+        Timer timer1 = new Timer();
+        Timer timer2 = new Timer();
+        bool volume1 = false;
+        bool volume2 = false;
+
+        public static WMPLib.WindowsMediaPlayer ShopSoundPlayer = new WMPLib.WindowsMediaPlayer();
+
         public Shop()
         {
             InitializeComponent();
 
             LB1Height = listBox1.Height;
             LB2Height = listBox2.Height;
+
+            timer1.Enabled = true;
+            timer1.Tick += timer1_Tick;
+            timer1.Interval = 10;
+
+            timer2.Enabled = true;
+            timer2.Tick += timer2_Tick;
+            timer2.Interval = 10;
+
+            timer1.Stop();
+            timer2.Stop();
+
+
+            if (Sound.SongPlayer.settings.volume > 0)
+                timer1.Start();
+
+            ShopSoundPlayer.settings.volume = 0;
+            ShopPlay(Sound.Song_marketplace);
+
+            timer2.Start();
+
+        }
+
+        void timer1_Tick(object sender, System.EventArgs e)
+        {
+            if (Sound.SongPlayer.settings.volume == 0)
+                volume1 = false;
+            else if (Sound.SongPlayer.settings.volume == 50)
+                volume1 = true;
+
+            if (volume1 == true)
+                Sound.SongPlayer.settings.volume -= 1;
+            else if (volume1 == false)
+                Sound.SongPlayer.settings.volume += 1;
+
+            if (Sound.SongPlayer.settings.volume == 0)
+            {
+                Sound.SongPause();
+                timer1.Stop();
+            }
+            else if (Sound.SongPlayer.settings.volume == 50)
+            {
+                Sound.SongUnpause();
+                timer1.Stop();
+            }
+        }
+
+        void timer2_Tick(object sender, System.EventArgs e)
+        {
+            if (ShopSoundPlayer.settings.volume == 0)
+                volume2 = false;
+            else if (ShopSoundPlayer.settings.volume == 50)
+                volume2 = true;
+
+            if (volume2 == true)
+                ShopSoundPlayer.settings.volume -= 1;
+            else if (volume2 == false)
+                ShopSoundPlayer.settings.volume += 1;
+
+            if (ShopSoundPlayer.settings.volume == 0)
+            {
+                ShopStop();
+                timer2.Stop();
+            }
+            else if (ShopSoundPlayer.settings.volume == 50)
+                timer2.Stop();
+        }
+
+        private static void ShopPlay(string _song)
+        {
+            if (ShopSoundPlayer.URL != _song)
+            {
+                ShopSoundPlayer.URL = _song;
+                ShopSoundPlayer.settings.setMode("loop", true);  //zapetlanie muzyki
+                ShopSoundPlayer.controls.play();
+            }
+        }
+        private static void ShopStop()  // jesli chcemy na sile zatrzymac muzyke
+        {
+            ShopSoundPlayer.controls.stop();
         }
 
         private void Shop_Load(object sender, EventArgs e)
@@ -72,6 +159,12 @@ namespace Gra
 
         private void button_powrot_Click(object sender, EventArgs e)
         {
+            if (ShopSoundPlayer.settings.volume > 0)
+                timer2.Start();
+
+            if (Sound.SongPlayer.settings.volume < 100)
+                timer1.Start();
+
             this.Close();
         }
 
@@ -108,8 +201,10 @@ namespace Gra
 
                         UpdateEquipment(postac);
                         UpdateProducts(seller);
+
+                        Sound.PlaySound(Sound.Sound_goldpickup);
                     //}
-               }
+                }
             }
 
 
@@ -212,6 +307,8 @@ namespace Gra
 
                         UpdateEquipment(postac);
                         UpdateProducts(seller);
+
+                        Sound.PlaySound(Sound.Sound_goldpickup);
                     }
                 }
             }

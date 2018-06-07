@@ -1,20 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <postac>
-  <save save="6" />
+  <save save="3" />
   <postac level="1" />
   <postac exp="0" />
   <postac str="4" />
   <postac dex="4" />
   <postac int="4" />
   <postac gold="0" />
-  <postac maxhp="184" hp="184" />
-  <postac maxmp="110" mp="110" />
-  <postac XTile="24" YTile="9" />
+  <postac maxhp="128" hp="128" />
+  <postac maxmp="70" mp="70" />
+  <postac XTile="21" YTile="11" />
   <world mapx="0" mapy="0" />
-  <item id="3" amount="2" />
-  <item id="1" amount="1" />
-  <equippedWeapon id="7" />
-  <quest id="1" isActive="True" Status="Active" DialogOccured="False" />
+  <quest id="1" isActive="True" Status="Success" DialogOccured="True" />
 </postac>
 <!--
 <postac>

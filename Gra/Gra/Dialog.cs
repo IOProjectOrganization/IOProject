@@ -20,6 +20,8 @@ namespace Gra
 
         StreamReader Reader;
         string line;
+        int i = 0;
+        int j = 0;
 
         bool PlayerIsTalking;
 
@@ -38,16 +40,12 @@ namespace Gra
             PlayerPB.Image = postac.getDialogImage();
             NPCPB.Image = npc.getDialogImage();
 
-            int i = 0;
-
             if (npc.getActiveQuestID() > 0)
             {
                 for (i = 0; ; i++)
                 {
                     if (npc.Questy.ElementAt(i).getIsActive())
-                    {
                         break;
-                    }
                 }
 
                 if (npc.Questy.ElementAt(i).getDialogOccured() == false)
@@ -79,6 +77,35 @@ namespace Gra
                             {
                                 if (line == "\n")
                                     textBox1.Text += Environment.NewLine;
+                                else if (line == "NEWQUEST")
+                                {
+                                    bool found = false;
+
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (!found)
+                                    {
+                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                    }
+                                }
+                                else if (line == "UPDATEQUEST")
+                                {
+                                    bool found = false;
+
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (found)
+                                    {
+                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                    }
+                                }
                                 else
                                     textBox1.Text = textBox1.Text + line;
 
@@ -87,7 +114,38 @@ namespace Gra
                             else
                             {
                                 npc.Questy.ElementAt(i).setDialogOccured(true);
-                                textBox1.Text = textBox1.Text + line;
+
+                                if (line == "NEWQUEST")
+                                {
+                                    bool found = false;
+
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (!found)
+                                    {
+                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                    }
+                                }
+                                else if (line == "UPDATEQUEST")
+                                {
+                                    bool found = false;
+
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (found)
+                                    {
+                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                    }
+                                }
+                                else
+                                    textBox1.Text = textBox1.Text + line;
                                 break;
                             }
                         }
@@ -149,16 +207,16 @@ namespace Gra
             }
             else if (e.KeyCode == Keys.Space)
             {
-                ReadDialog();
+                ReadDialog(postac, npc);
             }
         }
         
         private void Dialog_Click(object sender, EventArgs e)
         {
-            ReadDialog();
+            ReadDialog(postac, npc);
         }
 
-        private void ReadDialog()
+        private void ReadDialog(Bohater Player, PrzyjaznyNPC Npc)
         {
             if (textBox1.Text == npc.getEndingLine())
                 this.Close();
@@ -184,6 +242,35 @@ namespace Gra
                     {
                         if (line == "\\n")
                             textBox1.Text = textBox1.Text + Environment.NewLine;
+                        else if (line == "NEWQUEST")
+                        {
+                            bool found = false;
+
+                            foreach (Quest quest in Player.quests)
+                                if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                    found = true;
+
+                            if (!found)
+                            {
+                                Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                            }
+                        }
+                        else if (line == "UPDATEQUEST")
+                        {
+                            bool found = false;
+
+                            foreach (Quest quest in Player.quests)
+                                if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                    found = true;
+
+                            if (found)
+                            {
+                                Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                            }
+                        }
                         else
                             textBox1.Text = textBox1.Text + line;
 
@@ -191,17 +278,40 @@ namespace Gra
                     }
                     else
                     {
-                        textBox1.Text = textBox1.Text + line;
+                        npc.Questy.ElementAt(i).setDialogOccured(true);
 
-                        for (int i = 0; ; i++)
-                        {
-                            if (npc.Questy.ElementAt(i).getIsActive())
-                            {
-                                npc.Questy.ElementAt(i).setDialogOccured(true);
-                                break;
-                            }
-                        }
+                        if (line == "NEWQUEST")
+                                {
+                                    bool found = false;
 
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (!found)
+                                    {
+                                        Player.AddQuest(npc.Questy.ElementAt(i).getId());
+                                        Player.ChangeQuestIsActive(npc.Questy.ElementAt(i).getId(), true);
+                                        Player.ChangeQuestStatus(npc.Questy.ElementAt(i).getId(), QuestStatus.Active);
+                                    }
+                                }
+                                else if (line == "UPDATEQUEST")
+                                {
+                                    bool found = false;
+
+                                    foreach (Quest quest in Player.quests)
+                                        if (quest.getId() == npc.Questy.ElementAt(i).getId())
+                                            found = true;
+
+                                    if (found)
+                                    {
+                                        Player.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                        //npc.UpdateQuestStatus(npc.Questy.ElementAt(i).getId());
+                                    }
+                                }
+                        else
+                            textBox1.Text = textBox1.Text + line;
+                        
                         break;
                     }
                 }
