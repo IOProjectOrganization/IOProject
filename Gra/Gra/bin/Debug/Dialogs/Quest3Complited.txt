@@ -1,5 +1,4 @@
 ﻿3
-PLAYER
-Zabiłem te bestie, które niszczyły wasze zbiory.
+Bestie zabite. Teraz wieśniacy będą bezpieczniejsi.
 NPC
-?
+...

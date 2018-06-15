@@ -1,0 +1,29 @@
+﻿4
+Koniec
+NPC
+Rycerz wewnątrz naszego królestwa.
+PLAYER
+Przynoszę wieści od mego władcy do arcymaga.
+NPC
+Jakież to wieści przynosisz?
+PLAYER
+Wieści o ataku, o potworach z innego wymiaru...
+NPC
+Ahh...
+NPC
+Już rozumiem dlaczego tu przyszedłeś. Twoje przybycie świadczy o tym, że nie mamy już wiele czasu. Jeśli chcesz uratować swój dom, musimy działać szybko. Już od pewnego czasu posiadaliśmy informacje o tym zagrożeniu. Wasz władca był zbyt dumny żeby przyjąć od nas jakąkolwiek pomoc. Teraz jest zmuszony do przyjęcia prawdy.
+PLAYER
+Oznacza to, że nam pomożecie?
+NPC
+Fakt jest taki, że nasi magowie sami nie wystarczą. Będziemy potrzebować pomocy wszystkich królestw.
+\n
+Technologii wynalazców, wsparcia wyzwoleńców oraz zwinności złodziei.
+PLAYER
+Wszystkie z królestw?
+NPC
+Owszem, ponieważ ty bezpośrednio zetknąłeś się z tym zagrożeniem, dobrze wiesz jak wygląda ta sytuacja. Staraliśmy się sprzymierzyć z tymi królestwami, ale nie chcą nam zaufać. Jeśli zobaczą reprezentanta królestwa rycerzy potwierdzającego nasze ostrzeżenia będą bardziej skłonni uwierzyć. Musisz przekonać te królestwa do stanięcia razem przeciwko temu złu.
+PLAYER
+Gdzie powinienem zacząć?
+NPC
+Wyjdź bramą na wschód i podążaj prosto szlakiem. Trafisz do wioski wyzwoleńców. Odnajdź ich przywódcę i przekonaj go o wsparcie nas. Uważaj, ponieważ ten szlak jest częstą ofiarą ataków bandytów jak i potworów. Życzę szczęścia.
+UPDATEQUEST

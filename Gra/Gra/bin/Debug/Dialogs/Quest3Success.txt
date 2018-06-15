@@ -1,6 +1,9 @@
 ﻿3
-PLAYER
-Zabiłem te bestie, które niszczyły wasze zbiory.
+Zabiłeś bestie grożące wieśniakom. Wróć i odbierz nagrodę.
 NPC
-?
+Myślałym że pan mitroży a tu tela z bestii zostało. Pozwoli rycerz że pana wynagrodzę i może czymś ucenstuje.
+PLAYER
+Nie mam czasu na gościnę, ale wynagrodzenie mogę przyjąć.
+NPC
+Wam tylko o jednym w głowie klepka. Jednak muszę panu za pomoc zatrefić. Nie jestem hruby w sakiewce, płojdzie myśle że panu to i tak pomoże. Niech pan tylko tego nie wymrawi za dzisiok!
 UPDATEQUEST

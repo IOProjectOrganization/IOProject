@@ -1,17 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <postac>
-  <save save="1" />
-  <postac level="1" />
-  <postac exp="0" />
-  <postac str="4" />
-  <postac dex="4" />
-  <postac int="4" />
-  <postac gold="0" />
-  <postac maxhp="128" hp="128" />
-  <postac maxmp="70" mp="70" />
-  <postac XTile="23" YTile="10" />
-  <world mapx="0" mapy="0" />
-  <quest id="1" isActive="True" Status="Active" DialogOccured="False" />
+  <save save="2" />
+  <postac level="2" />
+  <postac exp="86" />
+  <postac str="21" />
+  <postac dex="5" />
+  <postac int="5" />
+  <postac gold="213" />
+  <postac maxhp="247" hp="114" />
+  <postac maxmp="75" mp="70" />
+  <postac XTile="21" YTile="12" />
+  <world mapx="2" mapy="-2" />
+  <item id="1" amount="1" />
+  <equippedWeapon id="7" />
+  <quest id="1" isActive="True" Status="Active" DialogOccured="False" Description="Porozmawiaj z rycerzem w jaskini." />
+  <quest id="3" isActive="True" Status="Complited" DialogOccured="False" Description="Bestie zabite. Teraz wieśniacy będą bezpieczniejsi." EnemiesKilled="5" />
 </postac>
 <!--
 <postac>

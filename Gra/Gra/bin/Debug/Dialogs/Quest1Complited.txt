@@ -1,5 +1,7 @@
 ﻿2
+Po dotarciu do królestwa dostarczyłeś wiadomość królowi, który natychmiast przydzielił ci kolejne zadanie. 
 PLAYER
 Wasza wysokość!
+UPDATEQUEST
 NEWQUEST
 STARTNEWDIALOG

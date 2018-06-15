@@ -1,4 +1,5 @@
 ﻿1
+Zbadaj głębszą część jaskini.
 PLAYER
 C-co się stało? Gdzie są pozostali?
 NPC
@@ -19,5 +20,4 @@ PLAYER
 Miałem pilnować tyłów, ake zaatakowała mnie wataha wilków. Nie miałem pojęcia…
 NPC
 Pff. Jeśli tak mówisz. Lepiej zrób z siebie użytek i dobij tych, którzy pozostali. Ja się w tym czasie muszę podleczyć.
-UPDATEQUEST
-STARTNEWDIALOG
+UPDATEFAKE

@@ -24,6 +24,8 @@ namespace Gra
         public const string Sound_weararmor = @"Sounds/weararmor.wav";
         public const string Sound_wearweapon = @"Sounds/wearweap.wav";
 
+        public const string Sound_questupdate = @"Sounds/questupdate.wav";
+
         //np. przy ataku Sound.PlaySound(Sound.Sound_playerbasicattack);
 
 

@@ -101,6 +101,12 @@
     </Compile>
     <Compile Include="Przedmiot.cs" />
     <Compile Include="Quest.cs" />
+    <Compile Include="QuestNotification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="QuestNotification.Designer.cs">
+      <DependentUpon>QuestNotification.cs</DependentUpon>
+    </Compile>
     <Compile Include="QuestsList.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -157,6 +163,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="QuestNotification.resx">
+      <DependentUpon>QuestNotification.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="QuestsList.resx">
       <DependentUpon>QuestsList.cs</DependentUpon>
@@ -217,10 +226,6 @@
     <EmbeddedResource Include="bin\Debug\MapTileData\maptiles-10.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\world20.png" />
-    <None Include="Resources\world10.png" />
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="AxWMPLib">
       <Guid>{6BF52A50-394A-11D3-B153-00C04F79FAA6}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -255,17 +260,21 @@
     <None Include="Resources\Minotaur.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Dialogs\Quest1.txt" />
     <Content Include="bin\Debug\Dialogs\Quest1Active.txt" />
     <Content Include="bin\Debug\Dialogs\Quest1Complited.txt" />
     <Content Include="bin\Debug\Dialogs\Quest1Success.txt" />
-    <Content Include="bin\Debug\Dialogs\Quest2.txt" />
-    <Content Include="bin\Debug\Dialogs\Quest3.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest2Active.txt" />
+    <Content Include="bin\Debug\Dialogs\Quest2Success.txt" />
     <Content Include="bin\Debug\Dialogs\Quest3Active.txt" />
     <Content Include="bin\Debug\Dialogs\Quest3Complited.txt" />
     <Content Include="bin\Debug\Dialogs\Quest3Success.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles10.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles2-1.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles2-2.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles2-3.txt" />
     <Content Include="bin\Debug\MapTileData\maptiles20.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles21.txt" />
+    <Content Include="bin\Debug\MapTileData\maptiles22.txt" />
     <Content Include="bin\Debug\Sounds\cave.wav" />
     <Content Include="bin\Debug\Sounds\enemyattackspell.wav" />
     <Content Include="bin\Debug\Sounds\enemybasicattack.wav" />
@@ -281,6 +290,7 @@
     <Content Include="bin\Debug\Sounds\menu.wav" />
     <Content Include="bin\Debug\Sounds\playerbasicattack.wav" />
     <None Include="Resources\title.png" />
+    <Content Include="bin\Debug\Sounds\questupdate.wav" />
     <Content Include="bin\Debug\Sounds\weararmor.wav" />
     <Content Include="bin\Debug\Sounds\wearweap.wav" />
     <None Include="Resources\armor.png" />
@@ -290,11 +300,29 @@
     <None Include="Resources\player_talk.png" />
     <None Include="Resources\world00.png" />
     <None Include="Resources\world_10.png" />
-    <None Include="Resources\potwór_3_wolf.png" />
     <None Include="Resources\Wolf.png" />
     <None Include="Resources\Wolf_battleimage.png" />
     <None Include="Resources\victory.png" />
     <None Include="Resources\gameover.png" />
+    <None Include="Resources\world10.png" />
+    <None Include="Resources\npc_peasant.png" />
+    <None Include="Resources\questupdate.png" />
+    <None Include="Resources\npc_king_talk.png" />
+    <None Include="Resources\npc_king.png" />
+    <None Include="Resources\npc_sorceress.png" />
+    <None Include="Resources\world20.png" />
+    <None Include="Resources\world21.png" />
+    <None Include="Resources\world2_1.png" />
+    <None Include="Resources\world2-2.png" />
+    <None Include="Resources\world2-3.png" />
+    <None Include="Resources\npc_knight_5.png" />
+    <None Include="Resources\npc_knight_2.png" />
+    <None Include="Resources\npc_knight_3.png" />
+    <None Include="Resources\npc_knight_4.png" />
+    <None Include="Resources\npc_peasant_2.png" />
+    <None Include="Resources\npc_peasant_3.png" />
+    <None Include="Resources\npc_peasant_4.png" />
+    <None Include="Resources\world22.png" />
     <Content Include="SaveFile.xml">
       <SubType>Designer</SubType>
     </Content>

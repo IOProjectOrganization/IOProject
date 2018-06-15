@@ -44,6 +44,7 @@ namespace Gra
         Combat combat;
         Dialog dialog;
         Quit quit;
+        QuestNotification questNotification;
 
         public XmlDocument xml = new XmlDocument();
 
@@ -63,7 +64,7 @@ namespace Gra
         {
             GameForm = form; //Przypisanie obsługiwanego Forma do tego danego forma
             GameForm.BackColor = Color.White; //Ustawiamy kolor tła na biały
-
+            
             worldMap = new WorldMap(GameForm);
             worldMap.worldMapItems = new List<WorldMapItem>();
             worldEnemies = new List<Przeciwnik>();
@@ -111,7 +112,6 @@ namespace Gra
                     }
                 }
 
-
                 xmlNodeList = xml.GetElementsByTagName("equippedWeapon");
                 if (xmlNodeList.Count > 0)
                 {
@@ -128,7 +128,49 @@ namespace Gra
                     Player.Ekwipunek.RemoveAt(Player.Ekwipunek.Count - 1);
                 }
 
+                xmlNodeList = xml.GetElementsByTagName("quest");
+                for (int i = 0; i < xmlNodeList.Count; i++)
+                {
+                    Player.AddQuest(int.Parse(xmlNodeList[i].Attributes.Item(0).Value));
+                    Player.quests.ElementAt(i).setIsActive(bool.Parse(xmlNodeList[i].Attributes.Item(1).Value));
+
+                    if (xmlNodeList[i].Attributes.Item(2).Value == "NotActive")
+                        Player.quests.ElementAt(i).setStatus(QuestStatus.NotActive);
+
+                    else if (xmlNodeList[i].Attributes.Item(2).Value == "Active")
+                        Player.quests.ElementAt(i).setStatus(QuestStatus.Active);
+
+                    else if(xmlNodeList[i].Attributes.Item(2).Value == "Success")
+                        Player.quests.ElementAt(i).setStatus(QuestStatus.Success);
+
+                    else if (xmlNodeList[i].Attributes.Item(2).Value == "Completed")
+                        Player.quests.ElementAt(i).setStatus(QuestStatus.Complited);
+
+                    Player.quests.ElementAt(i).setDialogOccured(bool.Parse(xmlNodeList[i].Attributes.Item(3).Value));
+                    Player.quests.ElementAt(i).setDescription(xmlNodeList[i].Attributes.Item(4).Value);
+                }
+
                 ReloadMap();
+
+                System.Random product = new Random(System.DateTime.Now.Millisecond);
+                for (int i = 0; i < 3; i++)
+                {
+                    sklepikarz.DodajPrzedmiot(product.Next(1, 7));
+                }
+
+                if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
+                {
+                    if (Sound.SongPlayer.currentMedia.name != "cave")
+                        Sound.PlaySong(Sound.Song_cave);
+                }
+                else
+                {
+                    if (Sound.SongPlayer.currentMedia.name != "grasslands")
+                    {
+                        Sound.StopSong();
+                        Sound.PlaySong(Sound.Song_grassland);
+                    }
+                }
             }
             else
             {
@@ -147,11 +189,19 @@ namespace Gra
 
                 Player.SetXTileIndex(23);
                 Player.SetYTileIndex(10);
-            }
 
-            Player.AddQuest(Task.questId_Cave);
-            Player.ChangeQuestIsActive(Task.questId_Cave, true);
-            Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
+                Player.AddQuest(Task.questId_Cave);
+                Player.ChangeQuestIsActive(Task.questId_Cave, true);
+                Player.ChangeQuestStatus(Task.questId_Cave, QuestStatus.Active);
+
+                questNotification = new QuestNotification();
+                questNotification.Size = new Size(_Width / 5, _Height / 7);
+                questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                questNotification.Show();
+                questNotification.Owner = this.GameForm;
+                this.GameForm.Focus();
+                this.GameForm.Activate();
+            }
 
 
             WorldMapPB = new PictureBox();
@@ -263,16 +313,27 @@ namespace Gra
                 XmlAttribute attribute2 = xml.CreateAttribute("isActive");
                 XmlAttribute attribute3 = xml.CreateAttribute("Status");
                 XmlAttribute attribute4 = xml.CreateAttribute("DialogOccured");
+                XmlAttribute attribute5 = xml.CreateAttribute("Description");
+                XmlAttribute attribute6 = xml.CreateAttribute("EnemiesKilled");
 
                 attribute1.Value = quest.getId().ToString();
                 attribute2.Value = quest.getIsActive().ToString();
                 attribute3.Value = quest.getStatus().ToString();
                 attribute4.Value = quest.getDialogOccured().ToString();
+                attribute5.Value = quest.getDescription().ToString();
 
                 quests.Attributes.Append(attribute1);
                 quests.Attributes.Append(attribute2);
                 quests.Attributes.Append(attribute3);
                 quests.Attributes.Append(attribute4);
+                quests.Attributes.Append(attribute5);
+
+                if (quest.GetType() == typeof(QuestKillEnemy))
+                {
+                    QuestKillEnemy _quest = quest as QuestKillEnemy;
+                    attribute6.Value = _quest.GetEnemiesKilled().ToString();
+                    quests.Attributes.Append(attribute6);
+                }
 
                 xml.DocumentElement.AppendChild(quests);
             }
@@ -396,7 +457,7 @@ namespace Gra
                                 {
                                     System.Random goldToGet = new Random();
                                     int gold;
-                                    gold = goldToGet.Next(1, 500);
+                                    gold = goldToGet.Next(1, 30);
 
                                     Player.DodajGold(gold);
                                     Sound.PlaySound(Sound.Sound_goldpickup);
@@ -450,6 +511,7 @@ namespace Gra
                                     dialog.DesktopLocation = new Point(0, _Height - dialog.Height);
                                     dialog.UpdateDialog(Player, P);
                                     dialog.Show();
+                                    dialog.Owner = this.GameForm;
                                     dialog.Focus();
                                 }
                             }
@@ -574,16 +636,27 @@ namespace Gra
                         XmlAttribute attribute2 = xml.CreateAttribute("isActive");
                         XmlAttribute attribute3 = xml.CreateAttribute("Status");
                         XmlAttribute attribute4 = xml.CreateAttribute("DialogOccured");
+                        XmlAttribute attribute5 = xml.CreateAttribute("Description");
+                        XmlAttribute attribute6 = xml.CreateAttribute("EnemiesKilled");
 
                         attribute1.Value = quest.getId().ToString();
                         attribute2.Value = quest.getIsActive().ToString();
                         attribute3.Value = quest.getStatus().ToString();
                         attribute4.Value = quest.getDialogOccured().ToString();
+                        attribute5.Value = quest.getDescription().ToString();
 
                         quests.Attributes.Append(attribute1);
                         quests.Attributes.Append(attribute2);
                         quests.Attributes.Append(attribute3);
                         quests.Attributes.Append(attribute4);
+                        quests.Attributes.Append(attribute5);
+
+                        if (quest.GetType() == typeof(QuestKillEnemy))
+                        {
+                            QuestKillEnemy _quest = quest as QuestKillEnemy;
+                            attribute6.Value = _quest.GetEnemiesKilled().ToString();
+                            quests.Attributes.Append(attribute6);
+                        }
 
                         xml.DocumentElement.AppendChild(quests);
                     }
@@ -597,10 +670,10 @@ namespace Gra
                     quit.Focus();
                 }
 
-                else if (e.KeyCode == Keys.W)
+                /*else if (e.KeyCode == Keys.W)
                 {
                     Player.DodajEXP(20);
-                }
+                }*/
 
                 else if (e.KeyCode == Keys.Left)
                 {
@@ -614,6 +687,26 @@ namespace Gra
                         Player.SetMoveDirection(Postac.MoveDirection.Left);
                         Player.SetIsMoving(true);
                         timer.Start();
+                    }
+
+                    if (mapX == -1 && mapY == 0)
+                    {
+                        if (Player.GetCharacterSprite().GetLocation().X < (_Width / 32) * 9 && Player.GetCharacterSprite().GetLocation().Y > (_Height / 18) * 5 && Player.GetCharacterSprite().GetLocation().Y < (_Height / 18) * 9)
+                        {
+                            for (int q = 0; q < Player.quests.Count; q++)
+                                if (Player.quests.ElementAt(q).getId() == 1 && Player.quests.ElementAt(q).getIsActive() && Player.quests.ElementAt(q).getStatus() == QuestStatus.Active)
+                                {
+                                    Player.UpdateQuestStatus(1);
+                                    Player.quests.ElementAt(q).setDescription("Wróc do rycerza i powiedz o swoim znalezisku.");
+                                    questNotification = new QuestNotification();
+                                    questNotification.Size = new Size(_Width / 5, _Height / 7);
+                                    questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                                    questNotification.Show();
+                                    questNotification.Owner = this.GameForm;
+                                    this.GameForm.Focus();
+                                    this.GameForm.Activate();
+                                }
+                        }
                     }
                 }
 
@@ -630,6 +723,26 @@ namespace Gra
                         Player.SetIsMoving(true);
                         timer.Start();
                     }
+
+                    if (mapX == -1 && mapY == 0)
+                    {
+                        if (Player.GetCharacterSprite().GetLocation().X < (_Width / 32) * 9 && Player.GetCharacterSprite().GetLocation().Y > (_Height / 18) * 5 && Player.GetCharacterSprite().GetLocation().Y < (_Height / 18) * 9)
+                        {
+                            for (int q = 0; q < Player.quests.Count; q++)
+                                if (Player.quests.ElementAt(q).getId() == 1 && Player.quests.ElementAt(q).getIsActive() && Player.quests.ElementAt(q).getStatus() == QuestStatus.Active)
+                                {
+                                    Player.UpdateQuestStatus(1);
+                                    Player.quests.ElementAt(q).setDescription("Wróc do rycerza i powiedz o swoim znalezisku.");
+                                    questNotification = new QuestNotification();
+                                    questNotification.Size = new Size(_Width / 5, _Height / 7);
+                                    questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                                    questNotification.Show();
+                                    questNotification.Owner = this.GameForm;
+                                    this.GameForm.Focus();
+                                    this.GameForm.Activate();
+                                }
+                        }
+                    }
                 }
 
                 else if (e.KeyCode == Keys.Up)
@@ -644,6 +757,26 @@ namespace Gra
                         Player.SetMoveDirection(Postac.MoveDirection.Up);
                         Player.SetIsMoving(true);
                         timer.Start();
+                    }
+
+                    if (mapX == -1 && mapY == 0)
+                    {
+                        if (Player.GetCharacterSprite().GetLocation().X < (_Width / 32) * 9 && Player.GetCharacterSprite().GetLocation().Y > (_Height / 18) * 5 && Player.GetCharacterSprite().GetLocation().Y < (_Height / 18) * 9)
+                        {
+                            for (int q = 0; q < Player.quests.Count; q++)
+                                if (Player.quests.ElementAt(q).getId() == 1 && Player.quests.ElementAt(q).getIsActive() && Player.quests.ElementAt(q).getStatus() == QuestStatus.Active)
+                                {
+                                    Player.UpdateQuestStatus(1);
+                                    Player.quests.ElementAt(q).setDescription("Wróc do rycerza i powiedz o swoim znalezisku.");
+                                    questNotification = new QuestNotification();
+                                    questNotification.Size = new Size(_Width / 5, _Height / 7);
+                                    questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                                    questNotification.Show();
+                                    questNotification.Owner = this.GameForm;
+                                    this.GameForm.Focus();
+                                    this.GameForm.Activate();
+                                }
+                        }
                     }
                 }
 
@@ -660,6 +793,26 @@ namespace Gra
                         Player.SetMoveDirection(Postac.MoveDirection.Down);
                         Player.SetIsMoving(true);
                         timer.Start();
+                    }
+
+                    if (mapX == -1 && mapY == 0)
+                    {
+                        if (Player.GetCharacterSprite().GetLocation().X < (_Width / 32) * 9 && Player.GetCharacterSprite().GetLocation().Y > (_Height / 18) * 5 && Player.GetCharacterSprite().GetLocation().Y < (_Height / 18) * 9)
+                        {
+                            for (int q = 0; q < Player.quests.Count; q++)
+                                if (Player.quests.ElementAt(q).getId() == 1 && Player.quests.ElementAt(q).getIsActive() && Player.quests.ElementAt(q).getStatus() == QuestStatus.Active)
+                                {
+                                    Player.UpdateQuestStatus(1);
+                                    Player.quests.ElementAt(q).setDescription("Wróc do rycerza i powiedz o swoim znalezisku.");
+                                    questNotification = new QuestNotification();
+                                    questNotification.Size = new Size(_Width / 5, _Height / 7);
+                                    questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                                    questNotification.Show();
+                                    questNotification.Owner = this.GameForm;
+                                    this.GameForm.Focus();
+                                    this.GameForm.Activate();
+                                }
+                        }
                     }
                 }
             }
@@ -711,7 +864,7 @@ namespace Gra
                     {
                         LoadNewMap(0, -1);
 
-                        Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 18 * 40);
+                        Point z = new Point(Player.GetCharacterSprite().GetLocation().X, 18 * (_Height / 18));
 
                         Player.SetYTileIndex(18);
 
@@ -734,9 +887,10 @@ namespace Gra
 
                         while (worldMap.GetWalkableAt(z) == false || worldMap.GetIsMapLoader(z) == true)
                         {
-                            z.X += (_Height / 18);
+                            z.Y += (_Height / 18);
                             Player.SetYTileIndex(Player.GetYTileIndex() + 1);
                         }
+
                         Player.GetCharacterSprite().SetLocation(z);
                     }
                 }
@@ -747,14 +901,25 @@ namespace Gra
 
                 if (MTB <= 0)
                 {
-                    combat = new Combat();
-                    combat.StartCombat(Player, NPC.EnemyById(NPC.enemyId_nietoperz));
-                    combat.Show();
-                    combat.Focus();
+                    if ((mapX == 2 && mapY == -2) || (mapX == 2 && mapY == -3) || (mapX == 2 && mapY == 2))
+                    {
+                        MTB = random.Next(15, 20);
+                    }
+                    else
+                    {
+                        combat = new Combat();
+                        if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
+                            combat.StartCombat(Player, NPC.EnemyById(NPC.enemyId_nietoperz), mapX, mapY);
+                        else
+                            combat.StartCombat(Player, NPC.EnemyById(NPC.enemyId_wilk), mapX, mapY);
 
-                    CombatTimer.Start();
+                        combat.Show();
+                        combat.Focus();
 
-                    MTB = random.Next(15, 20);
+                        CombatTimer.Start();
+
+                        MTB = random.Next(15, 20);
+                    }
                 }
 
                 timer.Stop();
@@ -797,7 +962,7 @@ namespace Gra
                         {
                             combat = new Combat();
 
-                            combat.StartCombat(Player, P);
+                            combat.StartCombat(Player, P, mapX, mapY);
                             combat.Show();
                             combat.Focus();
 
@@ -805,6 +970,51 @@ namespace Gra
 
                             MTB = random.Next(15, 20);
                         }
+                    }
+                }
+
+                if (mapX == 2 && mapY == 2)
+                {
+                    if ((Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 15 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 12) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 16 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 12) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 17 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 12) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 15 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 13) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 17 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 13) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 15 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 14) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 16 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 14) ||
+                        (Player.GetCharacterSprite().GetLocation().X == (_Width / 32) * 17 && Player.GetCharacterSprite().GetLocation().Y == (_Height / 18) * 14))
+                    {
+                        for (int q = 0; q < Player.quests.Count; q++)
+                            if (Player.quests.ElementAt(q).getId() == 2 && Player.quests.ElementAt(q).getIsActive() && Player.quests.ElementAt(q).getStatus() == QuestStatus.Active)
+                            {
+                                Player.UpdateQuestStatus(2);
+                                Player.quests.ElementAt(q).setDescription("Porozmawiaj z czarodziejka");
+
+                                foreach (PrzyjaznyNPC P in worldFriendlies)
+                                {
+                                    if (isFriendlyInRange(P))
+                                    {
+                                        if (P != null)
+                                        {
+                                            dialog = new Dialog();
+                                            dialog.Size = new Size(_Width, _Height / 3);
+                                            dialog.DesktopLocation = new Point(0, _Height - dialog.Height);
+                                            dialog.UpdateDialog(Player, P);
+                                            dialog.Show();
+                                            dialog.Owner = this.GameForm;
+                                            dialog.Focus();
+                                        }
+                                    }
+                                }
+
+                                questNotification = new QuestNotification();
+                                questNotification.Size = new Size(_Width / 5, _Height / 7);
+                                questNotification.DesktopLocation = new Point(_Width / 2 - questNotification.Size.Width / 2, (_Height / 3) / 16);
+                                questNotification.Show();
+                                questNotification.Owner = this.GameForm;
+                                this.GameForm.Focus();
+                                this.GameForm.Activate();
+                            }
                     }
                 }
             }
@@ -863,20 +1073,6 @@ namespace Gra
                     Draw();
 
                     gameEnd(false);
-                }
-
-                if ((mapX == 0 && mapY == 0) || (mapX == -1 && mapY == 0))
-                {
-                    if (Sound.SongPlayer.currentMedia.name != "cave")
-                        Sound.PlaySong(Sound.Song_cave);
-                }
-                else
-                {
-                    if (Sound.SongPlayer.currentMedia.name != "grasslands")
-                    {
-                        Sound.StopSong();
-                        Sound.PlaySong(Sound.Song_grassland);
-                    }
                 }
             }
         }

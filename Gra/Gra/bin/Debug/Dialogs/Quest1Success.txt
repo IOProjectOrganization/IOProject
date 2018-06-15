@@ -1,4 +1,5 @@
 ﻿1
+Wykonałeś zdanie... idź do króla.
 NPC
 I co, dałeś sobie radę?
 PLAYER

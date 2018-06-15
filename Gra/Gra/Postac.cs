@@ -411,25 +411,7 @@ namespace Gra
         {
             Quest _quest = Questy.Find(q => q.getId() == quest.getId());
 
-            if (_quest.getStatus() == QuestStatus.NotActive)
-            {
-                _quest.setStatus(QuestStatus.Active);
-                _quest.setIsActive(true);
-            }
-            else if (_quest.getStatus() == QuestStatus.Success)
-            {
-                _quest.setStatus(QuestStatus.Active);
-            }
-            else if (_quest.getStatus() == QuestStatus.Success)
-            {
-                _quest.setStatus(QuestStatus.Complited);
-                _quest.setIsActive(false);
-            }
-        }
-
-        public void UpdateQuestStatus(int questID)
-        {
-            Quest _quest = Questy.Find(q => q.getId() == questID);
+            _quest.setDialogOccured(false);
 
             if (_quest.getStatus() == QuestStatus.NotActive)
             {
@@ -443,27 +425,35 @@ namespace Gra
             else if (_quest.getStatus() == QuestStatus.Success)
             {
                 _quest.setStatus(QuestStatus.Complited);
+            }
+            else if (_quest.getStatus() == QuestStatus.Complited)
+            {
                 _quest.setIsActive(false);
             }
+        }
 
-            StreamReader Reader = new StreamReader(@"Dialogs\Quest" + questID.ToString() + ".txt");
+        public void UpdateQuestStatus(int questID)
+        {
+            Quest _quest = Questy.Find(q => q.getId() == questID);
 
-            string line = Reader.ReadLine();
+            _quest.setDialogOccured(false);
 
-            if (line == "ACTIVE" && _quest.getStatus() == QuestStatus.Active)
+            if (_quest.getStatus() == QuestStatus.NotActive)
             {
-                line = Reader.ReadLine();
-                _quest.setDescription(line);
+                _quest.setStatus(QuestStatus.Active);
+                _quest.setIsActive(true);
             }
-            else if (line == "SUCCESS" && _quest.getStatus() == QuestStatus.Success)
+            else if (_quest.getStatus() == QuestStatus.Active)
             {
-                line = Reader.ReadLine();
-                _quest.setDescription(line);
+                _quest.setStatus(QuestStatus.Success);
             }
-            else if (line == "COMPLETED" && _quest.getStatus() == QuestStatus.Complited)
+            else if (_quest.getStatus() == QuestStatus.Success)
             {
-                line = Reader.ReadLine();
-                _quest.setDescription(line);
+                _quest.setStatus(QuestStatus.Complited);
+            }
+            else if (_quest.getStatus() == QuestStatus.Complited)
+            {
+                _quest.setIsActive(false);
             }
         }
     }
@@ -783,6 +773,8 @@ namespace Gra
         {
             Quest _quest = quests.Find(q => q.getId() == quest.getId());
 
+            _quest.setDialogOccured(false);
+
             if (_quest.getStatus() == QuestStatus.NotActive)
             {
                 _quest.setStatus(QuestStatus.Active);
@@ -795,6 +787,9 @@ namespace Gra
             else if (_quest.getStatus() == QuestStatus.Success)
             {
                 _quest.setStatus(QuestStatus.Complited);
+            }
+            else if (_quest.getStatus() == QuestStatus.Complited)
+            {
                 _quest.setIsActive(false);
             }
         }
@@ -803,6 +798,8 @@ namespace Gra
         {
             Quest _quest = quests.Find(q => q.getId() == questID);
 
+            _quest.setDialogOccured(false);
+
             if (_quest.getStatus() == QuestStatus.NotActive)
             {
                 _quest.setStatus(QuestStatus.Active);
@@ -815,6 +812,9 @@ namespace Gra
             else if (_quest.getStatus() == QuestStatus.Success)
             {
                 _quest.setStatus(QuestStatus.Complited);
+            }
+            else if (_quest.getStatus() == QuestStatus.Complited)
+            {
                 _quest.setIsActive(false);
             }
         }
@@ -928,6 +928,7 @@ namespace Gra
         public const int friendlyId_Vincent = 1;
         public const int friendlyId_King = 2;
         public const int friendlyId_Peasant = 3;
+        public const int friendlyId_Sorceress = 4;
 
         static NPC()
         {
@@ -971,14 +972,24 @@ namespace Gra
             friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);
 
-            friendly = new PrzyjaznyNPC(friendlyId_King, "Król", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "Co tutaj nadal robisz?");
+            friendly = new PrzyjaznyNPC(friendlyId_King, "Król", Gra.Properties.Resources.npc_king, Gra.Properties.Resources.npc_king_talk, "Co tutaj nadal robisz?");
+            friendly.AddQuest(Task.questId_Cave);
+            friendly.Questy.ElementAt(0).setIsActive(true);
+            friendly.Questy.ElementAt(0).setStatus(QuestStatus.Complited);
+
             friendly.AddQuest(Task.questId_Danger);
-            friendly.Questy.ElementAt(0).setIsActive(false);
-            friendly.Questy.ElementAt(0).setStatus(QuestStatus.NotActive);
+            friendly.Questy.ElementAt(1).setIsActive(true);
+            friendly.Questy.ElementAt(1).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);
 
-            friendly = new PrzyjaznyNPC(friendlyId_Peasant, "Chłop", Gra.Properties.Resources.npc_knight_1, Gra.Properties.Resources.npc_knight_1_talk, "");
+            friendly = new PrzyjaznyNPC(friendlyId_Peasant, "Chłop", Gra.Properties.Resources.npc_peasant, Gra.Properties.Resources.Empty, "...");
             friendly.AddQuest(Task.questId_Peasant);
+            friendly.Questy.ElementAt(0).setIsActive(true);
+            friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
+            przyjazny.Add(friendly);
+
+            friendly = new PrzyjaznyNPC(friendlyId_Sorceress, "Czarodziejka", Gra.Properties.Resources.npc_sorceress, Gra.Properties.Resources.Empty, "");
+            friendly.AddQuest(Task.questId_Danger);
             friendly.Questy.ElementAt(0).setIsActive(true);
             friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);

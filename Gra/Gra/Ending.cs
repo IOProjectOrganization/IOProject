@@ -24,7 +24,7 @@ namespace Gra
 
         public void UpdateEnding(bool state)
         {
-            if (state)
+            if (state == true)
             {
                 pictureBox1.Image = Gra.Properties.Resources.victory;
                 Sound.PlaySong(Sound.Song_victory);

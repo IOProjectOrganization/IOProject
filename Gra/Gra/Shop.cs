@@ -61,7 +61,10 @@ namespace Gra
         void timer1_Tick(object sender, System.EventArgs e)
         {
             if (Sound.SongPlayer.settings.volume == 0)
+            {
                 volume1 = false;
+                Sound.SongUnpause();
+            }
             else if (Sound.SongPlayer.settings.volume == 50)
                 volume1 = true;
 
@@ -77,7 +80,6 @@ namespace Gra
             }
             else if (Sound.SongPlayer.settings.volume == 50)
             {
-                Sound.SongUnpause();
                 timer1.Stop();
             }
         }

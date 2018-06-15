@@ -1,0 +1,39 @@
+﻿2
+Dostarcz wiadomość od króla do arcymaga i poproś ich o pomoc w walce ze zbliżającym się niebezpieczeństwem.
+NPC
+W końcu przybyliście, Godric. Spodziewałem się waszego powrotu już długi czas temu. Gdzie jest reszta rycerzy?
+PLAYER
+Jaskinia którą zostaliśmy wysłani oczyścić od bestii okazała się być domem czemuś więcej niż pospolitym zwierzom.
+\n
+Naszych wojowników napotkała ogromna fala potworów. Podczas gdy oni starali się zatrzymać bestie, wróciłem aby zdać raport o wydarzeniu.
+NPC
+...
+NPC
+A więc to prawda...
+PLAYER
+...?
+NPC
+Od pewnego czasu królestwo magów starało się nawiązać z nami kontakt. Ostrzegali o tym, że ich zwiady doniosły o potężnej mrocznej energii pochodzącej z jaskinii do której zostaliście wysłani. Uważają, że to właśnie w tym miejscu jest źródło wszystkich potworów szerzących od lat terror poza bezpiecznymi granicami naszych miast.
+PLAYER
+Więc to dlatego wysłano nas aż w takiej liczbie do pojedynczej jaskinii?
+NPC
+Dokładnie.
+PLAYER
+Nie rozumiem jednak dlaczego magowie chcieliby nas o tym zagrożeniu ostrzec? Nie jesteśmy bowiem w najlepszych stosunkach.
+NPC
+Tłumaczyli to tym, że po tym jak te bestie, jeśli w ogóle by im się to udało, zdepczą nasze królestwo, to w następnym kierunku powędrowałyby do nich.
+PLAYER
+Myślisz, że to możliwe?
+NPC
+Ha, nasze wojska są zbyt potężne, jest jednak w moich interesach zminimalizować straty, a co za tym idzie przyjąć ich ofertę współpracy. Zważając na ich determinację o stworzenie sojuszu w tej sytuacji, nie uważam by chcieli nas oszukać.
+PLAYER
+Nasze królestwo jest buforem między tymi bestiami a magami...
+NPC
+I będziemy, nie ważne czy przyjmiemy ich ofertę bądź nie. Słuchaj uważnie Godric. Masz za misję wędrówkę do tych tchórzy w piżamach i skontaktowanie się z ich królem. Powierzam też w twoje ręcę zwój, który będzie świadczył o tym, że to ja ciebie wysłałem. Bez niego nie będziesz w stanie dostać się za ich bramy.
+PLAYER
+Powierzasz mi to zadanie?
+NPC
+Czas jest teraz najważniejszy, a ty jesteś świadom całej sytuacji. Wyślę resztę naszych wojsk aby utrzymały kontrolę aż do nadejścia posiłków. Ty pójdziesz do tych strachliwych, babrających się czarami magów. Powiadom arcymaga o całej sytuacji.
+\n
+Teraz ruszaj!
+UPDATEFAKE

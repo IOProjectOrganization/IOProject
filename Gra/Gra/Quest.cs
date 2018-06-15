@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Gra
 {
-    public enum  QuestStatus { NotActive, Active, Success, Complited };
+    public enum QuestStatus { NotActive, Active, Success, Complited };
 
     public class Quest
     {
@@ -62,6 +62,18 @@ namespace Gra
 
         public void setStatus(QuestStatus _status)
         { Status = _status; }
+
+        public void setStatus(int _status)
+        {
+            if (_status == 0)
+                Status = QuestStatus.NotActive;
+            else if (_status == 1)
+                Status = QuestStatus.Active;
+            else if (_status == 2)
+                Status = QuestStatus.Success;
+            else if (_status == 3)
+                Status = QuestStatus.Complited;
+        }
 
         public bool getDialogOccured()
         { return DialogOccured; }
@@ -137,6 +149,7 @@ namespace Gra
             if (licznikZabitych >= wymaganaIlosc)
             {
                 setStatus(QuestStatus.Success);
+                setDialogOccured(false);
 
                 return true;
             }
@@ -178,8 +191,8 @@ namespace Gra
 
         private static void loadQuests()
         {
-            quests.Add(new Quest(questId_Cave, "Jaskinia", "Twoim zadaniem jest zabicie potworów znajdujących się w jaskini.", false, QuestStatus.NotActive));
-            quests.Add(new Quest(questId_Danger, "Niebezpieczenstwo", "Wroc do krolestwa by poinformowac krola o niebezpieczenstwie, zagrazającym calej krainie.", false, QuestStatus.NotActive));
+            quests.Add(new Quest(questId_Cave, "Jaskinia", "Porozmawiaj z rycerzem w jaskini.", false, QuestStatus.NotActive));
+            quests.Add(new Quest(questId_Danger, "Niebezpieczenstwo", "Udaj się do magów, by prosić ich o pomoc", false, QuestStatus.NotActive));
             quests.Add(new QuestKillEnemy(questId_Peasant, "Chłopi w potrzebie", "Chłop poprosił Cię o zabicie bestii niszczących ich zbiory.", false, QuestStatus.NotActive, 3, 5));
         }
 

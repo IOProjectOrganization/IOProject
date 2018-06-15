@@ -202,4 +202,55 @@
   <data name="gameover" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\gameover.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="npc_peasant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_peasant.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world21" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world21.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world2_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world2_1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="questupdate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\questupdate.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_king" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_king_talk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_king_talk.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_sorceress" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_sorceress.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_knight_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_knight_5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_peasant_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_peasant_2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_peasant_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_peasant_3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="npc_peasant_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\npc_peasant_4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world22" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world22.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world2_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world2-2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="world2_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\world2-3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
