@@ -988,7 +988,7 @@ namespace Gra
             friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);
             przyjazny.Add(friendly);
 
-            friendly = new PrzyjaznyNPC(friendlyId_Sorceress, "Czarodziejka", Gra.Properties.Resources.npc_sorceress, Gra.Properties.Resources.Empty, "");
+            friendly = new PrzyjaznyNPC(friendlyId_Sorceress, "Czarodziejka", Gra.Properties.Resources.npc_sorceress, Gra.Properties.Resources.Empty, "Co tutaj robisz?");
             friendly.AddQuest(Task.questId_Danger);
             friendly.Questy.ElementAt(0).setIsActive(true);
             friendly.Questy.ElementAt(0).setStatus(QuestStatus.Active);

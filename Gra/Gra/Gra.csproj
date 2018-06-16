@@ -313,8 +313,6 @@
     <None Include="Resources\world20.png" />
     <None Include="Resources\world21.png" />
     <None Include="Resources\world2_1.png" />
-    <None Include="Resources\world2-2.png" />
-    <None Include="Resources\world2-3.png" />
     <None Include="Resources\npc_knight_5.png" />
     <None Include="Resources\npc_knight_2.png" />
     <None Include="Resources\npc_knight_3.png" />
@@ -323,6 +321,8 @@
     <None Include="Resources\npc_peasant_3.png" />
     <None Include="Resources\npc_peasant_4.png" />
     <None Include="Resources\world22.png" />
+    <None Include="Resources\world2-2.png" />
+    <None Include="Resources\world2-3.png" />
     <Content Include="SaveFile.xml">
       <SubType>Designer</SubType>
     </Content>

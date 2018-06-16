@@ -201,6 +201,9 @@ namespace Gra
                 questNotification.Owner = this.GameForm;
                 this.GameForm.Focus();
                 this.GameForm.Activate();
+
+                Player.DodajPrzedmiot(Item.itemId_smallPotion);
+                Player.DodajPrzedmiot(Item.itemId_smallPotion);
             }
 
 
